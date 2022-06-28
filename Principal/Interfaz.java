@@ -40,9 +40,9 @@ public class Interfaz implements ActionListener {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op1");
+                    System.out.println("seleccionado op1");//aca en estas va a estar la instancia de cada uno de nuestras partes
                 } else {
-                    System.out.println("deseleccionado op1");
+                    System.out.println("deseleccionado op1");//aca solo ponemos la parte pa cerrar la visualizacion de las cosas
                 }
             }
 
