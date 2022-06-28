@@ -11,7 +11,7 @@ import javax.swing.JToggleButton;
 
 public class Interfaz implements ActionListener {
 
-    public JFrame Fbase = new JFrame("Mostrar Imagen");
+    public JFrame Fbase = new JFrame("RegistroCivil");
     public JToggleButton opcion1 = new JToggleButton("Datos Personales");
     public JToggleButton opcion2 = new JToggleButton("Generación del número de cédula");
     public JToggleButton opcion3 = new JToggleButton("Tomar Fotografía");
@@ -21,22 +21,73 @@ public class Interfaz implements ActionListener {
         Fbase.setSize(600, 600);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
-        Fbase.setLayout(new FlowLayout());
+        Fbase.setLayout(null);
+        Fbase.setVisible(true);
+        Fbase.setBounds(0, 0, 600, 600);
+        opcion1.setBounds(0, 0, 190, 30);
+        opcion2.setBounds(0, 30, 190, 30);
+        opcion3.setBounds(0, 60, 190, 30);
+        opcion4.setBounds(0, 90, 190, 30);
         Fbase.add(this.opcion1);
         Fbase.add(this.opcion2);
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
+
         this.opcion1.addItemListener(new ItemListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-
+            public void itemStateChanged(ItemEvent ie) {
+                int estado = ie.getStateChange();
+                if (estado == ItemEvent.SELECTED) {
+                    System.out.println("seleccionado op1");
+                } else {
+                    System.out.println("deseleccionado op1");
+                }
             }
+
         });
+        this.opcion2.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                int estado = ie.getStateChange();
+                if (estado == ItemEvent.SELECTED) {
+                    System.out.println("seleccionado op2");
+                } else {
+                    System.out.println("deseleccionado op2");
+                }
+            }
+
+        });
+        this.opcion3.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                int estado = ie.getStateChange();
+                if (estado == ItemEvent.SELECTED) {
+                    System.out.println("seleccionado op3");
+                } else {
+                    System.out.println("deseleccionado op3");
+                }
+            }
+
+        });
+        this.opcion4.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                int estado = ie.getStateChange();
+                if (estado == ItemEvent.SELECTED) {
+                    System.out.println("seleccionado op4");
+                } else {
+                    System.out.println("deseleccionado op4");
+                }
+            }
+
+        });
+        Fbase.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Fbase.show();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
     public static void main(String[] args) {
