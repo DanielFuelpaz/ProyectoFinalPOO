@@ -1,15 +1,12 @@
 package Principal;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 
-public class Interfaz implements ActionListener {
+public class Interfaz {
 
     public JFrame Fbase = new JFrame("RegistroCivil");
     public JToggleButton opcion1 = new JToggleButton("Datos Personales");
@@ -24,12 +21,12 @@ public class Interfaz implements ActionListener {
         Fbase.setLayout(null);
         Fbase.setVisible(true);
         Fbase.setBounds(0, 0, 600, 600);
-        
+
         opcion1.setBounds(0, 0, 190, 30);
         opcion2.setBounds(0, 30, 190, 30);
         opcion3.setBounds(0, 60, 190, 30);
         opcion4.setBounds(0, 90, 190, 30);
-        
+
         Fbase.add(this.opcion1);
         Fbase.add(this.opcion2);
         Fbase.add(this.opcion3);
@@ -83,14 +80,9 @@ public class Interfaz implements ActionListener {
             }
 
         });
-        
+
         Fbase.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Fbase.show();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 
     public static void main(String[] args) {
