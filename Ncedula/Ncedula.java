@@ -12,7 +12,7 @@ public class Ncedula implements ActionListener {
         JPanel Jp1 = new JPanel();
         Jp1.add(a);
         Jp1.setBounds(100, 100, 375, 150);
-        Jp1.setBackground(Color.LIGHT_GRAY);
+        Jp1.setBackground(Color.GREEN);
         return Jp1;
     }
 
