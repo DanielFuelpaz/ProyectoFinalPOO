@@ -26,7 +26,7 @@ public class Interfaz {
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
         Fbase.setVisible(true);
-        Fbase.setBounds(0, 0, 600, 600);
+        Fbase.setBounds(0, 0, 800, 600);
 
         opcion1.setBounds(0, 0, 190, 30);
         opcion2.setBounds(0, 30, 190, 30);
