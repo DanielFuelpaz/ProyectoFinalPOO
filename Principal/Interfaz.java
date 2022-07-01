@@ -1,5 +1,6 @@
 package Principal;
 
+import Ncedula.Ncedula;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -13,6 +14,11 @@ public class Interfaz {
     public JToggleButton opcion2 = new JToggleButton("Generación del número de cédula");
     public JToggleButton opcion3 = new JToggleButton("Tomar Fotografía");
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
+    private Ncedula Ced = new Ncedula();
+
+    public Ncedula getCed() {
+        return Ced;
+    }
 
     public void initialize() {
         
@@ -21,7 +27,7 @@ public class Interfaz {
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
         Fbase.setVisible(true);
-        Fbase.setBounds(0, 0, 600, 600);
+        Fbase.setBounds(0, 0, 800, 600);
 
         opcion1.setBounds(0, 0, 190, 30);
         opcion2.setBounds(0, 30, 190, 30);
@@ -50,9 +56,11 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op2");
+
+                    Ced.panelcedula(Fbase);
                 } else {
-                    System.out.println("deseleccionado op2");
+                    Ced.getJp1().setVisible(false);
+
                 }
             }
 
