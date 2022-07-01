@@ -58,7 +58,7 @@ public class Interfaz {
 
                     Ced.panelcedula(Fbase);
                 } else {
-                    Ced.panelcedula(Fbase).setVisible(false);
+                    Ced.getJp1().setVisible(false);
 
                 }
             }
