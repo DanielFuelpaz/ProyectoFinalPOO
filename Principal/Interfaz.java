@@ -21,6 +21,7 @@ public class Interfaz {
     }
 
     public void initialize() {
+        
         Fbase.setSize(600, 600);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
@@ -95,6 +96,7 @@ public class Interfaz {
 
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
+        
         i.initialize();
     }
 
