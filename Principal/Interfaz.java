@@ -1,6 +1,8 @@
 package Principal;
 
 import Ncedula.Ncedula;
+import Opcion3.Panel3;
+
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -15,13 +17,14 @@ public class Interfaz {
     public JToggleButton opcion3 = new JToggleButton("Tomar Fotografía");
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
     private Ncedula Ced = new Ncedula();
+    public Panel3 foto = new Panel3();
 
     public Ncedula getCed() {
         return Ced;
     }
 
     public void initialize() {
-        
+
         Fbase.setSize(600, 600);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
@@ -44,9 +47,11 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op1");//aca en estas va a estar la instancia de cada uno de nuestras partes
+                    System.out.println("seleccionado op1");// aca en estas va a estar la instancia de cada uno de
+                                                           // nuestras partes
                 } else {
-                    System.out.println("deseleccionado op1");//aca solo ponemos la parte pa cerrar la visualizacion de las cosas
+                    System.out.println("deseleccionado op1");// aca solo ponemos la parte pa cerrar la visualizacion de
+                                                             // las cosas
                 }
             }
 
@@ -70,9 +75,9 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op3");
+                    foto.getPanel3(Fbase);
                 } else {
-                    System.out.println("deseleccionado op3");
+                    foto.getPanel().setVisible(false);
                 }
             }
 
@@ -96,7 +101,7 @@ public class Interfaz {
 
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
-        
+
         i.initialize();
     }
 
