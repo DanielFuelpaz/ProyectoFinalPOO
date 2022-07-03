@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -43,23 +46,9 @@ public class Ncedula implements ActionListener {
         ApNom.setLocation(240, 0);
 
         getJp1().add(personas);
-        personas.addItem("Ortiz Edison");
+        listaper(personas);
         personas.setSize(180, 20);
         personas.setLocation(395, 0);
-        this.personas.addActionListener(new ActionListener() {
-
-            @Override
-
-            public void actionPerformed(ActionEvent e) {
-                if (personas.getSelectedItem().toString().equalsIgnoreCase("izquierda")) {
-                    System.out.println(personas.getSelectedItem().toString());
-                } else {
-                    System.out.println(personas.getSelectedItem().toString());
-
-                }
-            }
-
-        });
 
         getJp1().add(Ced);
         Ced.setText("Cédula");
@@ -86,19 +75,72 @@ public class Ncedula implements ActionListener {
         return Jp1;
     }
 
+    public void listaper(JComboBox per) {
+
+        try {
+            Connection co = c.getConexion();
+            String instruccionsql = "SELECT*FROM registro";
+            PreparedStatement st = co.prepareStatement(instruccionsql);
+            ResultSet rs = st.executeQuery(instruccionsql);
+
+            while (rs.next()) {
+                per.addItem(rs.getString("apellidos") + " " + rs.getString("nombres"));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void listaper() {
+
+        try {
+            Connection co = c.getConexion();
+            String instruccionsql = "SELECT*FROM registro";
+            PreparedStatement st = co.prepareStatement(instruccionsql);
+            ResultSet rs = st.executeQuery(instruccionsql);
+
+            while (rs.next()) {
+                rs.getString("apellidos");
+                rs.getString("nombres");
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton but1 = (JButton) e.getSource();
         if (but1 == GenCedula) {
-            System.out.println("aca saldria la cedula");
+            int pos;
+            Random rnd = new Random();
+            Stack< Integer> pCartas = new Stack<>();
+            for (int i = 0; i < 20; i++) {
+                pos = rnd.nextInt(7999 + 1000) + 1000;
+                while (pCartas.contains(pos)) {
+                    pos = rnd.nextInt(7999 + 1000) + 1000;
+                }
+                pCartas.push(pos);
+            }
+
+            Rced.setText(String.valueOf("180500" + pCartas.get(1)));
         } else {
-            System.out.println("se guarda la cedula en la bd");
+
             try {
 
                 Connection co = c.getConexion();
-                String instruccionSql = "UPDATE registro SET cedula = ? WHERE registro.apellidos = 'Hernandez' AND registro.nombres = 'Joaquin';";
+                String partes[] = personas.getSelectedItem().toString().split(" ");
+                String instruccionSql = "UPDATE registro SET cedula = ? WHERE registro.apellidos = ? AND registro.nombres = ? ;";
                 PreparedStatement st = co.prepareStatement(instruccionSql);
                 st.setInt(1, Integer.valueOf(Rced.getText()));
+                st.setString(2, partes[0]);
+                st.setString(3, partes[1]);
                 st.executeUpdate();
 
             } catch (SQLException ex) {
