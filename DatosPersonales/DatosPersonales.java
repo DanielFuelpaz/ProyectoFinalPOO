@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Opcion1;
+package DatosPersonales;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -22,8 +23,7 @@ import javax.swing.JTextField;
  * @author g4to1
  */
 public class DatosPersonales implements ActionListener{
-    
-        public JFrame frame= new JFrame("Datos Personales");
+        public JFrame frame= new JFrame("Datos personales");
         public JLabel jl1=new JLabel("Nombres");
         public JTextField txtnombres=new JTextField("");
         public JLabel jl2=new JLabel("Apellidos");
@@ -40,9 +40,9 @@ public class DatosPersonales implements ActionListener{
         public JButton bg=new JButton("Guardar");
         
         public void initialize(){
-            frame.setSize(400, 400);
-            frame.setLocation(750,250);
-            frame.setBackground(Color.CYAN); // Color de fondo
+            
+            frame.setBounds(750,300, 400, 400);
+            frame.setBackground(Color.LIGHT_GRAY);
             frame.setLayout(null);
             jl1.setBounds(35, 30, 60, 15);
             frame.add(this.jl1);
@@ -61,15 +61,15 @@ public class DatosPersonales implements ActionListener{
             txttelefono.setBounds(100,140,200,25);
             frame.add(this.txttelefono);
             jl5.setBounds(35, 179, 60, 15);
-            frame.add(jl5);
+            frame.add(this.jl5);
             cb1.setBounds(100, 175, 200, 25);
-            frame.add(cb1);
+            frame.add(this.cb1);
             jl6.setBounds(35, 218, 60, 15);
-            frame.add(jl6);
+            frame.add(this.jl6);
             cb2.setBounds(100, 214, 200, 25);
-            frame.add(cb2);
+            frame.add(this.cb2);
             bg.setBounds(150, 263, 100, 25);
-            frame.add(bg);
+            frame.add(this.bg);
             
             cb1.addItem("Seleccionar");
             cb2.addItem("Seleccionar");
