@@ -79,32 +79,12 @@ public class Ncedula implements ActionListener {
 
         try {
             Connection co = c.getConexion();
-            String instruccionsql = "SELECT*FROM registro";
+            String instruccionsql = "SELECT * FROM registro WHERE cedula = '0'";
             PreparedStatement st = co.prepareStatement(instruccionsql);
             ResultSet rs = st.executeQuery(instruccionsql);
 
             while (rs.next()) {
                 per.addItem(rs.getString("apellidos") + " " + rs.getString("nombres"));
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public void listaper() {
-
-        try {
-            Connection co = c.getConexion();
-            String instruccionsql = "SELECT*FROM registro";
-            PreparedStatement st = co.prepareStatement(instruccionsql);
-            ResultSet rs = st.executeQuery(instruccionsql);
-
-            while (rs.next()) {
-                rs.getString("apellidos");
-                rs.getString("nombres");
 
             }
 
