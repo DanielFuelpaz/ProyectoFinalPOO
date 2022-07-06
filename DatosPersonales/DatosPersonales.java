@@ -5,13 +5,19 @@
  */
 package DatosPersonales;
 
+import Conexion.Conexion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -67,12 +73,38 @@ public class DatosPersonales implements ActionListener{
             frame.add(this.cb2);
             bg.setBounds(150, 263, 100, 25);
             frame.add(this.bg);
-            
-            cb1.addItem("Seleccionar");
-            cb2.addItem("Seleccionar");
+            cargarprovincias();
+            cargarciudades();
             
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.show();
+            
+            
+            this.bg.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent g){
+                    PreparedStatement ps = null;
+        try {
+            Conexion objCon = new Conexion();
+            Connection conn = objCon.getConexion();
+            ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)");
+            ps.setString(1, txtnombres.getText());
+            ps.setString(2, txtapellidos.getText());
+            ps.setString(3, txtdireccion.getText());
+            ps.setString(4, txttelefono.getText());
+            ps.setString(5, cb1.getSelectedItem().toString());
+            ps.setString(6, cb2.getSelectedItem().toString());
+            ps.execute();
+
+            JOptionPane.showMessageDialog(null, "Elementos guardados");
+
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al Guardar");
+        }
+                    
+                }   
+            });
             
         }
         
@@ -81,6 +113,47 @@ public class DatosPersonales implements ActionListener{
         public void actionPerformed(ActionEvent ae) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+        
+        public void cargarprovincias(){
+            int contador=0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            Conexion objCon = new Conexion();
+            Connection conn = objCon.getConexion();
+
+            ps = conn.prepareStatement("SELECT provincias FROM provincias");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                cb1.addItem(rs.getString("provincias"));
+                contador++;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }   
+        }
+        
+        public void cargarciudades(){
+            int contador=0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            Conexion objCon = new Conexion();
+            Connection conn = objCon.getConexion();
+
+            ps = conn.prepareStatement("SELECT ciudades FROM ciudades");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                cb2.addItem(rs.getString("ciudades"));
+                contador++;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }   
+        }
+        
         public static void main(String[] args) {
         DatosPersonales v=new DatosPersonales();
         v.initialize();

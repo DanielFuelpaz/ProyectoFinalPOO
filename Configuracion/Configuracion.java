@@ -5,14 +5,21 @@
  */
 package Configuracion;
 
+import Conexion.Conexion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,6 +34,7 @@ public class Configuracion implements ActionListener{
     public JTextField txtop2=new JTextField();
     public JButton guardar=new JButton("Guardar");
     
+    DefaultTableModel modelo = new DefaultTableModel();
     public void initialize(){
         frame.setBounds(750,300, 400, 400);
         frame.add(this.op1);
@@ -73,9 +81,30 @@ public class Configuracion implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent g){
                 if((cb1.getSelectedItem().toString()=="Ciudad")&&(txtop2.getText()!="")){
-                    System.out.println(txtop2.getText());
+                    PreparedStatement ps = null;
+                    Conexion objCon = new Conexion();
+                    Connection conn = objCon.getConexion();
+                    try {
+                        ps = conn.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)");
+                        ps.setString(1, txtop2.getText());
+                        ps.execute();
+                        JOptionPane.showMessageDialog(null, "Elementos guardados");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 }else if((cb1.getSelectedItem().toString()=="Provincia")&&(txtop2.getText()!="")){
-                    System.out.println(txtop2.getText());
+                    PreparedStatement ps = null;
+                    Conexion objCon = new Conexion();
+                    Connection conn = objCon.getConexion();
+                    try {
+                        ps = conn.prepareStatement("INSERT INTO provincias (provincias) VALUES (?)");
+                        ps.setString(1, txtop2.getText());
+                        ps.execute();
+                        JOptionPane.showMessageDialog(null, "Elementos guardados");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
                 }
