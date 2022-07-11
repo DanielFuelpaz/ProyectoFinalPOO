@@ -1,4 +1,4 @@
-package Opcion3;
+package Conexion;
 
 import Conexion.Conexion;
 import java.sql.Connection;
