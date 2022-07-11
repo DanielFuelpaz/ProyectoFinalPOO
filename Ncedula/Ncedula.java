@@ -1,6 +1,7 @@
 package Ncedula;
 
 import Conexion.Conexion;
+import Conexion.MySQLComandos;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +30,7 @@ public class Ncedula implements ActionListener {
     private JButton GenCedula = new JButton();
     private JButton Guardar = new JButton();
     Conexion c = new Conexion();
+    private MySQLComandos sql = new MySQLComandos();
 
     public JPanel getJp1() {
         return this.Jp1;
@@ -46,7 +48,7 @@ public class Ncedula implements ActionListener {
         ApNom.setLocation(240, 0);
 
         getJp1().add(personas);
-        listaper(personas);
+        sql.listaper(personas);
         personas.setSize(180, 20);
         personas.setLocation(395, 0);
 
@@ -73,25 +75,6 @@ public class Ncedula implements ActionListener {
         getJp1().setVisible(true);
 
         return Jp1;
-    }
-
-    public void listaper(JComboBox per) {
-
-        try {
-            Connection co = c.getConexion();
-            String instruccionsql = "SELECT * FROM registro WHERE cedula = '0'";
-            PreparedStatement st = co.prepareStatement(instruccionsql);
-            ResultSet rs = st.executeQuery(instruccionsql);
-
-            while (rs.next()) {
-                per.addItem(rs.getString("apellidos") + " " + rs.getString("nombres"));
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     @Override

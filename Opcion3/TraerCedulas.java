@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import Conexion.Conexion;
 
 public class TraerCedulas {
+
+    Conexion c = new Conexion();
+    Connection co = c.getConexion();
+    MySQLComandos comandos = new MySQLComandos();
+    ArrayList<String> cedulas = new ArrayList();
+
     public ArrayList ObtenerCedulas() {
-        Conexion c = new Conexion();
-        Connection co = c.getConexion();
-        MySQLComandos comandos = new MySQLComandos();
-        ArrayList<String> cedulas = new ArrayList();
+
         comandos.setInstruccion("SELECT * FROM registro");
         try {
             comandos.setP(co.prepareStatement(comandos.getInstruccion()));

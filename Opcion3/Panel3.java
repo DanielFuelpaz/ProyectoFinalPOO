@@ -8,7 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.ArrayList;
+
 public class Panel3 {
+
     private JPanel panel = new JPanel();
     private JLabel cedulaTitulo = new JLabel("cédula:");
     private JComboBox listaCedulas = new JComboBox();
