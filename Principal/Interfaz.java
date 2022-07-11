@@ -1,7 +1,7 @@
 package Principal;
 
 import Ncedula.Ncedula;
-import Opcion3.Panel3;
+import Opcion3.*;
 
 import java.awt.Color;
 import java.awt.event.ItemEvent;

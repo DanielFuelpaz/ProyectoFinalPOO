@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import java.util.ArrayList;
 public class Panel3 {
     private JPanel panel = new JPanel();
     private JLabel cedulaTitulo = new JLabel("cédula:");
@@ -95,6 +95,12 @@ public class Panel3 {
         this.getPanel().add(this.getImagenTitulo());
         this.getPanel().add(this.getTomarFoto());
         this.getPanel().add(this.getEspacioParaImagen());
+        this.getListaCedulas().removeAllItems();
+        TraerCedulas cedulasBase = new TraerCedulas();
+        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas();
+        for (int i = 0; i < cedulas.size(); i++) {
+            this.getListaCedulas().addItem(cedulas.get(i));
+        }
         this.getPanel().add(this.getGuardar());
         this.getPanel().setVisible(true);
         return this.getPanel();
