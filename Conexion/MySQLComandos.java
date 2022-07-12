@@ -1,6 +1,5 @@
 package Conexion;
 
-import Conexion.Conexion;
 import Ncedula.Ncedula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +14,7 @@ public class MySQLComandos {
     private String instruccion;
     private PreparedStatement p;
     private ResultSet rs;
-    private Conexion c=new Conexion();
+    private Conexion c = new Conexion();
 
     public String getInstruccion() {
         return this.instruccion;
@@ -69,6 +68,18 @@ public class MySQLComandos {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public ResultSet ConexionCedulas() {
+        Connection co = c.getConexion();
+        this.setInstruccion("SELECT * FROM registro");
+        try {
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery(this.getInstruccion()));
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return this.getRs();
     }
 
 }

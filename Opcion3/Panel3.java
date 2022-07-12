@@ -98,6 +98,8 @@ public class Panel3 {
         this.getPanel().add(this.getEspacioParaImagen());
         this.getListaCedulas().removeAllItems();
         TraerCedulas cedulasBase = new TraerCedulas();
+        MySQLComandos comandos=new MySQLComandos();
+        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());TraerCedulas cedulasBase = new TraerCedulas();
         ArrayList<String> cedulas = cedulasBase.ObtenerCedulas();
         for (int i = 0; i < cedulas.size(); i++) {
             this.getListaCedulas().addItem(cedulas.get(i));

@@ -7,23 +7,23 @@ import java.util.ArrayList;
 import Conexion.Conexion;
 
 public class TraerCedulas {
-
-    Conexion c = new Conexion();
-    Connection co = c.getConexion();
-    MySQLComandos comandos = new MySQLComandos();
     ArrayList<String> cedulas = new ArrayList();
 
-    public ArrayList ObtenerCedulas() {
+    public ArrayList<String> getCedulas() {
+        return this.cedulas;
+    }
 
-        comandos.setInstruccion("SELECT * FROM registro");
+    public void setCedulas(String cedula) {
+        this.cedulas.add(cedula);
+    }
+    
+    public ArrayList<String> ObtenerCedulas(ResultSet rs) {        
         try {
-            comandos.setP(co.prepareStatement(comandos.getInstruccion()));
-            comandos.setRs(comandos.getP().executeQuery(comandos.getInstruccion()));
-            while (comandos.getRs().next()) {
-                cedulas.add(comandos.getRs().getString("cedula"));
+            while (rs.next()) {
+                this.setCedulas(rs.getString("cedula"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(TraerCedulas.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cedulas;
     }
