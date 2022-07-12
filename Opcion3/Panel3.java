@@ -1,5 +1,6 @@
 package Opcion3;
 
+import Conexion.MySQLComandos;
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -99,8 +100,7 @@ public class Panel3 {
         this.getListaCedulas().removeAllItems();
         TraerCedulas cedulasBase = new TraerCedulas();
         MySQLComandos comandos=new MySQLComandos();
-        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());TraerCedulas cedulasBase = new TraerCedulas();
-        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas();
+        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());
         for (int i = 0; i < cedulas.size(); i++) {
             this.getListaCedulas().addItem(cedulas.get(i));
         }
