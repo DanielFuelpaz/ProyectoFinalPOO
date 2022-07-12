@@ -1,7 +1,7 @@
 package Principal;
 
 import Ncedula.Ncedula;
-import Opcion3.Panel3;
+import Opcion3.*;
 
 import java.awt.Color;
 import java.awt.event.ItemEvent;
@@ -48,10 +48,10 @@ public class Interfaz {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
                     System.out.println("seleccionado op1");// aca en estas va a estar la instancia de cada uno de
-                                                           // nuestras partes
+                    // nuestras partes
                 } else {
                     System.out.println("deseleccionado op1");// aca solo ponemos la parte pa cerrar la visualizacion de
-                                                             // las cosas
+                    // las cosas
                 }
             }
 
@@ -64,6 +64,7 @@ public class Interfaz {
 
                     Ced.panelcedula(Fbase);
                 } else {
+                    Ced.vaciar();
                     Ced.getJp1().setVisible(false);
 
                 }

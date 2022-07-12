@@ -1,15 +1,17 @@
 package Opcion3;
 
+import Conexion.MySQLComandos;
 import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.util.ArrayList;
 
 public class Panel3 {
+
     private JPanel panel = new JPanel();
     private JLabel cedulaTitulo = new JLabel("cédula:");
     private JComboBox listaCedulas = new JComboBox();
@@ -95,6 +97,13 @@ public class Panel3 {
         this.getPanel().add(this.getImagenTitulo());
         this.getPanel().add(this.getTomarFoto());
         this.getPanel().add(this.getEspacioParaImagen());
+        this.getListaCedulas().removeAllItems();
+        TraerCedulas cedulasBase = new TraerCedulas();
+        MySQLComandos comandos=new MySQLComandos();
+        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());
+        for (int i = 0; i < cedulas.size(); i++) {
+            this.getListaCedulas().addItem(cedulas.get(i));
+        }
         this.getPanel().add(this.getGuardar());
         this.getPanel().setVisible(true);
         return this.getPanel();
