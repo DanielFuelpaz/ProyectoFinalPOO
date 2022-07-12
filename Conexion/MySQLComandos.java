@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 public class MySQLComandos {
 
@@ -55,12 +56,12 @@ public class MySQLComandos {
 
         try {
             Connection co = c.getConexion();
-            String instruccionsql = "SELECT * FROM registro WHERE cedula = '0'";
+            String instruccionsql = "SELECT * FROM datospersonales WHERE cedula IS NULL";
             PreparedStatement st = co.prepareStatement(instruccionsql);
             ResultSet rs = st.executeQuery(instruccionsql);
 
             while (rs.next()) {
-                per.addItem(rs.getString("apellidos") + " " + rs.getString("nombres"));
+                per.addItem(rs.getString("apellido") + " " + rs.getString("nombre"));
 
             }
 
@@ -70,9 +71,26 @@ public class MySQLComandos {
 
     }
 
+    public void addced(JComboBox personas, JTextField Rced) {
+        try {
+
+            Connection co = c.getConexion();
+            String partes[] = personas.getSelectedItem().toString().split(" ");
+            String instruccionSql = "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;";
+            PreparedStatement st = co.prepareStatement(instruccionSql);
+            st.setInt(1, Integer.valueOf(Rced.getText()));
+            st.setString(2, partes[0]);
+            st.setString(3, partes[1]);
+            st.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public ResultSet ConexionCedulas() {
         Connection co = c.getConexion();
-        this.setInstruccion("SELECT * FROM registro");
+        this.setInstruccion("SELECT * FROM datospersonales");
         try {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
