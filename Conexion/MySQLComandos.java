@@ -42,26 +42,25 @@ public class MySQLComandos {
     }
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
-        String sql = "Select * from usuarios where usuario=? and clave=?";
+        this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
         Connection co = c.getConexion();
-        PreparedStatement ps;
-        ps = co.prepareStatement(sql);
-        ps.setString(1, u);
-        ps.setString(2, clave);
-        ResultSet rs = ps.executeQuery();
-        return rs;
+        this.setP(co.prepareStatement(this.getInstruccion()));
+        this.getP().setString(1, u);
+        this.getP().setString(2, clave);
+        this.setRs(this.getP().executeQuery());
+        return this.getRs();
     }
 
     public void listaper(JComboBox per) {
 
         try {
             Connection co = c.getConexion();
-            String instruccionsql = "SELECT * FROM datospersonales WHERE cedula IS NULL";
-            PreparedStatement st = co.prepareStatement(instruccionsql);
-            ResultSet rs = st.executeQuery(instruccionsql);
+            this.setInstruccion("SELECT * FROM datospersonales WHERE cedula IS NULL");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery(this.getInstruccion()));
 
-            while (rs.next()) {
-                per.addItem(rs.getString("apellido") + " " + rs.getString("nombre"));
+            while (this.getRs().next()) {
+                per.addItem(this.getRs().getString("apellido") + " " + this.getRs().getString("nombre"));
 
             }
 
@@ -76,12 +75,12 @@ public class MySQLComandos {
 
             Connection co = c.getConexion();
             String partes[] = personas.getSelectedItem().toString().split(" ");
-            String instruccionSql = "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;";
-            PreparedStatement st = co.prepareStatement(instruccionSql);
-            st.setInt(1, Integer.valueOf(Rced.getText()));
-            st.setString(2, partes[0]);
-            st.setString(3, partes[1]);
-            st.executeUpdate();
+            this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.getP().setInt(1, Integer.valueOf(Rced.getText()));
+            this.getP().setString(2, partes[0]);
+            this.getP().setString(3, partes[1]);
+            this.getP().executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
