@@ -5,10 +5,19 @@
  */
 package Controles;
 
+import Conexion.MySQLComandos;
+import java.sql.SQLException;
+
 /**
  *
  * @author USUARIO
  */
 public class Control_Usuario {
-    
+
+    public void control_u() throws SQLException {
+        MySQLComandos sql = new MySQLComandos();
+        if (!(sql.accesologin("", "").next())) {
+            
+        }
+    }
 }
