@@ -16,6 +16,7 @@ public class MySQLComandos {
     private PreparedStatement p;
     private ResultSet rs;
     private Conexion c = new Conexion();
+    private Connection co=c.getConexion();
 
     public String getInstruccion() {
         return this.instruccion;
@@ -43,7 +44,6 @@ public class MySQLComandos {
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
         this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
-        Connection co = c.getConexion();
         this.setP(co.prepareStatement(this.getInstruccion()));
         this.getP().setString(1, u);
         this.getP().setString(2, clave);
@@ -54,7 +54,6 @@ public class MySQLComandos {
     public void listaper(JComboBox per) {
 
         try {
-            Connection co = c.getConexion();
             this.setInstruccion("SELECT * FROM datospersonales WHERE cedula IS NULL");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
@@ -72,8 +71,6 @@ public class MySQLComandos {
 
     public void addced(JComboBox personas, JTextField Rced) {
         try {
-
-            Connection co = c.getConexion();
             String partes[] = personas.getSelectedItem().toString().split(" ");
             this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -88,7 +85,6 @@ public class MySQLComandos {
     }
 
     public ResultSet ConexionCedulas() {
-        Connection co = c.getConexion();
         this.setInstruccion("SELECT * FROM datospersonales");
         try {
             this.setP(co.prepareStatement(this.getInstruccion()));

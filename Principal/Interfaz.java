@@ -56,20 +56,16 @@ public class Interfaz {
             }
 
         });
-        this.opcion2.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                int estado = ie.getStateChange();
-                if (estado == ItemEvent.SELECTED) {
-
-                    Ced.panelcedula(Fbase);
-                } else {
-                    Ced.vaciar();
-                    Ced.getJp1().setVisible(false);
-
-                }
+        this.opcion2.addItemListener((ItemEvent ie) -> {
+            int estado = ie.getStateChange();
+            if (estado == ItemEvent.SELECTED) {
+                
+                Ced.panelcedula(Fbase);
+            } else {
+                Ced.vaciar();
+                Ced.getJp1().setVisible(false);
+                
             }
-
         });
         this.opcion3.addItemListener(new ItemListener() {
             @Override
@@ -102,7 +98,6 @@ public class Interfaz {
 
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
-
         i.initialize();
     }
 
