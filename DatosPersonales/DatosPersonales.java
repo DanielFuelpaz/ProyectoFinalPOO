@@ -18,7 +18,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -96,7 +95,10 @@ public class DatosPersonales implements ActionListener {
                     ps.setString(5, cb1.getSelectedItem().toString());
                     ps.setString(6, cb2.getSelectedItem().toString());
                     ps.execute();
+<<<<<<< HEAD
                     
+=======
+>>>>>>> ae0063bab36e5372631b6bd87460ff3aa2078310
                     JOptionPane.showMessageDialog(null, "Elementos guardados");
                     limpiar();
                     }else{

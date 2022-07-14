@@ -83,6 +83,24 @@ public class MySQLComandos {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public boolean traerced(String ced){
+        try {
+            this.setInstruccion("SELECT cedula FROM datospersonales WHERE cedula IS NOT NULL");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery(this.getInstruccion()));
+            while (this.getRs().next()) {
+                if (this.getRs().getString("cedula").substring(6, 9).equals(ced)) {
+                    return true;
+                }
+                
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
     public ResultSet ConexionCedulas() {
         this.setInstruccion("SELECT * FROM datospersonales");

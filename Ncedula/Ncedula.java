@@ -79,21 +79,20 @@ public class Ncedula implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton but1 = (JButton) e.getSource();
         if (but1 == GenCedula) {
-            int pos;
+            int pos = 0;
             Random rnd = new Random();
-            Stack< Integer> lista = new Stack<>();
             for (int i = 0; i < 20; i++) {
                 pos = rnd.nextInt(7999 + 1000) + 1000;
-                while (lista.contains(pos)) {
+                while (sql.traerced(Integer.toString(pos))) {
                     pos = rnd.nextInt(7999 + 1000) + 1000;
                 }
-                lista.push(pos);
             }
 
-            Rced.setText(String.valueOf("180500" + lista.get(1)));
+            Rced.setText(String.valueOf("180500" + pos));
         } else {
 
             sql.addced(personas, Rced);
+            Rced.setText("");
             personas.removeAllItems();
             sql.listaper(personas);
 
