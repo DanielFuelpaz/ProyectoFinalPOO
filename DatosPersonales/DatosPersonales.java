@@ -86,6 +86,7 @@ public class DatosPersonales implements ActionListener {
             public void actionPerformed(ActionEvent g) {
                 PreparedStatement ps = null;
                 try {
+                    if((txtnombres.getText().isEmpty()!=true)&&(txtapellidos.getText().isEmpty()!=true)&&(txtdireccion.getText().isEmpty()!=true)&&(txttelefono.getText().isEmpty()!=true)){
                     ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)");
                     ps.setString(1, txtnombres.getText());
                     ps.setString(2, txtapellidos.getText());
@@ -94,8 +95,13 @@ public class DatosPersonales implements ActionListener {
                     ps.setString(5, cb1.getSelectedItem().toString());
                     ps.setString(6, cb2.getSelectedItem().toString());
                     ps.execute();
-                    JOptionPane.showMessageDialog(null, "Elementos guardados");
 
+                    JOptionPane.showMessageDialog(null, "Elementos guardados");
+                    limpiar();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
+                    }
+                    
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error al Guardar");
                 }
@@ -149,5 +155,13 @@ public class DatosPersonales implements ActionListener {
     public static void main(String[] args) {
         DatosPersonales v = new DatosPersonales();
         v.initialize();
+    }
+    
+    private void limpiar() {
+        txtnombres.setText("");
+        txtapellidos.setText("");
+        txtdireccion.setText("");
+        txttelefono.setText("");
+
     }
 }
