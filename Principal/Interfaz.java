@@ -52,7 +52,7 @@ public class Interfaz {
 
                     v.initialize();
                 } else {
-                    
+
                     // las cosas
                 }
             }
@@ -61,11 +61,12 @@ public class Interfaz {
         this.opcion2.addItemListener((ItemEvent ie) -> {
             int estado = ie.getStateChange();
             if (estado == ItemEvent.SELECTED) {
-
+                Fbase.add(Ced.getJp1());
                 Ced.panelcedula(Fbase);
             } else {
                 Ced.vaciar();
-                Ced.getJp1().setVisible(false);
+//                Fbase.remove(Ced.getJp1());
+//                Fbase.repaint();
 
             }
         });

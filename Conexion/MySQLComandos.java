@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -16,7 +17,7 @@ public class MySQLComandos {
     private PreparedStatement p;
     private ResultSet rs;
     private Conexion c = new Conexion();
-    private Connection co=c.getConexion();
+    private Connection co = c.getConexion();
 
     public String getInstruccion() {
         return this.instruccion;
@@ -83,23 +84,27 @@ public class MySQLComandos {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public boolean traerced(String ced){
+
+    public int traerced() {
+        int pos = 0;
         try {
+
+            Random rnd = new Random();
+            pos = rnd.nextInt(7999 + 1000) + 1000;
+
             this.setInstruccion("SELECT cedula FROM datospersonales WHERE cedula IS NOT NULL");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
             while (this.getRs().next()) {
-                if (this.getRs().getString("cedula").substring(6, 9).equals(ced)) {
-                    return true;
+                while (this.getRs().getString("cedula").substring(6, 9).equals(Integer.toString(pos))) {
+                    pos = rnd.nextInt(7999 + 1000) + 1000;
                 }
-                
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return pos;
     }
 
     public ResultSet ConexionCedulas() {

@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import java.util.Stack;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -79,16 +78,7 @@ public class Ncedula implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton but1 = (JButton) e.getSource();
         if (but1 == GenCedula) {
-            int pos = 0;
-            Random rnd = new Random();
-            for (int i = 0; i < 20; i++) {
-                pos = rnd.nextInt(7999 + 1000) + 1000;
-                while (sql.traerced(Integer.toString(pos))) {
-                    pos = rnd.nextInt(7999 + 1000) + 1000;
-                }
-            }
-
-            Rced.setText(String.valueOf("180500" + pos));
+            Rced.setText(String.valueOf("180500" + sql.traerced()));
         } else {
 
             sql.addced(personas, Rced);
