@@ -79,26 +79,25 @@ public class DatosPersonales implements ActionListener{
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.show();
             
+            Conexion objCon = new Conexion();
+            Connection conn = objCon.getConexion();
             
             this.bg.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent g){
                     PreparedStatement ps = null;
         try {
-            Conexion objCon = new Conexion();
-            Connection conn = objCon.getConexion();
-            ps = conn.prepareStatement("INSERT INTO datospersonales (cedula,nombre,apellido,direccion,telefono,provincia,ciudad,imagen) VALUES (?,?,?,?,?,?,?,?)");
-            ps.setString(1, "");
-            ps.setString(2, txtnombres.getText());
-            ps.setString(3, txtapellidos.getText());
-            ps.setString(4, txtdireccion.getText());
-            ps.setString(5, txttelefono.getText());
-            ps.setString(6, cb1.getSelectedItem().toString());
-            ps.setString(7, cb2.getSelectedItem().toString());
-            ps.setString(8, "");
+            ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad,cedula) VALUES (?,?,?,?,?,?,?)");
+            ps.setString(1, txtnombres.getText());
+            ps.setString(2, txtapellidos.getText());
+            ps.setString(3, txtdireccion.getText());
+            ps.setString(4, txttelefono.getText());
+            ps.setString(5, cb1.getSelectedItem().toString());
+            ps.setString(6, cb2.getSelectedItem().toString());
+            ps.setString(7, "");
             ps.execute();
 
-            JOptionPane.showMessageDialog(null, "Elementos guardados");
+            JOptionPane.showMessageDialog(null, "Elementos Guardados");
             limpiar();
 
         } catch (SQLException ex) {
