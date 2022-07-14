@@ -85,7 +85,7 @@ public class Configuracion implements ActionListener {
         this.guardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent g) {
-                if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText() != "")) {
+                if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText().isEmpty()!=true)) {
                     PreparedStatement ps = null;
                     Conexion objCon = new Conexion();
                     Connection conn = objCon.getConexion();
@@ -100,7 +100,7 @@ public class Configuracion implements ActionListener {
                         Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText() != "")) {
+                } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText().isEmpty()!=true)) {
                     PreparedStatement ps = null;
                     Conexion objCon = new Conexion();
                     Connection conn = objCon.getConexion();
