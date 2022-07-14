@@ -87,17 +87,19 @@ public class DatosPersonales implements ActionListener{
         try {
             Conexion objCon = new Conexion();
             Connection conn = objCon.getConexion();
-            ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)");
-            ps.setString(1, txtnombres.getText());
-            ps.setString(2, txtapellidos.getText());
-            ps.setString(3, txtdireccion.getText());
-            ps.setString(4, txttelefono.getText());
-            ps.setString(5, cb1.getSelectedItem().toString());
-            ps.setString(6, cb2.getSelectedItem().toString());
+            ps = conn.prepareStatement("INSERT INTO datospersonales (cedula,nombre,apellido,direccion,telefono,provincia,ciudad,imagen) VALUES (?,?,?,?,?,?,?,?)");
+            ps.setString(1, "");
+            ps.setString(2, txtnombres.getText());
+            ps.setString(3, txtapellidos.getText());
+            ps.setString(4, txtdireccion.getText());
+            ps.setString(5, txttelefono.getText());
+            ps.setString(6, cb1.getSelectedItem().toString());
+            ps.setString(7, cb2.getSelectedItem().toString());
+            ps.setString(8, "");
             ps.execute();
 
             JOptionPane.showMessageDialog(null, "Elementos guardados");
-
+            limpiar();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al Guardar");
@@ -157,5 +159,11 @@ public class DatosPersonales implements ActionListener{
         public static void main(String[] args) {
         DatosPersonales v=new DatosPersonales();
         v.initialize();
+    }
+    private void limpiar() {
+        txtnombres.setText("");
+        txtapellidos.setText("");
+        txtdireccion.setText("");
+        txttelefono.setText("");
     }
 }

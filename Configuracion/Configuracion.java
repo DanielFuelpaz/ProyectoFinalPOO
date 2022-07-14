@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,7 @@ public class Configuracion implements ActionListener {
     public JLabel op2 = new JLabel("Nombre Ciudad");
     public JLabel op3 = new JLabel("Nombre Provincia");
     public JComboBox cb1 = new JComboBox();
+    public JComboBox cb2 = new JComboBox();
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
 
@@ -53,12 +55,17 @@ public class Configuracion implements ActionListener {
                     op3.show(false);
                     op2.show(true);
                     txtop2.show(true);
+                    cb2.show(true);
                     frame.add(op2);
-                    op2.setBounds(15, 70, 215, 15);
+                    op2.setBounds(15, 100, 215, 15);
+                    frame.add(cb2);
+                    cb2.setBounds(150, 70, 200, 20);
                     frame.add(txtop2);
-                    txtop2.setBounds(150, 70, 200, 20);
+                    txtop2.setBounds(150, 100, 200, 20);
+                    cargarprovincias();
                 } else if (cb1.getSelectedItem().toString() == "Provincia") {
                     op2.show(false);
+                    cb2.show(false);
                     op3.show(true);
                     txtop2.show(true);
                     frame.add(op3);
@@ -69,6 +76,7 @@ public class Configuracion implements ActionListener {
                     op3.show(false);
                     op2.show(false);
                     txtop2.show(false);
+                    cb2.show(false);
                 }
 
             }
@@ -82,10 +90,12 @@ public class Configuracion implements ActionListener {
                     Conexion objCon = new Conexion();
                     Connection conn = objCon.getConexion();
                     try {
-                        ps = conn.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)");
+                        ps = conn.prepareStatement("INSERT INTO ciudades (ciudades,provincias) VALUES (?,?)");
                         ps.setString(1, txtop2.getText());
+                        ps.setString(2, cb2.getSelectedItem().toString());
                         ps.execute();
                         JOptionPane.showMessageDialog(null, "Elementos guardados");
+                        limpiar();
                     } catch (SQLException ex) {
                         Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -99,6 +109,7 @@ public class Configuracion implements ActionListener {
                         ps.setString(1, txtop2.getText());
                         ps.execute();
                         JOptionPane.showMessageDialog(null, "Elementos guardados");
+                        limpiar();
                     } catch (SQLException ex) {
                         Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -120,5 +131,29 @@ public class Configuracion implements ActionListener {
         Configuracion cf = new Configuracion();
         cf.initialize();
     }
+    
+    public void cargarprovincias(){
+            int contador=0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            Conexion objCon = new Conexion();
+            Connection conn = objCon.getConexion();
 
+            ps = conn.prepareStatement("SELECT provincias FROM provincias");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                cb2.addItem(rs.getString("provincias"));
+                contador++;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }   
+        }
+    
+    private void limpiar() {
+        txtop2.setText("");
+
+    }
 }
