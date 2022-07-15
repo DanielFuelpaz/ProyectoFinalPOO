@@ -31,6 +31,8 @@ public class Configuracion implements ActionListener {
     public JComboBox cb2 = new JComboBox();
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
+    Conexion objCon = new Conexion();
+    Connection conn = objCon.getConexion();
 
     DefaultTableModel modelo = new DefaultTableModel();
 
@@ -87,8 +89,7 @@ public class Configuracion implements ActionListener {
             public void actionPerformed(ActionEvent g) {
                 if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText().isEmpty()!=true)) {
                     PreparedStatement ps = null;
-                    Conexion objCon = new Conexion();
-                    Connection conn = objCon.getConexion();
+                    
                     try {
                         ps = conn.prepareStatement("INSERT INTO ciudades (ciudades,provincias) VALUES (?,?)");
                         ps.setString(1, txtop2.getText());
@@ -133,7 +134,7 @@ public class Configuracion implements ActionListener {
     }
     
     public void cargarprovincias(){
-            int contador=0;
+        int contador=0;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
