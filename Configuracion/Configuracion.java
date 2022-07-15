@@ -1,6 +1,7 @@
 package Configuracion;
 
 import Conexion.Conexion;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Configuracion implements ActionListener {
 
-    public JFrame frame = new JFrame("Configuracion");
+    public JPanel frame = new JPanel();
     public JLabel op1 = new JLabel("Seleccione la Opcion");
     public JLabel op2 = new JLabel("Nombre Ciudad");
     public JLabel op3 = new JLabel("Nombre Provincia");
@@ -35,9 +37,14 @@ public class Configuracion implements ActionListener {
     Connection conn = objCon.getConexion();
 
     DefaultTableModel modelo = new DefaultTableModel();
+    
+    public JPanel getFrame() {
+        return frame;
+    }
 
     public void initialize() {
-        frame.setBounds(750, 300, 400, 400);
+        frame.setBounds(205, 0, 575, 350);
+        frame.setBackground(Color.LIGHT_GRAY);
         frame.add(this.op1);
         frame.setLayout(null);
         op1.setBounds(15, 30, 215, 15);
@@ -64,6 +71,7 @@ public class Configuracion implements ActionListener {
                     cb2.setBounds(150, 70, 200, 20);
                     frame.add(txtop2);
                     txtop2.setBounds(150, 100, 200, 20);
+                    frame.show();
                     cargarprovincias();
                 } else if (cb1.getSelectedItem().toString() == "Provincia") {
                     op2.show(false);
@@ -119,8 +127,6 @@ public class Configuracion implements ActionListener {
                 }
             }
         });
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.show();
     }
 
     @Override
@@ -128,11 +134,6 @@ public class Configuracion implements ActionListener {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public static void main(String[] args) {
-        Configuracion cf = new Configuracion();
-        cf.initialize();
-    }
-    
     public void cargarprovincias(){
         int contador=0;
         PreparedStatement ps = null;
