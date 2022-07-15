@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -26,7 +27,7 @@ import javax.swing.JTextField;
  */
 public class DatosPersonales implements ActionListener {
 
-    public JFrame frame = new JFrame("Datos personales");
+    public JPanel frame = new JPanel();
     public JLabel jl1 = new JLabel("Nombres");
     public JTextField txtnombres = new JTextField("");
     public JLabel jl2 = new JLabel("Apellidos");
@@ -44,9 +45,13 @@ public class DatosPersonales implements ActionListener {
     private Conexion objCon = new Conexion();
     private Connection conn = objCon.getConexion();
 
+    public JPanel getFrame() {
+        return frame;
+    }
+
     public void initialize() {
 
-        frame.setBounds(750, 300, 400, 400);
+        frame.setBounds(200, 0, 575, 350);
         frame.setBackground(Color.LIGHT_GRAY);
         frame.setLayout(null);
         jl1.setBounds(35, 30, 60, 15);
@@ -77,8 +82,6 @@ public class DatosPersonales implements ActionListener {
         frame.add(this.bg);
         cargarprovincias();
         cargarciudades();
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.show();
 
         this.bg.addActionListener(new ActionListener() {
@@ -86,22 +89,22 @@ public class DatosPersonales implements ActionListener {
             public void actionPerformed(ActionEvent g) {
                 PreparedStatement ps = null;
                 try {
-                    if((txtnombres.getText().isEmpty()!=true)&&(txtapellidos.getText().isEmpty()!=true)&&(txtdireccion.getText().isEmpty()!=true)&&(txttelefono.getText().isEmpty()!=true)){
-                    ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)");
-                    ps.setString(1, txtnombres.getText());
-                    ps.setString(2, txtapellidos.getText());
-                    ps.setString(3, txtdireccion.getText());
-                    ps.setString(4, txttelefono.getText());
-                    ps.setString(5, cb1.getSelectedItem().toString());
-                    ps.setString(6, cb2.getSelectedItem().toString());
-                    ps.execute();
+                    if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true) && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
+                        ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)");
+                        ps.setString(1, txtnombres.getText());
+                        ps.setString(2, txtapellidos.getText());
+                        ps.setString(3, txtdireccion.getText());
+                        ps.setString(4, txttelefono.getText());
+                        ps.setString(5, cb1.getSelectedItem().toString());
+                        ps.setString(6, cb2.getSelectedItem().toString());
+                        ps.execute();
 
-                    JOptionPane.showMessageDialog(null, "Elementos guardados");
-                    limpiar();
-                    }else{
+                        JOptionPane.showMessageDialog(null, "Elementos guardados");
+                        limpiar();
+                    } else {
                         JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
                     }
-                    
+
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Error al Guardar");
                 }
@@ -156,7 +159,7 @@ public class DatosPersonales implements ActionListener {
         DatosPersonales v = new DatosPersonales();
         v.initialize();
     }
-    
+
     private void limpiar() {
         txtnombres.setText("");
         txtapellidos.setText("");

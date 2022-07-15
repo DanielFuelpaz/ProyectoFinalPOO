@@ -29,8 +29,8 @@ public class Ncedula implements ActionListener {
         return this.Jp1;
     }
 
-    public JPanel panelcedula(JFrame a) {
-        a.add(Jp1);
+    public JPanel initialize() {
+
         getJp1().setBounds(200, 0, 575, 350);
         getJp1().setBackground(new Color(205, 224, 228));
         getJp1().setLayout(null);
@@ -70,9 +70,6 @@ public class Ncedula implements ActionListener {
         return Jp1;
     }
 
-    public void vaciar() {
-        this.personas.removeAllItems();
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
