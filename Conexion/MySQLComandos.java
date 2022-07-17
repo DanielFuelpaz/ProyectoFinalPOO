@@ -63,6 +63,15 @@ public class MySQLComandos {
         return false;
     }
 
+    public ResultSet accesologin(String u, String clave) throws SQLException {
+        this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
+        this.setP(co.prepareStatement(this.getInstruccion()));
+        this.getP().setString(1, u);
+        this.getP().setString(2, clave);
+        this.setRs(this.getP().executeQuery());
+        return this.getRs();
+    }
+
     public void listaper(JComboBox per) {
 
         try {

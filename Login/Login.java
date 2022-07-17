@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Objetos.*;
-import Controles.*;
 import Principal.Interfaz;
 import javax.swing.JTextField;
 
@@ -205,7 +204,6 @@ public class Login implements ActionListener {
     
   
     public static void main(String[] args) {
-        Control_Usuario c = new Control_Usuario();
         Login l = new Login();
        l.panelusuario();
 
