@@ -1,9 +1,6 @@
 package Conexion;
 
-import Login.Login;
 import Ncedula.Ncedula;
-import Objetos.usuario;
-import Principal.Interfaz;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +9,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class MySQLComandos {
@@ -46,9 +42,8 @@ public class MySQLComandos {
     public void setRs(ResultSet rs) {
         this.rs = rs;
     }
-    
-    
-    public boolean iniciosesion(JTextField usuario, JTextField contraseña ) {
+
+    public boolean iniciosesion(JTextField usuario, JTextField contraseña) {
 
         Conexion c = new Conexion();
         try {
@@ -58,7 +53,9 @@ public class MySQLComandos {
 
             ResultSet rs = st.executeQuery(instruccionSql);
             rs.next();
-            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("clave").equals(contraseña.getText())) {
+            System.out.println(rs.getString("usuario"));
+            System.out.println(rs.getString("contraseña"));
+            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
                 System.out.println("sesion iniciada correctamente");
                 return true;
             }
@@ -69,9 +66,6 @@ public class MySQLComandos {
         }
         return false;
     }
-
-    
-    
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
         this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
