@@ -46,17 +46,6 @@ public class MySQLComandos {
     public boolean iniciosesion(JTextField usuario, JTextField contraseña) {
 
         try {
-
-            Connection co = c.getConexion();
-            String instruccionSql = "SELECT * FROM usuarios";
-            PreparedStatement st = co.prepareStatement(instruccionSql);
-
-            ResultSet rs = st.executeQuery(instruccionSql);
-            rs.next();
-            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
-                System.out.println("sesion iniciada correctamente");
-                return true;
-
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -65,7 +54,6 @@ public class MySQLComandos {
                     System.out.println("sesion iniciada correctamente");
                     return true;
                 }
-
             }
 
             //executeUpdate cuando se hacen select
@@ -73,6 +61,15 @@ public class MySQLComandos {
             System.out.println("Error en la conexion");
         }
         return false;
+    }
+
+    public ResultSet accesologin(String u, String clave) throws SQLException {
+        this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
+        this.setP(co.prepareStatement(this.getInstruccion()));
+        this.getP().setString(1, u);
+        this.getP().setString(2, clave);
+        this.setRs(this.getP().executeQuery());
+        return this.getRs();
     }
 
     public void listaper(JComboBox per) {
