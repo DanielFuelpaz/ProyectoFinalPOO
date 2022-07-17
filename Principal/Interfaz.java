@@ -1,11 +1,9 @@
 package Principal;
-<<<<<<< HEAD
+
 import Login.*;
-=======
 
 import Configuracion.Configuracion;
 import DatosPersonales.DatosPersonales;
->>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
 import Ncedula.Ncedula;
 import Opcion3.*;
 
@@ -16,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 
 public class Interfaz {
-    
+
     public JFrame Fbase = new JFrame("RegistroCivil");
     public JToggleButton opcion1 = new JToggleButton("Datos Personales");
     public JToggleButton opcion2 = new JToggleButton("Generación del número de cédula");
@@ -25,62 +23,50 @@ public class Interfaz {
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
     private Ncedula Ced = new Ncedula();
     public Panel3 foto = new Panel3();
-<<<<<<< HEAD
-    
 
-=======
     DatosPersonales v = new DatosPersonales();
-    Configuracion c= new Configuracion();
-    
->>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
+    Configuracion c = new Configuracion();
+
     public Ncedula getCed() {
         return Ced;
     }
-    
+
     public void initialize() {
-        
+
         Fbase.setSize(600, 600);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
         Fbase.setVisible(true);
         Fbase.setBounds(0, 0, 800, 600);
-        
+
         opcion1.setBounds(0, 0, 190, 30);
         opcion2.setBounds(0, 30, 190, 30);
         opcion3.setBounds(0, 60, 190, 30);
         opcion4.setBounds(0, 90, 190, 30);
         opcion5.setBounds(0, 120, 190, 30);
-        
+
         Fbase.add(this.opcion1);
         Fbase.add(this.opcion2);
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
         Fbase.add(this.opcion5);
-        
+
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-<<<<<<< HEAD
-                   
-                    
-                    
-                } else {
-                    
-                    
-                    
-=======
+
                     Fbase.add(v.getFrame());
                     v.initialize();
                 } else {
                     v.getFrame().setVisible(false);
                     // las cosas
->>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
+
                 }
             }
-            
+
         });
         this.opcion2.addItemListener((ItemEvent ie) -> {
             int estado = ie.getStateChange();
@@ -103,7 +89,7 @@ public class Interfaz {
                     foto.getPanel().setVisible(false);
                 }
             }
-            
+
         });
         this.opcion4.addItemListener(new ItemListener() {
             @Override
@@ -115,7 +101,7 @@ public class Interfaz {
                     System.out.println("deseleccionado op4");
                 }
             }
-            
+
         });
         this.opcion5.addItemListener(new ItemListener() {
             @Override
@@ -128,16 +114,16 @@ public class Interfaz {
                     c.getFrame().setVisible(false);
                 }
             }
-            
+
         });
-        
+
         Fbase.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Fbase.show();
     }
-    
+
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
         i.initialize();
     }
-    
+
 }

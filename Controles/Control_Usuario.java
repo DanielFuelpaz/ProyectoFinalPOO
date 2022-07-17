@@ -5,7 +5,7 @@
  */
 package Controles;
 
-<<<<<<< HEAD
+
 import Conexion.*;
 import Controles.*;
 import Objetos.usuario;
@@ -17,45 +17,21 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-=======
+
 import Conexion.MySQLComandos;
 import java.sql.SQLException;
->>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
+
 
 /**
  *
  * @author USUARIO
  */
-public class Control_Usuario {
-<<<<<<< HEAD
+public class Control_Usuario  {
+
     
-    public void consultarLogin(){
-        
-        Connection con;
-        Conexion f = new Conexion();
-        PreparedStatement ps;
-        String sql = "Select * From usuarios where usuario=? and contraseña=?";
-        Login l = new Login();
-        usuario u = new usuario();
-        try{
-            con = f.getConexion();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, l.caja.getText());
-           ps.setString(2, l.caja2.getText());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Interfaz i = new Interfaz();
-                i.initialize();
-                //setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "Ïngreso mal de clave");
-            }
-        }catch(Exception e){
-            System.out.println("Error: "+e);
-        }
-    }
+   
     
-=======
+
 
     public void control_u() throws SQLException {
         MySQLComandos sql = new MySQLComandos();
@@ -63,5 +39,5 @@ public class Control_Usuario {
             
         }
     }
->>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
+
 }

@@ -1,6 +1,9 @@
 package Conexion;
 
+import Login.Login;
 import Ncedula.Ncedula;
+import Objetos.usuario;
+import Principal.Interfaz;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +12,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class MySQLComandos {
@@ -42,6 +46,35 @@ public class MySQLComandos {
     public void setRs(ResultSet rs) {
         this.rs = rs;
     }
+    
+    
+     public void consultarLogin(){
+        
+        Connection con;
+        Conexion f = new Conexion();
+        PreparedStatement ps;
+        String sql = "Select * From usuarios where usuario=? and contraseña=?";
+        Login l = new Login();
+        usuario u = new usuario();
+        try{
+            con = f.getConexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, l.getCaja().getText());
+           ps.setString(2, l.getCaja2().getText());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Interfaz i = new Interfaz();
+                i.initialize();
+                //setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(null, "Ïngreso mal de clave");
+            }
+        }catch(Exception e){
+            System.out.println("Error: "+e);
+        }
+    }
+    
+    
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
         this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
