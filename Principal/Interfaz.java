@@ -1,5 +1,5 @@
 package Principal;
-
+import Login.*;
 import Ncedula.Ncedula;
 import Opcion3.*;
 
@@ -18,6 +18,7 @@ public class Interfaz {
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
     private Ncedula Ced = new Ncedula();
     public Panel3 foto = new Panel3();
+    
 
     public Ncedula getCed() {
         return Ced;
@@ -47,11 +48,13 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op1");// aca en estas va a estar la instancia de cada uno de
-                    // nuestras partes
+                   
+                    
+                    
                 } else {
-                    System.out.println("deseleccionado op1");// aca solo ponemos la parte pa cerrar la visualizacion de
-                    // las cosas
+                    
+                    
+                    
                 }
             }
 

@@ -9,6 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import Principal.*;
 
 /**
  *
@@ -16,17 +20,26 @@ import java.sql.SQLException;
  */
 public class usuario {
     
-    public ResultSet consultarLoguin(String u, String clave) throws SQLException
-    {
-        Conexion c = new Conexion();
-        String sql="Select * from usuarios where usuario=? and clave=?";
-        Connection co = c.getConexion();
-        PreparedStatement ps;
-        ps = co.prepareStatement(sql);
-        ps.setString(1,u);
-        ps.setString(2, clave);
-        ResultSet rs = ps.executeQuery();
-        return rs;
+    private String usuario;
+    private String clave;
+
+    public String getUsuario() {
+        return this.usuario;
     }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return this.clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+    
+    
+    
     
 }
