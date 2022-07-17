@@ -43,20 +43,9 @@ public class MySQLComandos {
         this.rs = rs;
     }
 
-    public boolean iniciosesion(JTextField usuario, JTextField contraseña) {
+    public boolean iniciosesion(JTextField usuario, JTextField contraseña) throws SQLException {
 
         try {
-
-            Connection co = c.getConexion();
-            String instruccionSql = "SELECT * FROM usuarios";
-            PreparedStatement st = co.prepareStatement(instruccionSql);
-
-            ResultSet rs = st.executeQuery(instruccionSql);
-            rs.next();
-            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
-                System.out.println("sesion iniciada correctamente");
-                return true;
-
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -65,7 +54,6 @@ public class MySQLComandos {
                     System.out.println("sesion iniciada correctamente");
                     return true;
                 }
-
             }
 
             //executeUpdate cuando se hacen select

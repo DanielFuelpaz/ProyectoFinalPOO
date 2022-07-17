@@ -30,7 +30,6 @@ public class Control_Usuario  {
 
     
    
-    
 
 
     public void control_u() throws SQLException {
