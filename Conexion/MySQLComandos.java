@@ -48,31 +48,28 @@ public class MySQLComandos {
     }
     
     
-     public void consultarLogin(){
-        
-        Connection con;
-        Conexion f = new Conexion();
-        PreparedStatement ps;
-        String sql = "Select * From usuarios where usuario=? and contraseña=?";
-        Login l = new Login();
-        usuario u = new usuario();
-        try{
-            con = f.getConexion();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, l.getCaja().getText());
-           ps.setString(2, l.getCaja2().getText());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Interfaz i = new Interfaz();
-                i.initialize();
-                //setVisible(false);
-            }else{
-                JOptionPane.showMessageDialog(null, "Ïngreso mal de clave");
+    public boolean iniciosesion(JTextField usuario, JTextField contraseña ) {
+
+        Conexion c = new Conexion();
+        try {
+            Connection co = c.getConexion();
+            String instruccionSql = "SELECT * FROM usuarios";
+            PreparedStatement st = co.prepareStatement(instruccionSql);
+
+            ResultSet rs = st.executeQuery(instruccionSql);
+            rs.next();
+            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("clave").equals(contraseña.getText())) {
+                System.out.println("sesion iniciada correctamente");
+                return true;
             }
-        }catch(Exception e){
-            System.out.println("Error: "+e);
+            //executeUpdate cuando se hacen select
+
+        } catch (Exception e) {
+            System.out.println("Error en la conexion");
         }
+        return false;
     }
+
     
     
 
