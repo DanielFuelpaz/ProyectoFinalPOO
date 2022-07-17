@@ -193,6 +193,7 @@ public class Login implements ActionListener {
         this.j2.add(textocreacion2);
         this.j2.add(textocreacion3);
         this.j2.add(botonguardar);
+        this.botonguardar.addActionListener(this);
 
         this.j2.setBackground(Color.GRAY);
         this.j2.show();
@@ -205,10 +206,8 @@ public class Login implements ActionListener {
     public static void main(String[] args) {
         Control_Usuario c = new Control_Usuario();
         Login l = new Login();
-        l.panelusuario();
-        // l.panelCreacionCuenta();
+       l.panelusuario();
 
-        //l.panelCreacionCuenta();
     }
 
     @Override
@@ -221,8 +220,11 @@ public class Login implements ActionListener {
                 Interfaz i = new Interfaz();
                 i.initialize();
             }
+        } else if (but1 == boton) {
+            j.hide();
+            panelCreacionCuenta();
         } else {
-            System.out.println("este es el crear usuario");
+//            sql.guardarusuario;
         }
 
     }
