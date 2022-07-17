@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Objetos.*;
 import Controles.*;
+import Principal.Interfaz;
 import javax.swing.JTextField;
 
 public class Login implements ActionListener {
@@ -148,7 +149,6 @@ public class Login implements ActionListener {
         this.caja.setText("Usuario");
         this.caja2.setText("Contraseña");
         this.boton.setText("Crear Cuenta");
-        this.boton2.setText("INGRESAR");
         this.j.setLayout(null);
         this.j.setSize(400, 400);
         this.boton2.setBounds(30, 300, 100, 25);
@@ -157,6 +157,8 @@ public class Login implements ActionListener {
         this.texto2.setBounds(100, 250, 100, 25);
         this.caja.setBounds(35, 200, 50, 25);
         this.caja2.setBounds(25, 250, 75, 25);
+        this.boton.addActionListener(this);
+        this.boton2.addActionListener(this);
 
         this.j.add(caja);
         this.j.add(caja2);
@@ -171,7 +173,6 @@ public class Login implements ActionListener {
 
         return j;
     }
-
 
     //Metodo De Creacion Cuenta Retorna un Frame 
     public JFrame panelCreacionCuenta() {
@@ -192,6 +193,7 @@ public class Login implements ActionListener {
         this.j2.add(textocreacion2);
         this.j2.add(textocreacion3);
         this.j2.add(botonguardar);
+        this.botonguardar.addActionListener(this);
 
         this.j2.setBackground(Color.GRAY);
         this.j2.show();
@@ -201,31 +203,31 @@ public class Login implements ActionListener {
 
     }
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
-       
-         JButton but1 = (JButton) e.getSource();
-        if (but1 == boton2) {
-           
-         sql.iniciosesion(texto, texto);            
-        } else {
-
-            
-
-        }
-    }
-        
-    
-    
-    
-
+  
     public static void main(String[] args) {
         Control_Usuario c = new Control_Usuario();
         Login l = new Login();
-        l.panelusuario();
-        // l.panelCreacionCuenta();
+       l.panelusuario();
 
-        //l.panelCreacionCuenta();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        JButton but1 = (JButton) e.getSource();
+        if (but1 == boton2) {
+            if (sql.iniciosesion(texto, texto2) == true) {
+                j.hide();
+                Interfaz i = new Interfaz();
+                i.initialize();
+            }
+        } else if (but1 == boton) {
+            j.hide();
+            panelCreacionCuenta();
+        } else {
+//            sql.guardarusuario;
+        }
+
     }
 
 }

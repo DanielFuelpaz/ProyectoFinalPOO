@@ -1,9 +1,6 @@
 package Conexion;
 
-import Login.Login;
 import Ncedula.Ncedula;
-import Objetos.usuario;
-import Principal.Interfaz;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +9,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class MySQLComandos {
@@ -46,12 +42,11 @@ public class MySQLComandos {
     public void setRs(ResultSet rs) {
         this.rs = rs;
     }
-    
-    
-    public boolean iniciosesion(JTextField usuario, JTextField contraseña ) {
 
-        Conexion c = new Conexion();
+    public boolean iniciosesion(JTextField usuario, JTextField contraseña) {
+
         try {
+
             Connection co = c.getConexion();
             String instruccionSql = "SELECT * FROM usuarios";
             PreparedStatement st = co.prepareStatement(instruccionSql);
@@ -61,25 +56,23 @@ public class MySQLComandos {
             if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
                 System.out.println("sesion iniciada correctamente");
                 return true;
-            }
-            //executeUpdate cuando se hacen select
 
+            this.setInstruccion("SELECT * FROM usuarios");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery());
+            while (this.getRs().next()) {
+                if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
+                    System.out.println("sesion iniciada correctamente");
+                    return true;
+                }
+
+            }
+
+            //executeUpdate cuando se hacen select
         } catch (Exception e) {
             System.out.println("Error en la conexion");
         }
         return false;
-    }
-
-    
-    
-
-    public ResultSet accesologin(String u, String clave) throws SQLException {
-        this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
-        this.setP(co.prepareStatement(this.getInstruccion()));
-        this.getP().setString(1, u);
-        this.getP().setString(2, clave);
-        this.setRs(this.getP().executeQuery());
-        return this.getRs();
     }
 
     public void listaper(JComboBox per) {

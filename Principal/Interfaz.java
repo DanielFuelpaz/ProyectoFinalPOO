@@ -1,8 +1,5 @@
 package Principal;
 
-import Login.*;
-
-import Configuracion.Configuracion;
 import DatosPersonales.DatosPersonales;
 import Ncedula.Ncedula;
 import Opcion3.*;
@@ -23,9 +20,7 @@ public class Interfaz {
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
     private Ncedula Ced = new Ncedula();
     public Panel3 foto = new Panel3();
-
-    DatosPersonales v = new DatosPersonales();
-    Configuracion c = new Configuracion();
+    private DatosPersonales DP = new DatosPersonales();
 
     public Ncedula getCed() {
         return Ced;
@@ -57,13 +52,10 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-
-                    Fbase.add(v.getFrame());
-                    v.initialize();
+                    Fbase.add(DP.getFrame());
+                    DP.initialize();
                 } else {
-                    v.getFrame().setVisible(false);
-                    // las cosas
-
+                    DP.getFrame().setVisible(false);
                 }
             }
 
@@ -108,10 +100,9 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    Fbase.add(c.getFrame());
-                    c.initialize();
+
                 } else {
-                    c.getFrame().setVisible(false);
+
                 }
             }
 

@@ -45,7 +45,7 @@ public class DatosPersonales implements ActionListener {
     private Connection conn = objCon.getConexion();
 
     public JPanel getFrame() {
-        return frame;
+        return this.frame;
     }
 
     public void initialize() {
@@ -153,6 +153,11 @@ public class DatosPersonales implements ActionListener {
             System.out.println(ex.toString());
         }
     }
+
+//    public static void main(String[] args) {
+//        DatosPersonales v = new DatosPersonales();
+//        v.initialize();
+//    }
 
     private void limpiar() {
         txtnombres.setText("");
