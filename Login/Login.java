@@ -207,8 +207,7 @@ public class Login implements ActionListener {
          JButton but1 = (JButton) e.getSource();
         if (but1 == boton2) {
            
-        
-            
+         sql.iniciosesion(texto, texto);            
         } else {
 
             

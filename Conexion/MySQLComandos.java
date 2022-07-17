@@ -58,7 +58,7 @@ public class MySQLComandos {
 
             ResultSet rs = st.executeQuery(instruccionSql);
             rs.next();
-            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("clave").equals(contraseña.getText())) {
+            if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
                 System.out.println("sesion iniciada correctamente");
                 return true;
             }
