@@ -154,11 +154,6 @@ public class DatosPersonales implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        DatosPersonales v = new DatosPersonales();
-        v.initialize();
-    }
-
     private void limpiar() {
         txtnombres.setText("");
         txtapellidos.setText("");
