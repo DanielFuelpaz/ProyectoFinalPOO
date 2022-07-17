@@ -5,6 +5,7 @@
  */
 package Controles;
 
+<<<<<<< HEAD
 import Conexion.*;
 import Controles.*;
 import Objetos.usuario;
@@ -16,12 +17,17 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+=======
+import Conexion.MySQLComandos;
+import java.sql.SQLException;
+>>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
 
 /**
  *
  * @author USUARIO
  */
 public class Control_Usuario {
+<<<<<<< HEAD
     
     public void consultarLogin(){
         
@@ -49,4 +55,13 @@ public class Control_Usuario {
         }
     }
     
+=======
+
+    public void control_u() throws SQLException {
+        MySQLComandos sql = new MySQLComandos();
+        if (!(sql.accesologin("", "").next())) {
+            
+        }
+    }
+>>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
 }

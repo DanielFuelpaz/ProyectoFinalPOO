@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -16,6 +17,7 @@ public class MySQLComandos {
     private PreparedStatement p;
     private ResultSet rs;
     private Conexion c = new Conexion();
+    private Connection co = c.getConexion();
 
     public String getInstruccion() {
         return this.instruccion;
@@ -43,7 +45,6 @@ public class MySQLComandos {
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
         this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
-        Connection co = c.getConexion();
         this.setP(co.prepareStatement(this.getInstruccion()));
         this.getP().setString(1, u);
         this.getP().setString(2, clave);
@@ -54,7 +55,6 @@ public class MySQLComandos {
     public void listaper(JComboBox per) {
 
         try {
-            Connection co = c.getConexion();
             this.setInstruccion("SELECT * FROM datospersonales WHERE cedula IS NULL");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
@@ -72,8 +72,6 @@ public class MySQLComandos {
 
     public void addced(JComboBox personas, JTextField Rced) {
         try {
-
-            Connection co = c.getConexion();
             String partes[] = personas.getSelectedItem().toString().split(" ");
             this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -87,8 +85,29 @@ public class MySQLComandos {
         }
     }
 
+    public int traerced() {
+        int pos = 0;
+        try {
+
+            Random rnd = new Random();
+            pos = rnd.nextInt(7999 + 1000) + 1000;
+
+            this.setInstruccion("SELECT cedula FROM datospersonales WHERE cedula IS NOT NULL");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery(this.getInstruccion()));
+            while (this.getRs().next()) {
+                while (this.getRs().getString("cedula").substring(6, 9).equals(Integer.toString(pos))) {
+                    pos = rnd.nextInt(7999 + 1000) + 1000;
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pos;
+    }
+
     public ResultSet ConexionCedulas() {
-        Connection co = c.getConexion();
         this.setInstruccion("SELECT * FROM datospersonales");
         try {
             this.setP(co.prepareStatement(this.getInstruccion()));

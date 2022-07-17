@@ -1,10 +1,12 @@
 package Configuracion;
 
 import Conexion.Conexion;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,18 +25,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Configuracion implements ActionListener {
 
-    public JFrame frame = new JFrame("Configuracion");
+    public JPanel frame = new JPanel();
     public JLabel op1 = new JLabel("Seleccione la Opcion");
     public JLabel op2 = new JLabel("Nombre Ciudad");
     public JLabel op3 = new JLabel("Nombre Provincia");
     public JComboBox cb1 = new JComboBox();
+    public JComboBox cb2 = new JComboBox();
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
+    Conexion objCon = new Conexion();
+    Connection conn = objCon.getConexion();
 
     DefaultTableModel modelo = new DefaultTableModel();
+    
+    public JPanel getFrame() {
+        return frame;
+    }
 
     public void initialize() {
-        frame.setBounds(750, 300, 400, 400);
+        frame.setBounds(205, 0, 575, 350);
+        frame.setBackground(Color.LIGHT_GRAY);
         frame.add(this.op1);
         frame.setLayout(null);
         op1.setBounds(15, 30, 215, 15);
@@ -53,12 +64,18 @@ public class Configuracion implements ActionListener {
                     op3.show(false);
                     op2.show(true);
                     txtop2.show(true);
+                    cb2.show(true);
                     frame.add(op2);
-                    op2.setBounds(15, 70, 215, 15);
+                    op2.setBounds(15, 100, 215, 15);
+                    frame.add(cb2);
+                    cb2.setBounds(150, 70, 200, 20);
                     frame.add(txtop2);
-                    txtop2.setBounds(150, 70, 200, 20);
+                    txtop2.setBounds(150, 100, 200, 20);
+                    frame.show();
+                    cargarprovincias();
                 } else if (cb1.getSelectedItem().toString() == "Provincia") {
                     op2.show(false);
+                    cb2.show(false);
                     op3.show(true);
                     txtop2.show(true);
                     frame.add(op3);
@@ -69,6 +86,7 @@ public class Configuracion implements ActionListener {
                     op3.show(false);
                     op2.show(false);
                     txtop2.show(false);
+                    cb2.show(false);
                 }
 
             }
@@ -77,20 +95,21 @@ public class Configuracion implements ActionListener {
         this.guardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent g) {
-                if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText() != "")) {
+                if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText().isEmpty()!=true)) {
                     PreparedStatement ps = null;
-                    Conexion objCon = new Conexion();
-                    Connection conn = objCon.getConexion();
+                    
                     try {
-                        ps = conn.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)");
+                        ps = conn.prepareStatement("INSERT INTO ciudades (ciudades,provincias) VALUES (?,?)");
                         ps.setString(1, txtop2.getText());
+                        ps.setString(2, cb2.getSelectedItem().toString());
                         ps.execute();
                         JOptionPane.showMessageDialog(null, "Elementos guardados");
+                        limpiar();
                     } catch (SQLException ex) {
                         Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText() != "")) {
+                } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText().isEmpty()!=true)) {
                     PreparedStatement ps = null;
                     Conexion objCon = new Conexion();
                     Connection conn = objCon.getConexion();
@@ -99,6 +118,7 @@ public class Configuracion implements ActionListener {
                         ps.setString(1, txtop2.getText());
                         ps.execute();
                         JOptionPane.showMessageDialog(null, "Elementos guardados");
+                        limpiar();
                     } catch (SQLException ex) {
                         Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -107,8 +127,6 @@ public class Configuracion implements ActionListener {
                 }
             }
         });
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.show();
     }
 
     @Override
@@ -116,9 +134,28 @@ public class Configuracion implements ActionListener {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public static void main(String[] args) {
-        Configuracion cf = new Configuracion();
-        cf.initialize();
-    }
+    public void cargarprovincias(){
+        int contador=0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            Conexion objCon = new Conexion();
+            Connection conn = objCon.getConexion();
 
+            ps = conn.prepareStatement("SELECT provincias FROM provincias");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                cb2.addItem(rs.getString("provincias"));
+                contador++;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }   
+        }
+    
+    private void limpiar() {
+        txtop2.setText("");
+
+    }
 }

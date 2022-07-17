@@ -109,8 +109,12 @@ public class Login implements ActionListener {
         Control_Usuario c = new Control_Usuario();
         Login l = new Login();
         l.panelusuario();
+<<<<<<< HEAD
         // l.panelCreacionCuenta();
         
+=======
+       //l.panelCreacionCuenta();
+>>>>>>> ef3163662657da1506b379442e72ef1b09a924dd
     }
 
 }
