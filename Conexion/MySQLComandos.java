@@ -43,7 +43,7 @@ public class MySQLComandos {
         this.rs = rs;
     }
 
-    public boolean iniciosesion(JTextField usuario, JTextField contraseña) {
+    public boolean iniciosesion(JTextField usuario, JTextField contraseña) throws SQLException {
 
         try {
             this.setInstruccion("SELECT * FROM usuarios");
