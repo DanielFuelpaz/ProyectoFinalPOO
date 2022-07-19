@@ -10,27 +10,31 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Objetos.*;
 import Principal.Interfaz;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class Login implements ActionListener {
 
     // Propiedades del Metodo Creacion Cuneta
     private JFrame j2 = new JFrame();
-    private JLabel cajacreacion = new JLabel("Nombre Usuario");
-    private JLabel cajacreacion2 = new JLabel("Contraseña");
-    private JLabel cajacreacion3 = new JLabel("Repita la Contraseña");
+    private JLabel cajacreacion = new JLabel("Nombre Usuario: ");
+    private JLabel cajacreacion2 = new JLabel("Contraseña: ");
+    private JLabel cajacreacion3 = new JLabel("Repita la Contraseña:");
     private JTextField textocreacion = new JTextField("");
-    private JTextField textocreacion2 = new JTextField("");
-    private JTextField textocreacion3 = new JTextField("");
+    private JPasswordField textocreacion2 = new JPasswordField("");
+    private JPasswordField textocreacion3 = new JPasswordField("");
     private JButton botonguardar = new JButton("Guardar");
 
     // Propiedades del Metodo Login Acceso a la Cuenta
     private JFrame j = new JFrame();
-    private JLabel caja = new JLabel("Usuario");
-    private JLabel caja2 = new JLabel("Contraseña");
+    private JLabel caja = new JLabel("Usuario: ");
+    private JLabel caja2 = new JLabel("Contraseña: ");
     private JTextField texto = new JTextField("");
-    private JTextField texto2 = new JTextField("");
-    private JButton boton = new JButton("Crear Usuario");
+    private JPasswordField texto2 = new JPasswordField("");
+    private JButton boton = new JButton("Crear Usuario ");
     private JButton boton2 = new JButton("Ingresar");
     private MySQLComandos sql = new MySQLComandos();
 
@@ -75,15 +79,15 @@ public class Login implements ActionListener {
         return this.textocreacion2;
     }
 
-    public void setTextocreacion2(JTextField textocreacion2) {
+    public void setTextocreacion2(JPasswordField textocreacion2) {
         this.textocreacion2 = textocreacion2;
     }
 
-    public JTextField getTextocreacion3() {
+    public JPasswordField getTextocreacion3() {
         return this.textocreacion3;
     }
 
-    public void setTextocreacion3(JTextField textocreacion3) {
+    public void setTextocreacion3(JPasswordField textocreacion3) {
         this.textocreacion3 = textocreacion3;
     }
 
@@ -123,7 +127,7 @@ public class Login implements ActionListener {
         return this.texto2;
     }
 
-    public void setTexto2(JTextField texto2) {
+    public void setTexto2(JPasswordField texto2) {
         this.texto2 = texto2;
     }
 
@@ -143,6 +147,7 @@ public class Login implements ActionListener {
         this.boton2 = boton2;
     }
 
+    
     public JFrame panelusuario() {
 
         this.caja.setText("Usuario");
@@ -214,16 +219,26 @@ public class Login implements ActionListener {
 
         JButton but1 = (JButton) e.getSource();
         if (but1 == boton2) {
-            if (sql.iniciosesion(texto, texto2) == true) {
-                j.hide();
-                Interfaz i = new Interfaz();
-                i.initialize();
+            try {
+                if (sql.iniciosesion(texto, texto2) == true) {
+                    j.hide();
+                    Interfaz i = new Interfaz();
+                    i.initialize();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (but1 == boton) {
             j.hide();
             panelCreacionCuenta();
+            
         } else {
-//            sql.guardarusuario;
+            
+            try {
+                sql.creacionusuario(textocreacion, textocreacion3);
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

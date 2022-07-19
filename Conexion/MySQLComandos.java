@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class MySQLComandos {
@@ -43,7 +44,7 @@ public class MySQLComandos {
         this.rs = rs;
     }
 
-    public boolean iniciosesion(JTextField usuario, JTextField contraseña) throws SQLException {
+    public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
 
         try {
             this.setInstruccion("SELECT * FROM usuarios");
@@ -62,6 +63,43 @@ public class MySQLComandos {
         }
         return false;
     }
+    
+    //Control Creacion de Usuario
+    
+     public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) throws SQLException {
+
+        try {
+            this.setInstruccion("SELECT * FROM usuarios");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery());
+            while (this.getRs().next()) {
+                
+                do {
+                    
+                     if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())) {
+                   
+                         System.out.println("=== Error Usuario o Contraseña ya Existente ===");
+                    
+                }
+                    
+                } while (!(rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())));
+                
+                
+                
+                    
+                    return true;
+                
+            }
+
+            //executeUpdate cuando se hacen select
+        } catch (Exception e) {
+            System.out.println("Error en la conexion");
+        }
+        return false;
+    }
+    
+    
+    
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
         this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
