@@ -1,5 +1,6 @@
 package Conexion;
 
+import Configuracion.Configuracion;
 import Ncedula.Ncedula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -65,7 +67,7 @@ public class MySQLComandos {
     }
 
     //Control Creacion de Usuario
-    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) throws SQLException {
+    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) {
 
         try {
             this.setInstruccion("SELECT * FROM usuarios");
@@ -73,31 +75,23 @@ public class MySQLComandos {
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
 
-                do {
-
-                    if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())) {
-
-                        System.out.println("=== Error Usuario o Contraseña ya Existente ===");
-
-                    } else {
-
-                        this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
-                        this.setP(co.prepareStatement(this.getInstruccion()));
-                        this.getP().setString(1, usuario.getText());
-                        this.getP().setString(2, confirmacion.getText());
-                        this.setRs(this.getP().executeQuery());
-                        System.out.println(" ==== Usuario Creado ====");
-                    }
-
-                } while (!(rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())));
-
-                return true;
+                if (!(rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText()))) {
+                    this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
+                    this.setP(co.prepareStatement(this.getInstruccion()));
+                    this.getP().setString(1, usuario.getText());
+                    this.getP().setString(2, confirmacion.getText());
+                    this.getP().executeUpdate();
+                    System.out.println(" ==== Usuario Creado ====");
+                    usuario.setText("");
+                    confirmacion.setText("");
+                    return true;
+                }
 
             }
 
             //executeUpdate cuando se hacen select
-        } catch (Exception e) {
-            System.out.println("Error en la conexion");
+        } catch (Exception ex) {
+            System.out.println("El Usuario ya existe");
         }
         return false;
     }
@@ -175,6 +169,33 @@ public class MySQLComandos {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.getRs();
+    }
+
+    public void InsCiud(JTextField txtop2) {
+
+        try {
+            this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)"));
+            this.getP().setString(1, txtop2.getText());
+            this.getP().execute();
+            JOptionPane.showMessageDialog(null, "Elementos guardados");
+            txtop2.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void InsProv(JTextField txtop2) {
+        try {
+            this.setInstruccion("INSERT INTO provincias (provincias) VALUES (?)");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.getP().setString(1, txtop2.getText());
+            this.getP().executeUpdate();
+            JOptionPane.showMessageDialog(null, "Elementos guardados");
+            txtop2.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

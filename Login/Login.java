@@ -38,11 +38,6 @@ public class Login implements ActionListener {
     private JButton boton2 = new JButton("Ingresar");
     private MySQLComandos sql = new MySQLComandos();
 
-    // Propiedad de Conexion
-    Conexion c = new Conexion();
-
-    usuario o = new usuario();
-
     public JLabel getCajacreacion() {
         return this.cajacreacion;
     }
@@ -147,7 +142,6 @@ public class Login implements ActionListener {
         this.boton2 = boton2;
     }
 
-    
     public JFrame panelusuario() {
 
         this.caja.setText("Usuario");
@@ -206,11 +200,10 @@ public class Login implements ActionListener {
         return j2;
 
     }
-    
-  
+
     public static void main(String[] args) {
         Login l = new Login();
-       l.panelusuario();
+        l.panelusuario();
 
     }
 
@@ -231,14 +224,13 @@ public class Login implements ActionListener {
         } else if (but1 == boton) {
             j.hide();
             panelCreacionCuenta();
-            
+
         } else {
-            
-            try {
-                sql.creacionusuario(textocreacion, textocreacion3);
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            if (sql.creacionusuario(textocreacion, textocreacion3)) {
+                j2.hide();
+                j.show();
             }
+
         }
 
     }

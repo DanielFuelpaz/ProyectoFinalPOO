@@ -24,10 +24,6 @@ public class Interfaz {
     private DatosPersonales DP = new DatosPersonales();
     Configuracion c = new Configuracion();
 
-    public Ncedula getCed() {
-        return Ced;
-    }
-
     public void initialize() {
 
         Fbase.setSize(600, 600);

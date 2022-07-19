@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
+import Conexion.MySQLComandos;
 
 public class Configuracion implements ActionListener {
 
@@ -28,10 +28,7 @@ public class Configuracion implements ActionListener {
     public JComboBox cb2 = new JComboBox();
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
-    Conexion objCon = new Conexion();
-    Connection conn = objCon.getConexion();
-
-    DefaultTableModel modelo = new DefaultTableModel();
+    private MySQLComandos sql = new MySQLComandos();
 
     public JPanel getFrame() {
         return frame;
@@ -55,33 +52,37 @@ public class Configuracion implements ActionListener {
         this.cb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                if (cb1.getSelectedItem().toString() == "Ciudad") {
-                    op3.show(false);
-                    op2.show(true);
-                    txtop2.show(true);
-                    cb2.show(true);
-                    frame.add(op2);
-                    op2.setBounds(15, 100, 215, 15);
-                    frame.add(cb2);
-                    cb2.setBounds(150, 70, 200, 20);
-                    frame.add(txtop2);
-                    txtop2.setBounds(150, 100, 200, 20);
-                    frame.show();
-                    cargarprovincias();
-                } else if (cb1.getSelectedItem().toString() == "Provincia") {
-                    op2.show(false);
-                    cb2.show(false);
-                    op3.show(true);
-                    txtop2.show(true);
-                    frame.add(op3);
-                    op3.setBounds(15, 70, 215, 15);
-                    frame.add(txtop2);
-                    txtop2.setBounds(150, 70, 200, 20);
-                } else {
-                    op3.show(false);
-                    op2.show(false);
-                    txtop2.show(false);
-                    cb2.show(false);
+                switch (cb1.getSelectedItem().toString()) {
+                    case "Ciudad" -> {
+                        op3.show(false);
+                        op2.show(true);
+                        txtop2.show(true);
+                        cb2.show(true);
+                        frame.add(op2);
+                        op2.setBounds(15, 100, 215, 15);
+                        frame.add(cb2);
+                        cb2.setBounds(150, 70, 200, 20);
+                        frame.add(txtop2);
+                        txtop2.setBounds(150, 100, 200, 20);
+                        frame.show();
+                        cargarprovincias();
+                    }
+                    case "Provincia" -> {
+                        op2.show(false);
+                        cb2.show(false);
+                        op3.show(true);
+                        txtop2.show(true);
+                        frame.add(op3);
+                        op3.setBounds(15, 70, 215, 15);
+                        frame.add(txtop2);
+                        txtop2.setBounds(150, 70, 200, 20);
+                    }
+                    default -> {
+                        op3.show(false);
+                        op2.show(false);
+                        txtop2.show(false);
+                        cb2.show(false);
+                    }
                 }
 
             }
@@ -92,32 +93,12 @@ public class Configuracion implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText().isEmpty() != true)) {
-            PreparedStatement ps = null;
-
-            try {
-                ps = conn.prepareStatement("INSERT INTO ciudades (ciudades,provincias) VALUES (?,?)");
-                ps.setString(1, txtop2.getText());
-                ps.setString(2, cb2.getSelectedItem().toString());
-                ps.execute();
-                JOptionPane.showMessageDialog(null, "Elementos guardados");
-                limpiar();
-            } catch (SQLException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if ((cb1.getSelectedItem().toString().equals("Ciudad")) && (txtop2.getText().isEmpty() != true)) {
+            sql.InsCiud(txtop2);
 
         } else if (("Provincia".equals(cb1.getSelectedItem().toString())) && (txtop2.getText().isEmpty() != true)) {
-            PreparedStatement ps;
+            sql.InsProv(txtop2);
 
-            try {
-                ps = conn.prepareStatement("INSERT INTO provincias (provincias) VALUES (?)");
-                ps.setString(1, txtop2.getText());
-                ps.execute();
-                JOptionPane.showMessageDialog(null, "Elementos guardados");
-                limpiar();
-            } catch (SQLException ex) {
-                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
         }
@@ -125,8 +106,8 @@ public class Configuracion implements ActionListener {
 
     public void cargarprovincias() {
         int contador = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        PreparedStatement ps;
+        ResultSet rs;
         try {
             Conexion objCon = new Conexion();
             Connection conn = objCon.getConexion();
@@ -141,11 +122,6 @@ public class Configuracion implements ActionListener {
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-    }
-
-    private void limpiar() {
-        txtop2.setText("");
-
     }
 
     public static void main(String[] args) {
