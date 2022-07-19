@@ -106,9 +106,9 @@ public class Configuracion implements ActionListener {
                 Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText().isEmpty() != true)) {
-            PreparedStatement ps = null;
-            
+        } else if (("Provincia".equals(cb1.getSelectedItem().toString())) && (txtop2.getText().isEmpty() != true)) {
+            PreparedStatement ps;
+
             try {
                 ps = conn.prepareStatement("INSERT INTO provincias (provincias) VALUES (?)");
                 ps.setString(1, txtop2.getText());
