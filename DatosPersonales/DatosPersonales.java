@@ -5,18 +5,16 @@
  */
 package DatosPersonales;
 
-import Conexion.Conexion;
+import Conexion.MySQLComandos;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -41,8 +39,7 @@ public class DatosPersonales implements ActionListener {
     public JLabel jl6 = new JLabel("Ciudad");
     public JComboBox cb2 = new JComboBox();
     public JButton bg = new JButton("Guardar");
-    private Conexion objCon = new Conexion();
-    private Connection conn = objCon.getConexion();
+    private MySQLComandos sql = new MySQLComandos();
 
     public JPanel getFrame() {
         return this.frame;
@@ -79,35 +76,15 @@ public class DatosPersonales implements ActionListener {
         frame.add(this.cb2);
         bg.setBounds(150, 263, 100, 25);
         frame.add(this.bg);
-        cargarprovincias();
-        cargarciudades();
+        sql.cargarprovincias(cb1);
+        sql.cargarciudades(cb2);
         frame.show();
 
         this.bg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent g) {
-                PreparedStatement ps = null;
-                try {
-                    if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true) && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
-                        ps = conn.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)");
-                        ps.setString(1, txtnombres.getText());
-                        ps.setString(2, txtapellidos.getText());
-                        ps.setString(3, txtdireccion.getText());
-                        ps.setString(4, txttelefono.getText());
-                        ps.setString(5, cb1.getSelectedItem().toString());
-                        ps.setString(6, cb2.getSelectedItem().toString());
-                        ps.execute();
 
-                        JOptionPane.showMessageDialog(null, "Elementos guardados");
-                        limpiar();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
-                    }
-
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Error al Guardar");
-                }
-
+                sql.addPer(txtnombres, txtapellidos, txtdireccion, txttelefono, cb1, cb2);
             }
         });
 
@@ -118,52 +95,6 @@ public class DatosPersonales implements ActionListener {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void cargarprovincias() {
-        int contador = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
+    
 
-            ps = conn.prepareStatement("SELECT provincias FROM provincias");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-
-                cb1.addItem(rs.getString("provincias"));
-                contador++;
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-    }
-
-    public void cargarciudades() {
-        int contador = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-
-            ps = conn.prepareStatement("SELECT ciudades FROM ciudades");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-
-                cb2.addItem(rs.getString("ciudades"));
-                contador++;
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
-        }
-    }
-
-//    public static void main(String[] args) {
-//        DatosPersonales v = new DatosPersonales();
-//        v.initialize();
-//    }
-
-    private void limpiar() {
-        txtnombres.setText("");
-        txtapellidos.setText("");
-        txtdireccion.setText("");
-        txttelefono.setText("");
-
-    }
 }

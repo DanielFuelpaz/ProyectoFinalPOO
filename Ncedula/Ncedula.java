@@ -20,7 +20,6 @@ public class Ncedula implements ActionListener {
     private JTextField Rced = new JTextField();
     private JButton GenCedula = new JButton();
     private JButton Guardar = new JButton();
-    Conexion c = new Conexion();
     private MySQLComandos sql = new MySQLComandos();
 
     public JPanel getJp1() {

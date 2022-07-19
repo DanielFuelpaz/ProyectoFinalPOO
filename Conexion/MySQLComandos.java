@@ -1,6 +1,5 @@
 package Conexion;
 
-import Configuracion.Configuracion;
 import Ncedula.Ncedula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +18,7 @@ public class MySQLComandos {
     private String instruccion;
     private PreparedStatement p;
     private ResultSet rs;
-    private Conexion c = new Conexion();
+    private final Conexion c = new Conexion();
     private Connection co = c.getConexion();
 
     public String getInstruccion() {
@@ -49,6 +48,7 @@ public class MySQLComandos {
     public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
 
         try {
+            co = c.getConexion();
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -62,6 +62,20 @@ public class MySQLComandos {
             //executeUpdate cuando se hacen select
         } catch (Exception e) {
             System.out.println("Error en la conexion");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
         return false;
     }
@@ -70,6 +84,7 @@ public class MySQLComandos {
     public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) {
 
         try {
+            co = c.getConexion();
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -92,8 +107,78 @@ public class MySQLComandos {
             //executeUpdate cuando se hacen select
         } catch (Exception ex) {
             System.out.println("El Usuario ya existe");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
         return false;
+    }
+
+    public void cargarprovincias(JComboBox cb1) {
+        try {
+            co = c.getConexion();
+            this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
+            this.setRs(this.getP().executeQuery());
+            while (this.getRs().next()) {
+
+                cb1.addItem(rs.getString("provincias"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
+    public void cargarciudades(JComboBox cb2) {
+        try {
+            co = c.getConexion();
+            this.setP(co.prepareStatement("SELECT ciudades FROM ciudades"));
+            this.setRs(this.getP().executeQuery());
+            while (this.getRs().next()) {
+
+                cb2.addItem(this.getRs().getString("ciudades"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
     }
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
@@ -105,9 +190,51 @@ public class MySQLComandos {
         return this.getRs();
     }
 
+    public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono, JComboBox cb1, JComboBox cb2) {
+        try {
+            co = c.getConexion();
+            if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true) && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
+                this.setP(co.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
+                this.getP().setString(1, txtnombres.getText());
+                this.getP().setString(2, txtapellidos.getText());
+                this.getP().setString(3, txtdireccion.getText());
+                this.getP().setString(4, txttelefono.getText());
+                this.getP().setString(5, cb1.getSelectedItem().toString());
+                this.getP().setString(6, cb2.getSelectedItem().toString());
+                this.getP().executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Elementos guardados");
+                txtnombres.setText("");
+                txtapellidos.setText("");
+                txtdireccion.setText("");
+                txttelefono.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al Guardar");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
     public void listaper(JComboBox per) {
 
         try {
+            co = c.getConexion();
             this.setInstruccion("SELECT * FROM datospersonales WHERE cedula IS NULL");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
@@ -119,12 +246,27 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
 
     }
 
     public void addced(JComboBox personas, JTextField Rced) {
         try {
+            co = c.getConexion();
             String partes[] = personas.getSelectedItem().toString().split(" ");
             this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -135,13 +277,27 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }
 
     public int traerced() {
         int pos = 0;
         try {
-
+            co = c.getConexion();
             Random rnd = new Random();
             pos = rnd.nextInt(7999 + 1000) + 1000;
 
@@ -156,23 +312,52 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
         return pos;
     }
 
     public ResultSet ConexionCedulas() {
+        co = c.getConexion();
         this.setInstruccion("SELECT * FROM datospersonales");
         try {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
         return this.getRs();
     }
 
     public void InsCiud(JTextField txtop2) {
-
+        co = c.getConexion();
         try {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)"));
             this.getP().setString(1, txtop2.getText());
@@ -181,11 +366,26 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
 
     }
 
     public void InsProv(JTextField txtop2) {
+        co = c.getConexion();
         try {
             this.setInstruccion("INSERT INTO provincias (provincias) VALUES (?)");
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -195,6 +395,20 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
     }
 
