@@ -63,32 +63,36 @@ public class MySQLComandos {
         }
         return false;
     }
-    
+
     //Control Creacion de Usuario
-    
-     public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) throws SQLException {
+    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) throws SQLException {
 
         try {
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-                
+
                 do {
-                    
-                     if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())) {
-                   
-                         System.out.println("=== Error Usuario o Contraseña ya Existente ===");
-                    
-                }
-                    
+
+                    if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())) {
+
+                        System.out.println("=== Error Usuario o Contraseña ya Existente ===");
+
+                    } else {
+
+                        this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
+                        this.setP(co.prepareStatement(this.getInstruccion()));
+                        this.getP().setString(1, usuario.getText());
+                        this.getP().setString(2, confirmacion.getText());
+                        this.setRs(this.getP().executeQuery());
+                        System.out.println(" ==== Usuario Creado ====");
+                    }
+
                 } while (!(rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText())));
-                
-                
-                
-                    
-                    return true;
-                
+
+                return true;
+
             }
 
             //executeUpdate cuando se hacen select
@@ -97,9 +101,6 @@ public class MySQLComandos {
         }
         return false;
     }
-    
-    
-    
 
     public ResultSet accesologin(String u, String clave) throws SQLException {
         this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
