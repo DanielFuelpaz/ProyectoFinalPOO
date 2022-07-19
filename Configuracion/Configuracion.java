@@ -12,17 +12,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author g4to1
- */
 public class Configuracion implements ActionListener {
 
     public JPanel frame = new JPanel();
@@ -37,7 +32,7 @@ public class Configuracion implements ActionListener {
     Connection conn = objCon.getConexion();
 
     DefaultTableModel modelo = new DefaultTableModel();
-    
+
     public JPanel getFrame() {
         return frame;
     }
@@ -92,50 +87,44 @@ public class Configuracion implements ActionListener {
             }
         });
 
-        this.guardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent g) {
-                if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText().isEmpty()!=true)) {
-                    PreparedStatement ps = null;
-                    
-                    try {
-                        ps = conn.prepareStatement("INSERT INTO ciudades (ciudades,provincias) VALUES (?,?)");
-                        ps.setString(1, txtop2.getText());
-                        ps.setString(2, cb2.getSelectedItem().toString());
-                        ps.execute();
-                        JOptionPane.showMessageDialog(null, "Elementos guardados");
-                        limpiar();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText().isEmpty()!=true)) {
-                    PreparedStatement ps = null;
-                    Conexion objCon = new Conexion();
-                    Connection conn = objCon.getConexion();
-                    try {
-                        ps = conn.prepareStatement("INSERT INTO provincias (provincias) VALUES (?)");
-                        ps.setString(1, txtop2.getText());
-                        ps.execute();
-                        JOptionPane.showMessageDialog(null, "Elementos guardados");
-                        limpiar();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
-                }
-            }
-        });
+        this.guardar.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if ((cb1.getSelectedItem().toString() == "Ciudad") && (txtop2.getText().isEmpty() != true)) {
+            PreparedStatement ps = null;
+
+            try {
+                ps = conn.prepareStatement("INSERT INTO ciudades (ciudades,provincias) VALUES (?,?)");
+                ps.setString(1, txtop2.getText());
+                ps.setString(2, cb2.getSelectedItem().toString());
+                ps.execute();
+                JOptionPane.showMessageDialog(null, "Elementos guardados");
+                limpiar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else if ((cb1.getSelectedItem().toString() == "Provincia") && (txtop2.getText().isEmpty() != true)) {
+            PreparedStatement ps = null;
+            
+            try {
+                ps = conn.prepareStatement("INSERT INTO provincias (provincias) VALUES (?)");
+                ps.setString(1, txtop2.getText());
+                ps.execute();
+                JOptionPane.showMessageDialog(null, "Elementos guardados");
+                limpiar();
+            } catch (SQLException ex) {
+                Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
+        }
     }
 
-    public void cargarprovincias(){
-        int contador=0;
+    public void cargarprovincias() {
+        int contador = 0;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
@@ -151,11 +140,15 @@ public class Configuracion implements ActionListener {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        }   
         }
-    
+    }
+
     private void limpiar() {
         txtop2.setText("");
+
+    }
+
+    public static void main(String[] args) {
 
     }
 }

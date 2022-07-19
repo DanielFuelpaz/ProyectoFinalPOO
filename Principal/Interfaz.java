@@ -1,5 +1,6 @@
 package Principal;
 
+import Configuracion.Configuracion;
 import DatosPersonales.DatosPersonales;
 import Ncedula.Ncedula;
 import Opcion3.*;
@@ -21,6 +22,7 @@ public class Interfaz {
     private Ncedula Ced = new Ncedula();
     public Panel3 foto = new Panel3();
     private DatosPersonales DP = new DatosPersonales();
+    Configuracion c = new Configuracion();
 
     public Ncedula getCed() {
         return Ced;
@@ -100,9 +102,10 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-
+                    Fbase.add(c.getFrame());
+                    c.initialize();
                 } else {
-
+                    c.getFrame().setVisible(false);
                 }
             }
 
