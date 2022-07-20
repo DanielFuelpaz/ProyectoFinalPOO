@@ -1,13 +1,8 @@
 package Configuracion;
 
-import Conexion.Conexion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -63,7 +58,7 @@ public class Configuracion implements ActionListener {
                         frame.add(txtop2);
                         txtop2.setBounds(150, 100, 200, 20);
                         frame.show();
-                        cargarprovincias();
+                        sql.cargarprovincias(cb2);
                     }
                     case "Provincia" -> {
                         op2.show(false);
@@ -99,26 +94,6 @@ public class Configuracion implements ActionListener {
 
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
-        }
-    }
-
-    public void cargarprovincias() {
-        int contador = 0;
-        PreparedStatement ps;
-        ResultSet rs;
-        try {
-            Conexion objCon = new Conexion();
-            Connection conn = objCon.getConexion();
-
-            ps = conn.prepareStatement("SELECT provincias FROM provincias");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-
-                cb2.addItem(rs.getString("provincias"));
-                contador++;
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
         }
     }
 
