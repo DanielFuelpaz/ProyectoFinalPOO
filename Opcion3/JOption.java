@@ -22,7 +22,7 @@ public class Panel3 {
     private JLabel imagenTitulo = new JLabel("Imagen");
     private JButton tomarFoto = new JButton("Abrir Cámara");
     private JLabel espacioParaImagen = new JLabel();
-
+    
     public JPanel getPanel() {
         return this.panel;
     }
@@ -89,27 +89,25 @@ public class Panel3 {
         this.getPanel().add(this.getImagenTitulo());
         this.getPanel().add(this.getTomarFoto());
         this.getPanel().add(this.getEspacioParaImagen());
-        this.getListaCedulas().removeAllItems();
-        TraerCedulas cedulasBase = new TraerCedulas();
-        MySQLComandos comandos = new MySQLComandos();
+        this.gedulasBase = new TraerCedulas();
+        MySQLComandos comandos=new MySQLComandos();
         ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());
         for (int i = 0; i < cedulas.size(); i++) {
             this.getListaCedulas().addItem(cedulas.get(i));
         }
         this.getPanel().setVisible(true);
-        // cambio
         this.getTomarFoto().addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Camarapnl cam = new Camarapnl();
-                        panel.add(cam, BorderLayout.CENTER);
-                        panel.revalidate();
-                        panel.repaint();
-                    }
-
-                });
+        new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Camarapnl cam = new Camarapnl();
+                panel.add(cam, BorderLayout.CENTER);
+                panel.revalidate();
+                panel.repaint();
+            }
+            
+        }
+        );
         return this.getPanel();
     }
-
 }
