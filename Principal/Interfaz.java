@@ -1,5 +1,7 @@
 package Principal;
 
+import Configuracion.Configuracion;
+import DatosPersonales.DatosPersonales;
 import Ncedula.Ncedula;
 import Opcion3.*;
 
@@ -16,12 +18,11 @@ public class Interfaz {
     public JToggleButton opcion2 = new JToggleButton("Generación del número de cédula");
     public JToggleButton opcion3 = new JToggleButton("Tomar Fotografía");
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
+    public JToggleButton opcion5 = new JToggleButton("Configuracion");
     private Ncedula Ced = new Ncedula();
     public Panel3 foto = new Panel3();
-
-    public Ncedula getCed() {
-        return Ced;
-    }
+    private DatosPersonales DP = new DatosPersonales();
+    Configuracion c = new Configuracion();
 
     public void initialize() {
 
@@ -36,39 +37,37 @@ public class Interfaz {
         opcion2.setBounds(0, 30, 190, 30);
         opcion3.setBounds(0, 60, 190, 30);
         opcion4.setBounds(0, 90, 190, 30);
+        opcion5.setBounds(0, 120, 190, 30);
 
         Fbase.add(this.opcion1);
         Fbase.add(this.opcion2);
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
+        Fbase.add(this.opcion5);
 
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op1");// aca en estas va a estar la instancia de cada uno de
-                                                           // nuestras partes
+                    Fbase.add(DP.getFrame());
+                    DP.initialize();
                 } else {
-                    System.out.println("deseleccionado op1");// aca solo ponemos la parte pa cerrar la visualizacion de
-                                                             // las cosas
+                    DP.getFrame().setVisible(false);
                 }
             }
 
         });
-        this.opcion2.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                int estado = ie.getStateChange();
-                if (estado == ItemEvent.SELECTED) {
+        this.opcion2.addItemListener((ItemEvent ie) -> {
+            int estado = ie.getStateChange();
+            if (estado == ItemEvent.SELECTED) {
+                Fbase.add(Ced.getJp1());
+                Ced.initialize();
+            } else {
+                Ced.getJp1().setVisible(false);
+//                Fbase.dispose();
 
-                    Ced.panelcedula(Fbase);
-                } else {
-                    Ced.getJp1().setVisible(false);
-
-                }
             }
-
         });
         this.opcion3.addItemListener(new ItemListener() {
             @Override
@@ -94,6 +93,19 @@ public class Interfaz {
             }
 
         });
+        this.opcion5.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                int estado = ie.getStateChange();
+                if (estado == ItemEvent.SELECTED) {
+                    Fbase.add(c.getFrame());
+                    c.initialize();
+                } else {
+                    c.getFrame().setVisible(false);
+                }
+            }
+
+        });
 
         Fbase.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Fbase.show();
@@ -101,7 +113,6 @@ public class Interfaz {
 
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
-
         i.initialize();
     }
 

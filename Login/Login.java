@@ -1,61 +1,237 @@
 package Login;
 
 import Conexion.Conexion;
+import Conexion.MySQLComandos;
 import java.awt.Color;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import Objetos.*;
+import Principal.Interfaz;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class Login implements ActionListener {
 
-    public JLabel caja = new JLabel("Usuario");
-    public JLabel caja2 = new JLabel("Usuario");
+    // Propiedades del Metodo Creacion Cuneta
+    private JFrame j2 = new JFrame();
+    private JLabel cajacreacion = new JLabel("Nombre Usuario: ");
+    private JLabel cajacreacion2 = new JLabel("Contraseña: ");
+    private JLabel cajacreacion3 = new JLabel("Repita la Contraseña:");
+    private JTextField textocreacion = new JTextField("");
+    private JPasswordField textocreacion2 = new JPasswordField("");
+    private JPasswordField textocreacion3 = new JPasswordField("");
+    private JButton botonguardar = new JButton("Guardar");
 
-    public TextField texto = new TextField("");
-    public TextField texto2 = new TextField("");
-
-    public JButton boton = new JButton("Crear Usuario");
+    // Propiedades del Metodo Login Acceso a la Cuenta
     private JFrame j = new JFrame();
-    Conexion c = new Conexion();
+    private JLabel caja = new JLabel("Usuario: ");
+    private JLabel caja2 = new JLabel("Contraseña: ");
+    private JTextField texto = new JTextField("");
+    private JPasswordField texto2 = new JPasswordField("");
+    private JButton boton = new JButton("Crear Usuario ");
+    private JButton boton2 = new JButton("Ingresar");
+    private MySQLComandos sql = new MySQLComandos();
+
+    public JLabel getCajacreacion() {
+        return this.cajacreacion;
+    }
+
+    public void setCajacreacion(JLabel cajacreacion) {
+        this.cajacreacion = cajacreacion;
+    }
+
+    public JLabel getCajacreacion2() {
+        return this.cajacreacion2;
+    }
+
+    public void setCajacreacion2(JLabel cajacreacion2) {
+        this.cajacreacion2 = cajacreacion2;
+    }
+
+    public JLabel getCajacreacion3() {
+        return this.cajacreacion3;
+    }
+
+    public void setCajacreacion3(JLabel cajacreacion3) {
+        this.cajacreacion3 = cajacreacion3;
+    }
+
+    public JTextField getTextocreacion() {
+        return this.textocreacion;
+    }
+
+    public void setTextocreacion(JTextField textocreacion) {
+        this.textocreacion = textocreacion;
+    }
+
+    public JTextField getTextocreacion2() {
+        return this.textocreacion2;
+    }
+
+    public void setTextocreacion2(JPasswordField textocreacion2) {
+        this.textocreacion2 = textocreacion2;
+    }
+
+    public JPasswordField getTextocreacion3() {
+        return this.textocreacion3;
+    }
+
+    public void setTextocreacion3(JPasswordField textocreacion3) {
+        this.textocreacion3 = textocreacion3;
+    }
+
+    public JButton getBotonguardar() {
+        return this.botonguardar;
+    }
+
+    public void setBotonguardar(JButton botonguardar) {
+        this.botonguardar = botonguardar;
+    }
+
+    public JLabel getCaja() {
+        return this.caja;
+    }
+
+    public void setCaja(JLabel caja) {
+        this.caja = caja;
+    }
+
+    public JLabel getCaja2() {
+        return this.caja2;
+    }
+
+    public void setCaja2(JLabel caja2) {
+        this.caja2 = caja2;
+    }
+
+    public JTextField getTexto() {
+        return this.texto;
+    }
+
+    public void setTexto(JTextField texto) {
+        this.texto = texto;
+    }
+
+    public JTextField getTexto2() {
+        return this.texto2;
+    }
+
+    public void setTexto2(JPasswordField texto2) {
+        this.texto2 = texto2;
+    }
+
+    public JButton getBoton() {
+        return this.boton;
+    }
+
+    public void setBoton(JButton boton) {
+        this.boton = boton;
+    }
+
+    public JButton getBoton2() {
+        return boton2;
+    }
+
+    public void setBoton2(JButton boton2) {
+        this.boton2 = boton2;
+    }
 
     public JFrame panelusuario() {
 
-        caja.setText("Usuario");
-        caja2.setText("Contraseña");
-        boton.setText("Crear Cuenta");
-        j.setLayout(null);
-        j.setSize(400, 400);
-        boton.setBounds(150, 300, 150, 25); // Edicion del Boton lugar (x,y) (largo,ancho)
-        texto.setBounds(100, 200, 200, 25);
-        texto2.setBounds(100, 250, 200, 25);
-        caja.setBounds(35, 200, 50, 25);
-        caja2.setBounds(25, 250, 75, 25);
+        this.caja.setText("Usuario");
+        this.caja2.setText("Contraseña");
+        this.boton.setText("Crear Cuenta");
+        this.j.setLayout(null);
+        this.j.setSize(400, 400);
+        this.boton2.setBounds(30, 300, 100, 25);
+        this.boton.setBounds(150, 300, 200, 25); // Edicion del Boton lugar (x,y) (largo,ancho)
+        this.texto.setBounds(100, 200, 100, 25);
+        this.texto2.setBounds(100, 250, 100, 25);
+        this.caja.setBounds(35, 200, 50, 25);
+        this.caja2.setBounds(25, 250, 75, 25);
+        this.boton.addActionListener(this);
+        this.boton2.addActionListener(this);
 
-        j.add(caja);
-        j.add(caja2);
-        j.add(texto);
-        j.add(texto2);
-        j.add(boton);
+        this.j.add(caja);
+        this.j.add(caja2);
+        this.j.add(texto);
+        this.j.add(texto2);
+        this.j.add(boton);
+        this.j.add(boton2);
 
-        j.setBackground(Color.GRAY);
-        j.show();
-        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.j.setBackground(Color.GRAY);
+        this.j.show();
+        this.j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         return j;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //Metodo De Creacion Cuenta Retorna un Frame 
+    public JFrame panelCreacionCuenta() {
+
+        this.j2.setLayout(null);
+        this.j2.setSize(600, 600);
+        this.cajacreacion.setBounds(55, 100, 100, 25);
+        this.cajacreacion2.setBounds(75, 200, 70, 25);
+        this.cajacreacion3.setBounds(20, 300, 130, 25);
+        this.textocreacion.setBounds(150, 100, 100, 25);
+        this.textocreacion2.setBounds(150, 200, 100, 25);
+        this.textocreacion3.setBounds(150, 300, 100, 25);
+        this.botonguardar.setBounds(200, 350, 100, 25);
+        this.j2.add(cajacreacion);
+        this.j2.add(cajacreacion2);
+        this.j2.add(cajacreacion3);
+        this.j2.add(textocreacion);
+        this.j2.add(textocreacion2);
+        this.j2.add(textocreacion3);
+        this.j2.add(botonguardar);
+        this.botonguardar.addActionListener(this);
+
+        this.j2.setBackground(Color.GRAY);
+        this.j2.show();
+        this.j2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        return j2;
+
     }
 
     public static void main(String[] args) {
-
         Login l = new Login();
         l.panelusuario();
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        JButton but1 = (JButton) e.getSource();
+        if (but1 == boton2) {
+            try {
+                if (sql.iniciosesion(texto, texto2) == true) {
+                    j.hide();
+                    Interfaz i = new Interfaz();
+                    i.initialize();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (but1 == boton) {
+            j.hide();
+            panelCreacionCuenta();
+
+        } else {
+            if (sql.creacionusuario(textocreacion, textocreacion3)) {
+                j2.hide();
+                j.show();
+            }
+
+        }
 
     }
 

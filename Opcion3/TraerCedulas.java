@@ -1,10 +1,9 @@
 package Opcion3;
 
-import Conexion.MySQLComandos;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
-import Conexion.Conexion;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TraerCedulas {
     ArrayList<String> cedulas = new ArrayList();
@@ -18,6 +17,7 @@ public class TraerCedulas {
     }
     
     public ArrayList<String> ObtenerCedulas(ResultSet rs) {        
+
         try {
             while (rs.next()) {
                 this.setCedulas(rs.getString("cedula"));
@@ -25,6 +25,7 @@ public class TraerCedulas {
         } catch (SQLException ex) {
             Logger.getLogger(TraerCedulas.class.getName()).log(Level.SEVERE, null, ex);
         }
+      
         return cedulas;
     }
 }

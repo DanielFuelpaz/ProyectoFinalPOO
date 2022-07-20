@@ -1,6 +1,10 @@
 package Opcion3;
 
+<<<<<<< HEAD
 import Conexion.Conexion;
+=======
+import Conexion.MySQLComandos;
+>>>>>>> 7edfe04e0ff3c41918b2266823096ea53e739262
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -91,13 +95,12 @@ public class Panel3 {
         this.getPanel().add(this.getEspacioParaImagen());
         this.getListaCedulas().removeAllItems();
         TraerCedulas cedulasBase = new TraerCedulas();
-        MySQLComandos comandos = new MySQLComandos();
+        MySQLComandos comandos=new MySQLComandos();
         ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());
         for (int i = 0; i < cedulas.size(); i++) {
             this.getListaCedulas().addItem(cedulas.get(i));
         }
         this.getPanel().setVisible(true);
-        // cambio
         this.getTomarFoto().addActionListener(
                 new ActionListener() {
                     @Override
