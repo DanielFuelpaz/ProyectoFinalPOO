@@ -4,8 +4,6 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import javax.swing.JButton;
 import javax.swing.JToggleButton;
 
 public class Camara {

@@ -14,7 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Panel3 {
+public class JOption {
 
     private JPanel panel = new JPanel();
     private JLabel cedulaTitulo = new JLabel("cédula:");
@@ -22,6 +22,7 @@ public class Panel3 {
     private JLabel imagenTitulo = new JLabel("Imagen");
     private JButton tomarFoto = new JButton("Abrir Cámara");
     private JLabel espacioParaImagen = new JLabel();
+    private MySQLComandos comandos =new MySQLComandos();
     
     public JPanel getPanel() {
         return this.panel;
@@ -89,12 +90,7 @@ public class Panel3 {
         this.getPanel().add(this.getImagenTitulo());
         this.getPanel().add(this.getTomarFoto());
         this.getPanel().add(this.getEspacioParaImagen());
-        this.gedulasBase = new TraerCedulas();
-        MySQLComandos comandos=new MySQLComandos();
-        ArrayList<String> cedulas = cedulasBase.ObtenerCedulas(comandos.ConexionCedulas());
-        for (int i = 0; i < cedulas.size(); i++) {
-            this.getListaCedulas().addItem(cedulas.get(i));
-        }
+        this.comandos.ConexionCedulas(this.getListaCedulas());
         this.getPanel().setVisible(true);
         this.getTomarFoto().addActionListener(
         new ActionListener(){
