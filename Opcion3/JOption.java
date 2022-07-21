@@ -1,13 +1,12 @@
 package Opcion3;
 
-import javax.swing.JOptionPane;
-
+import Conexion.MySQLComandos;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import Conexion.MySQLComandos;
+import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -113,6 +112,7 @@ public class JOption {
 
     public void mostar(String s) {
         JOptionPane.showMessageDialog(null, s);
+
     }
 
 }

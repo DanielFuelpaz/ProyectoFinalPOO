@@ -243,7 +243,7 @@ public class Camarapnl extends javax.swing.JPanel {
         this.getTomarbtn().setText("OTRA");
         this.getGuardarbtn().setEnabled(true);
         this.getImg().setImg(new ImageIcon(this.getCam().getWebcam().getImage()));
-//        this.getImg().setIcon(new ImageIcon(this.getImg().getImg().getImage().getScaledInstance(this.getFotolbl().getWidth(), this.getFotolbl().getHeight(),Image.SCALE_SMOOTH )));
+
         this.getImg().setIcon(new ImageIcon(this.getImg().getImg().getImage()
                 .getScaledInstance(this.getFotolbl().getWidth(), this.getFotolbl().getHeight(), Image.SCALE_SMOOTH)));
         this.getFotolbl().setIcon(this.getImg().getIcon());
