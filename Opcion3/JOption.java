@@ -1,16 +1,15 @@
 package Opcion3;
 
-import Conexion.Conexion;
-import java.awt.Color;
+import javax.swing.JOptionPane;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.util.ArrayList;
 import Conexion.MySQLComandos;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,14 +21,19 @@ public class JOption {
     private JLabel imagenTitulo = new JLabel("Imagen");
     private JButton tomarFoto = new JButton("Abrir Cámara");
     private JLabel espacioParaImagen = new JLabel();
-    private MySQLComandos comandos =new MySQLComandos();
-    
+    private MySQLComandos comandos = new MySQLComandos();
+
     public JPanel getPanel() {
         return this.panel;
     }
 
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
+    public int preguntar(String s, String t) {
+        int r = JOptionPane.showConfirmDialog(null, s, t, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return r;
+    }
+
+    public String ingreso(String s, String t) {
+        return JOptionPane.showInputDialog(null, s, t);
     }
 
     public JLabel getCedulaTitulo() {
@@ -93,7 +97,7 @@ public class JOption {
         this.comandos.ConexionCedulas(this.getListaCedulas());
         this.getPanel().setVisible(true);
         this.getTomarFoto().addActionListener(
-        new ActionListener(){
+                new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Camarapnl cam = new Camarapnl();
@@ -101,9 +105,14 @@ public class JOption {
                 panel.revalidate();
                 panel.repaint();
             }
-            
+
         }
         );
         return this.getPanel();
     }
+
+    public void mostar(String s) {
+        JOptionPane.showMessageDialog(null, s);
+    }
+
 }
