@@ -1,6 +1,5 @@
 package Ncedula;
 
-import Conexion.Conexion;
 import Conexion.MySQLComandos;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
