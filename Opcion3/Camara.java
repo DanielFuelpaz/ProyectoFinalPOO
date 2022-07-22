@@ -12,7 +12,7 @@ public class Camara {
     private int numeroFoto = 1;
 
     public int getLargoCamara() {
-        return this.anchoCamara;
+        return this.largoCamara;
     }
 
     public void setLargoCamara(int largoCamara) {

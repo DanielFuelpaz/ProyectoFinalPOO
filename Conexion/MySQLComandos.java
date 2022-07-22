@@ -21,7 +21,6 @@ public class MySQLComandos {
     private PreparedStatement p;
     private ResultSet rs;
     private final Conexion c = new Conexion();
-    private Connection co = c.getConexion();
 
     public String getInstruccion() {
         return this.instruccion;
@@ -49,9 +48,9 @@ public class MySQLComandos {
 
     //Metodo de Inicio de Secion
     public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
-
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -66,7 +65,7 @@ public class MySQLComandos {
             //executeUpdate cuando se hacen select
         } catch (Exception e) {
             System.out.println("Error en la conexion");
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -86,9 +85,9 @@ public class MySQLComandos {
 
     //Control Creacion de Usuario
     public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) {
-
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -111,7 +110,7 @@ public class MySQLComandos {
             //executeUpdate cuando se hacen select
         } catch (Exception ex) {
             System.out.println("El Usuario ya existe");
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -131,22 +130,21 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public JTable Reportes() throws SQLException {
-        
+        Connection co = c.getConexion();
         Conexion c = new Conexion();
         String[] columnas = {"cedula", "Nombre", "Apellido", "Direccion", "Fotografia"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         JTable tabla = new JTable();
-       
-       
+
         try {
-            
+
             tabla.setModel(modelo);
-            co = c.getConexion();
+
             this.setInstruccion("SELECT * FROM datos usuario");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
-            
+
             while (rs.next()) {
                 registros[0] = rs.getString("Cedula");
                 registros[1] = rs.getString("Nombre");
@@ -158,7 +156,7 @@ public class MySQLComandos {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar");
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -179,8 +177,9 @@ public class MySQLComandos {
     }
 
     public void cargarprovincias(JComboBox cb1) {
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
@@ -189,7 +188,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -207,8 +206,9 @@ public class MySQLComandos {
     }
 
     public void cargarciudades(JComboBox cb2) {
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             this.setP(co.prepareStatement("SELECT ciudades FROM ciudades"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
@@ -217,7 +217,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -235,8 +235,9 @@ public class MySQLComandos {
     }
 
     public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono, JComboBox cb1, JComboBox cb2) {
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true) && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
                 this.setP(co.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
                 this.getP().setString(1, txtnombres.getText());
@@ -258,7 +259,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al Guardar");
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -276,9 +277,9 @@ public class MySQLComandos {
     }
 
     public void listaper(JComboBox per) {
-
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             this.setInstruccion("SELECT * FROM datospersonales WHERE cedula IS NULL");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
@@ -290,7 +291,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -309,8 +310,9 @@ public class MySQLComandos {
     }
 
     public void addced(JComboBox personas, JTextField Rced) {
+        Connection co = c.getConexion();
         try {
-            co = c.getConexion();
+
             String partes[] = personas.getSelectedItem().toString().split(" ");
             this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -321,7 +323,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -339,9 +341,10 @@ public class MySQLComandos {
     }
 
     public int traerced() {
+        Connection co = c.getConexion();
         int pos = 0;
         try {
-            co = c.getConexion();
+
             Random rnd = new Random();
             pos = rnd.nextInt(7999 + 1000) + 1000;
 
@@ -356,7 +359,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -371,11 +374,12 @@ public class MySQLComandos {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
+
         return pos;
     }
 
     public void ConexionCedulas(JComboBox ListaCedulas) {
-        co = c.getConexion();
+        Connection co = c.getConexion();
         this.setInstruccion("SELECT cedula FROM datospersonales");
         try {
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -385,7 +389,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -404,7 +408,7 @@ public class MySQLComandos {
     }
 
     public void InsCiud(JTextField txtop2) {
-        co = c.getConexion();
+        Connection co = c.getConexion();
         try {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)"));
             this.getP().setString(1, txtop2.getText());
@@ -413,7 +417,7 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -432,7 +436,7 @@ public class MySQLComandos {
     }
 
     public void InsProv(JTextField txtop2) {
-        co = c.getConexion();
+        Connection co = c.getConexion();
         try {
             this.setInstruccion("INSERT INTO provincias (provincias) VALUES (?)");
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -442,7 +446,7 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        }finally {
             try {
                 if (rs != null) {
                     rs.close();
