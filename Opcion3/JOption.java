@@ -1,17 +1,18 @@
 package Opcion3;
 
-import java.awt.Color;
+import Conexion.MySQLComandos;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import Conexion.MySQLComandos;
+import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Panel3 {
+public class JOption {
 
     private JPanel panel = new JPanel();
     private JLabel cedulaTitulo = new JLabel("cédula:");
@@ -25,8 +26,13 @@ public class Panel3 {
         return this.panel;
     }
 
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
+    public int preguntar(String s, String t) {
+        int r = JOptionPane.showConfirmDialog(null, s, t, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        return r;
+    }
+
+    public String ingreso(String s, String t) {
+        return JOptionPane.showInputDialog(null, s, t);
     }
 
     public JLabel getCedulaTitulo() {
@@ -87,10 +93,8 @@ public class Panel3 {
         this.getPanel().add(this.getImagenTitulo());
         this.getPanel().add(this.getTomarFoto());
         this.getPanel().add(this.getEspacioParaImagen());
-        this.getListaCedulas().removeAllItems();
         this.comandos.ConexionCedulas(this.getListaCedulas());
         this.getPanel().setVisible(true);
-        // cambio
         this.getTomarFoto().addActionListener(
                 new ActionListener() {
             @Override
@@ -101,8 +105,14 @@ public class Panel3 {
                 panel.repaint();
             }
 
-        });
+        }
+        );
         return this.getPanel();
+    }
+
+    public void mostar(String s) {
+        JOptionPane.showMessageDialog(null, s);
+
     }
 
 }

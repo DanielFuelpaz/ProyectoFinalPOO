@@ -59,6 +59,7 @@ public class MySQLComandos {
                 if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
                     System.out.println("sesion iniciada correctamente");
                     return true;
+
                 }
             }
 
@@ -233,15 +234,6 @@ public class MySQLComandos {
         }
     }
 
-    public ResultSet accesologin(String u, String clave) throws SQLException {
-        this.setInstruccion("Select * from usuarios where usuario=? and clave=?");
-        this.setP(co.prepareStatement(this.getInstruccion()));
-        this.getP().setString(1, u);
-        this.getP().setString(2, clave);
-        this.setRs(this.getP().executeQuery());
-        return this.getRs();
-    }
-
     public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono, JComboBox cb1, JComboBox cb2) {
         try {
             co = c.getConexion();
@@ -382,12 +374,15 @@ public class MySQLComandos {
         return pos;
     }
 
-    public ResultSet ConexionCedulas() {
+    public void ConexionCedulas(JComboBox ListaCedulas) {
         co = c.getConexion();
-        this.setInstruccion("SELECT * FROM datospersonales");
+        this.setInstruccion("SELECT cedula FROM datospersonales");
         try {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery(this.getInstruccion()));
+            while (this.getRs().next()) {
+                ListaCedulas.addItem(this.getRs().getString("cedula"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -405,7 +400,7 @@ public class MySQLComandos {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        return this.getRs();
+
     }
 
     public void InsCiud(JTextField txtop2) {
