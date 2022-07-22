@@ -130,9 +130,10 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public JTable Reportes() throws SQLException {
+        
         Connection co = c.getConexion();
         Conexion c = new Conexion();
-        String[] columnas = {"cedula", "Nombre", "Apellido", "Direccion", "Fotografia"};
+        String[] columnas = { "Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         JTable tabla = new JTable();
@@ -141,16 +142,16 @@ public class MySQLComandos {
 
             tabla.setModel(modelo);
 
-            this.setInstruccion("SELECT * FROM datos usuario");
+            this.setInstruccion("SELECT * FROM datospersonales");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
 
             while (rs.next()) {
-                registros[0] = rs.getString("Cedula");
-                registros[1] = rs.getString("Nombre");
-                registros[2] = rs.getString("Apellido");
-                registros[3] = rs.getString("Direccion");
-                registros[4] = rs.getString("Fotografia");
+                registros[0] = rs.getString("cedula");
+                registros[1] = rs.getString("apellido");
+                registros[2] = rs.getString("nombre");
+                registros[3] = rs.getString("direccion");
+                registros[4] = rs.getString("foto");
                 modelo.addRow(registros);
 
             }

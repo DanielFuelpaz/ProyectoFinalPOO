@@ -6,6 +6,7 @@
 package Reporte;
 
 import Conexion.MySQLComandos;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -45,9 +46,10 @@ public class Reporte implements ActionListener {
   
     public JPanel Mostrar() throws SQLException {
         
-        this.report = m.Reportes();
-        this.panel.add(report);
-    
+        panel.setBounds(200, 0, 575, 350);
+        panel.setBackground(new Color(205,224,228));
+        panel.add(m.Reportes());
+        
     
         
         

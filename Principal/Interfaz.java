@@ -24,10 +24,10 @@ public class Interfaz {
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
     private Ncedula Ced = new Ncedula();
-    public Panel3 foto = new Panel3();
+    private Panel3 foto = new Panel3();
     private DatosPersonales DP = new DatosPersonales();
     private Reporte r = new Reporte();
-    Configuracion c = new Configuracion();
+    private Configuracion c = new Configuracion();
 
     public void initialize() {
 
@@ -92,13 +92,14 @@ public class Interfaz {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
                     try {
-                        r.Mostrar();
+                        Fbase.add(r.Mostrar());
+                        
                         
                     } catch (SQLException ex) {
                         Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
-                    
+                    r.getPanel().setVisible(false);
                 }
             }
 
