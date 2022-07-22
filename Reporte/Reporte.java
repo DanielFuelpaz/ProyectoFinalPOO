@@ -6,18 +6,15 @@
 package Reporte;
 
 import Conexion.MySQLComandos;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.awt.Dimension;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author USUARIO
- */
-public class Reporte implements ActionListener {
+public class Reporte {
 
     //Propiedades de la Clase Reporte
     private JPanel panel = new JPanel();
@@ -39,26 +36,22 @@ public class Reporte implements ActionListener {
     public void setReport(JTable report) {
         this.report = report;
     }
-    
-    
-    
-    
-  
-    public JPanel Mostrar() throws SQLException {
-        
-        panel.setBounds(200, 0, 575, 350);
-        panel.setBackground(new Color(205,224,228));
-        panel.add(m.Reportes());
-        
-    
-        
-        
-        return this.panel;
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public JPanel initialize() {
+
+        panel.setBounds(200, 0, 575, 350);
+        panel.setBackground(new Color(205, 224, 228));
+        report.setPreferredScrollableViewportSize(new Dimension(200, 300));
+        report.setBounds(20, 20, 475, 300);
+        JScrollPane Scroll=new JScrollPane();
+        Scroll.setViewportView(report);
+        DefaultTableModel model = m.Reportes();
+        report.setModel(model);
+        panel.add(report);
+        panel.setLayout(null);
+        panel.setVisible(true);
+
+        return this.panel;
     }
 
 }
