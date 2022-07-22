@@ -65,7 +65,7 @@ public class MySQLComandos {
             //executeUpdate cuando se hacen select
         } catch (Exception e) {
             System.out.println("Error en la conexion");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -110,7 +110,7 @@ public class MySQLComandos {
             //executeUpdate cuando se hacen select
         } catch (Exception ex) {
             System.out.println("El Usuario ya existe");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -129,10 +129,10 @@ public class MySQLComandos {
     }
 
     // Metodo de Traer Reportes
-    public DefaultTableModel Reportes(){
-        
+    public void Reportes(JTable tabla) {
+
         Connection co = c.getConexion();
-        String[] columnas = { "Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
+        String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
@@ -151,9 +151,10 @@ public class MySQLComandos {
                 modelo.addRow(registros);
 
             }
+            tabla.setModel(modelo);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -168,9 +169,6 @@ public class MySQLComandos {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-
-        return modelo;
-
     }
 
     public void cargarprovincias(JComboBox cb1) {
@@ -185,7 +183,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -214,7 +212,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -256,7 +254,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al Guardar");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -288,7 +286,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -320,7 +318,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -356,7 +354,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -386,7 +384,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -414,7 +412,7 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -443,7 +441,7 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
