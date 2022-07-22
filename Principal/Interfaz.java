@@ -9,9 +9,6 @@ import Reporte.Reporte;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 
@@ -91,13 +88,8 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    try {
-                        Fbase.add(r.Mostrar());
-                        
-                        
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Fbase.add(r.getPanel());
+                    r.initialize();
                 } else {
                     r.getPanel().setVisible(false);
                 }
