@@ -28,7 +28,6 @@ public class Interfaz {
 
     public void initialize() {
 
-        Fbase.setSize(600, 600);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
@@ -46,7 +45,6 @@ public class Interfaz {
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
         Fbase.add(this.opcion5);
-
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {

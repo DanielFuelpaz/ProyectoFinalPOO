@@ -46,7 +46,7 @@ public class Configuracion implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent a) {
                 switch (cb1.getSelectedItem().toString()) {
-                    case  "Ciudad":  {
+                    case "Ciudad" -> {
                         op3.show(false);
                         op2.show(true);
                         txtop2.show(true);
@@ -60,7 +60,7 @@ public class Configuracion implements ActionListener {
                         frame.show();
                         sql.cargarprovincias(cb2);
                     }
-                    case "Provincia": {
+                    case "Provincia" -> {
                         op2.show(false);
                         cb2.show(false);
                         op3.show(true);
@@ -70,7 +70,7 @@ public class Configuracion implements ActionListener {
                         frame.add(txtop2);
                         txtop2.setBounds(150, 70, 200, 20);
                     }
-                    default: {
+                    default -> {
                         op3.show(false);
                         op2.show(false);
                         txtop2.show(false);

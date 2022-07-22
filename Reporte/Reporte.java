@@ -11,14 +11,15 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 public class Reporte {
 
-    String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
     //Propiedades de la Clase Reporte
     private JPanel panel = new JPanel();
     MySQLComandos m = new MySQLComandos();
     private JTable report = new JTable();
+    TableColumnModel columna;
 
     public JPanel getPanel() {
         return this.panel;
@@ -38,12 +39,13 @@ public class Reporte {
 
     public JPanel initialize() {
 
-        panel.setBounds(200, 0, 575, 350);
+        panel.setBounds(200, 0, 600, 350);
         panel.setBackground(new Color(205, 224, 228));
-        report.setBounds(20, 20, 475, 300);
+        report.setBounds(20, 20, 600, 300);
+        report.setLayout(null);
         m.Reportes(report);
         JScrollPane jscrollpane = new JScrollPane(report);
-
+        panel.add(report);
         panel.add(jscrollpane, BorderLayout.CENTER);
         panel.setLayout(null);
         panel.setVisible(true);
