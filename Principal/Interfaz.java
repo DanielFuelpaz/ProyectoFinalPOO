@@ -4,10 +4,14 @@ import Configuracion.Configuracion;
 import DatosPersonales.DatosPersonales;
 import Ncedula.Ncedula;
 import Opcion3.*;
+import Reporte.Reporte;
 
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 
@@ -22,6 +26,7 @@ public class Interfaz {
     private Ncedula Ced = new Ncedula();
     public Panel3 foto = new Panel3();
     private DatosPersonales DP = new DatosPersonales();
+    private Reporte r = new Reporte();
     Configuracion c = new Configuracion();
 
     public void initialize() {
@@ -86,9 +91,14 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    System.out.println("seleccionado op4");
+                    try {
+                        r.Mostrar();
+                        
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Interfaz.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
-                    System.out.println("deseleccionado op4");
+                    
                 }
             }
 

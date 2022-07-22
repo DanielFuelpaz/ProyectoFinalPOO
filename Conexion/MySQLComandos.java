@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class MySQLComandos {
 
@@ -45,6 +47,7 @@ public class MySQLComandos {
         this.rs = rs;
     }
 
+    //Metodo de Inicio de Secion
     public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
 
         try {
@@ -123,6 +126,55 @@ public class MySQLComandos {
             }
         }
         return false;
+    }
+
+    // Metodo de Traer Reportes
+    public JTable Reportes() throws SQLException {
+        
+        Conexion c = new Conexion();
+        String[] columnas = {"cedula", "Nombre", "Apellido", "Direccion", "Fotografia"};
+        String[] registros = new String[5];
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        JTable tabla = new JTable();
+       
+       
+        try {
+            
+            tabla.setModel(modelo);
+            co = c.getConexion();
+            this.setInstruccion("SELECT * FROM datos usuario");
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.setRs(this.getP().executeQuery());
+            
+            while (rs.next()) {
+                registros[0] = rs.getString("Cedula");
+                registros[1] = rs.getString("Nombre");
+                registros[2] = rs.getString("Apellido");
+                registros[3] = rs.getString("Direccion");
+                registros[4] = rs.getString("Fotografia");
+                modelo.addRow(registros);
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al conectar");
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        return tabla;
+
     }
 
     public void cargarprovincias(JComboBox cb1) {
