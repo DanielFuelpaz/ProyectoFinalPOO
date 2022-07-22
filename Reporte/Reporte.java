@@ -8,14 +8,13 @@ package Reporte;
 import Conexion.MySQLComandos;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class Reporte {
 
+    String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
     //Propiedades de la Clase Reporte
     private JPanel panel = new JPanel();
     MySQLComandos m = new MySQLComandos();
@@ -41,13 +40,11 @@ public class Reporte {
 
         panel.setBounds(200, 0, 575, 350);
         panel.setBackground(new Color(205, 224, 228));
-        report.setPreferredScrollableViewportSize(new Dimension(200, 300));
         report.setBounds(20, 20, 475, 300);
-        JScrollPane Scroll=new JScrollPane();
-        Scroll.setViewportView(report);
-        DefaultTableModel model = m.Reportes();
-        report.setModel(model);
-        panel.add(report);
+        m.Reportes(report);
+        JScrollPane jscrollpane = new JScrollPane(report);
+
+        panel.add(jscrollpane, BorderLayout.CENTER);
         panel.setLayout(null);
         panel.setVisible(true);
 
