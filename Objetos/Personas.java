@@ -7,6 +7,15 @@ public class Personas {
     private String nombre;
     private String direccion;
     private String telefono;
+    private byte[] fotos;
+
+    public byte[] getFotos() {
+        return fotos;
+    }
+
+    public void setFotos(byte[] fotos) {
+        this.fotos = fotos;
+    }
 
     public Integer getCedula() {
         return this.cedula;
