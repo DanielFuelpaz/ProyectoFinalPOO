@@ -21,6 +21,7 @@ public class Interfaz {
     public JToggleButton opcion3 = new JToggleButton("Tomar Fotografía");
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
+    public JToggleButton opcion6 = new JToggleButton("Salir");
     private Ncedula Ced = new Ncedula();
     private Panel3s foto = new Panel3s();
     private DatosPersonales DP = new DatosPersonales();
@@ -40,13 +41,18 @@ public class Interfaz {
         opcion3.setBounds(0, 60, 190, 30);
         opcion4.setBounds(0, 90, 190, 30);
         opcion5.setBounds(0, 120, 190, 30);
+        opcion6.setBounds(0, 150, 190, 30);
 
         Fbase.add(this.opcion1);
         Fbase.add(this.opcion2);
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
         Fbase.add(this.opcion5);
+<<<<<<< HEAD
         
+=======
+        Fbase.add(this.opcion6);
+>>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
@@ -116,7 +122,18 @@ public class Interfaz {
 
         });
 
-        Fbase.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.opcion6.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                int estado = ie.getStateChange();
+                if (estado == ItemEvent.SELECTED) {
+                    System.exit(0);
+                }
+            }
+
+        });
+        Fbase.setDefaultCloseOperation(0);
+        Fbase.setResizable(false);
         Fbase.show();
     }
     public static void main(String[] args) {

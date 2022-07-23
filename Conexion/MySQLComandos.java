@@ -1,5 +1,7 @@
 package Conexion;
 
+import Objetos.cargarciudad;
+import Objetos.cargarprovincia;
 import Ncedula.Ncedula;
 import Objetos.PersonaBD;
 import Opcion3.JOption3;
@@ -11,13 +13,15 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class MySQLComandos {
@@ -99,7 +103,7 @@ public class MySQLComandos {
     }
 
     // Control Creacion de Usuario
-    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) {
+    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion, JPasswordField contraseña) {
         Connection co = c.getConexion();
         try {
 
@@ -107,7 +111,25 @@ public class MySQLComandos {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
+                //primer control: Nombres de usuarios ya existentes
+                if (!(rs.getString("usuario").equals(usuario.getText()))) {
+                    if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*") && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
+                        this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
+                        this.setP(co.prepareStatement(this.getInstruccion()));
+                        this.getP().setString(1, usuario.getText());
+                        this.getP().setString(2, confirmacion.getText());
+                        this.getP().executeUpdate();
+                        this.getDatos().mostrar(" ==== Usuario Creado ====");
+                        usuario.setText("");
+                        contraseña.setText("");
+                        confirmacion.setText("");
+                        return true;
+                    } else {
+                        this.getDatos().mostrar("La contraseña debe tener todo en mayusculas y tener numeros\nEjemplo: USUARIO1234");
+                        return false;
+                    }
 
+<<<<<<< HEAD
                 if (!(this.getRs().getString("usuario").equals(usuario.getText())
                        ) && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]") ) {
                          
@@ -125,16 +147,23 @@ public class MySQLComandos {
                     
                 }else{
                     datos.mostrar("=== ERROR DE CREACION DE USUARIO ====");
+=======
+>>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
                 }
 
             }
 
             // executeUpdate cuando se hacen select
+<<<<<<< HEAD
         } catch (Exception ex) {
 
             this.getDatos().mostrar("=== ERROR CLAVE USUARIO INCORRECTA ===");
 
             this.getDatos().mostrar("El Usuario ya existe");
+=======
+        } catch (SQLException ex) {
+            this.getDatos().mostrar("El Usuario " + usuario.getText() + " ya existe");
+>>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
 
         } finally {
             try {
@@ -211,12 +240,53 @@ public class MySQLComandos {
 
     public void cargarprovincias(JComboBox cb1) {
         Connection co = c.getConexion();
+<<<<<<< HEAD
         try {
             cb1.removeAllItems();
             this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
                 cb1.addItem(this.getRs().getString("provincias"));
+=======
+        DefaultComboBoxModel value;
+        Statement st = null;
+        ResultSet rs = null;
+        try{
+            st = co.createStatement();
+            rs = st.executeQuery("SELECT * FROM provincias");
+            value = new DefaultComboBoxModel();
+            cb1.setModel(value);
+            while(rs.next()){                
+                value.addElement(new cargarprovincia(rs.getInt(1),rs.getString(2)));
+            }
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally{
+            try{
+                st.close();
+                rs.close();
+            }catch(Exception ex){
+            }
+        }
+    }
+    
+    public void cargarciudades(JComboBox cb2, int id) {
+          
+        Connection co = c.getConexion();
+        DefaultComboBoxModel value;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try{
+            ps = co.prepareStatement("SELECT * FROM ciudades where prov_id = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            value = new DefaultComboBoxModel();
+            cb2.setModel(value);
+            while(rs.next()){
+                value.addElement(new cargarciudad(rs.getInt(1), rs.getString(2)));
+>>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
             }
         } catch (SQLException ex) {
             this.getDatos().mostrar(ex);
@@ -235,7 +305,9 @@ public class MySQLComandos {
                 this.getDatos().mostrar(e);
             }
         }
+        
     }
+<<<<<<< HEAD
 
     public void cargarciudades(JComboBox cb2) {
         Connection co = c.getConexion();
@@ -265,6 +337,9 @@ public class MySQLComandos {
             }
         }
     }
+=======
+    
+>>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
 
     public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono,
             JComboBox cb1, JComboBox cb2) {
@@ -437,13 +512,17 @@ public class MySQLComandos {
         }
         }
 
-    public void InsCiud(JTextField txtop2) {
+    public void InsCiud(JTextField txtop2,int id) {
         Connection co = c.getConexion();
         try {
-            this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)"));
+            this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
             this.getP().setString(1, txtop2.getText());
+            this.getP().setInt(2, id);
             this.getP().execute();
             this.getDatos().mostrar("Elementos guardados");
+            this.getP().setString(2, txtop2.getText());
+            this.getP().executeUpdate();
+            JOptionPane.showMessageDialog(null, "Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);

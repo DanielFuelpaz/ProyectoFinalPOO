@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Principal.Interfaz;
-import java.awt.Font;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -172,6 +171,7 @@ public class Login implements ActionListener {
         this.j.setBackground(Color.GRAY);
         this.j.show();
         this.j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.j.setResizable(false);
 
         return j;
     }
@@ -200,6 +200,7 @@ public class Login implements ActionListener {
         this.j2.setBackground(Color.GRAY);
         this.j2.show();
         this.j2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.j2.setResizable(false);
 
         return j2;
 
@@ -230,7 +231,7 @@ public class Login implements ActionListener {
             panelCreacionCuenta();
 
         } else {
-            if (sql.creacionusuario(textocreacion, textocreacion3)) {
+            if (sql.creacionusuario(textocreacion, textocreacion2,textocreacion3)) {
                 j2.hide();
                 j.show();
             }
