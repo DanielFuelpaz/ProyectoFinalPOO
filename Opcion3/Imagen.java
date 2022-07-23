@@ -9,27 +9,27 @@ public class Imagen {
     private ImageIcon img;
     private Icon icon;
 
-    public BufferedImage getRuta() {
+    protected BufferedImage getRuta() {
         return this.ruta;
     }
 
-    public void setRuta(BufferedImage ruta) {
+    protected void setRuta(BufferedImage ruta) {
         this.ruta = ruta;
     }
 
-    public ImageIcon getImg() {
+    protected ImageIcon getImg() {
         return this.img;
     }
 
-    public void setImg(ImageIcon img) {
+    protected void setImg(ImageIcon img) {
         this.img = img;
     }
 
-    public Icon getIcon() {
+    protected Icon getIcon() {
         return this.icon;
     }
 
-    public void setIcon(Icon icon) {
+    protected void setIcon(Icon icon) {
         this.icon = icon;
     }
 
