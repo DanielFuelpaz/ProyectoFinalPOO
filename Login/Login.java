@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Principal.Interfaz;
-import java.awt.Font;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -232,7 +231,7 @@ public class Login implements ActionListener {
             panelCreacionCuenta();
 
         } else {
-            if (sql.creacionusuario(textocreacion, textocreacion3)) {
+            if (sql.creacionusuario(textocreacion, textocreacion2,textocreacion3)) {
                 j2.hide();
                 j.show();
             }
