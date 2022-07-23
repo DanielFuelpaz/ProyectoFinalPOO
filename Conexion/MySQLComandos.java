@@ -2,6 +2,7 @@ package Conexion;
 
 import Ncedula.Ncedula;
 import Objetos.PersonaBD;
+import Opcion3.JOption3;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,7 @@ public class MySQLComandos {
     private PreparedStatement p;
     private ResultSet rs;
     private final Conexion c = new Conexion();
+    JOption3 datos = new JOption3();
 
     public String getInstruccion() {
         return this.instruccion;
@@ -50,18 +52,26 @@ public class MySQLComandos {
         this.rs = rs;
     }
 
+    public JOption3 getDatos() {
+        return this.datos;
+    }
+
+    public void setDatos(JOption3 datos) {
+        this.datos = datos;
+    }
+    
+
     // Metodo de Inicio de Secion
     public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
         Connection co = c.getConexion();
         try {
-
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
                 if (rs.getString("usuario").equals(usuario.getText())
                         && rs.getString("contraseña").equals(contraseña.getText())) {
-                    System.out.println("sesion iniciada correctamente");
+                    this.getDatos().mostrar("sesion iniciada correctamente");
                     return true;
 
                 }
@@ -69,7 +79,7 @@ public class MySQLComandos {
 
             // executeUpdate cuando se hacen select
         } catch (Exception e) {
-            System.out.println("Error en la conexion");
+            this.getDatos().mostrar("Error en la conexion");
         } finally {
             try {
                 if (rs != null) {
@@ -82,7 +92,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
         return false;
@@ -105,7 +115,7 @@ public class MySQLComandos {
                     this.getP().setString(1, usuario.getText());
                     this.getP().setString(2, confirmacion.getText());
                     this.getP().executeUpdate();
-                    System.out.println(" ==== Usuario Creado ====");
+                    this.getDatos().mostrar(" ==== Usuario Creado ====");
                     usuario.setText("");
                     confirmacion.setText("");
                     return true;
@@ -115,7 +125,7 @@ public class MySQLComandos {
 
             // executeUpdate cuando se hacen select
         } catch (Exception ex) {
-            System.out.println("El Usuario ya existe");
+            this.getDatos().mostrar("El Usuario ya existe");
         } finally {
             try {
                 if (rs != null) {
@@ -128,7 +138,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
         return false;
@@ -158,7 +168,7 @@ public class MySQLComandos {
             }
             tabla.setModel(modelo);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al conectar");
+            this.getDatos().mostrar("Error al conectar");
         } finally {
             try {
                 if (rs != null) {
@@ -171,7 +181,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
     }
@@ -197,7 +207,7 @@ public class MySQLComandos {
                 listP.add(persona);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al conectar");
+            this.getDatos().mostrar("Error al conectar");
         } finally {
             try {
                 if (rs != null) {
@@ -210,7 +220,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
         return listP;
@@ -223,11 +233,10 @@ public class MySQLComandos {
             this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-
                 cb1.addItem(rs.getString("provincias"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            this.getDatos().mostrar(ex);
         } finally {
             try {
                 if (rs != null) {
@@ -240,7 +249,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
     }
@@ -256,7 +265,7 @@ public class MySQLComandos {
                 cb2.addItem(this.getRs().getString("ciudades"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            this.getDatos().mostrar(ex);
         } finally {
             try {
                 if (rs != null) {
@@ -269,7 +278,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+               this.getDatos().mostrar(e);
             }
         }
     }
@@ -291,17 +300,17 @@ public class MySQLComandos {
                 this.getP().setString(6, cb2.getSelectedItem().toString());
                 this.getP().executeUpdate();
 
-                JOptionPane.showMessageDialog(null, "Elementos guardados");
+                this.getDatos().mostrar("Elementos guardados");
                 txtnombres.setText("");
                 txtapellidos.setText("");
                 txtdireccion.setText("");
                 txttelefono.setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
+                this.getDatos().mostrar("No se ha seleccionado ningun item");
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al Guardar");
+            this.getDatos().mostrar("Error al Guardar");
         } finally {
             try {
                 if (rs != null) {
@@ -314,7 +323,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
     }
@@ -346,7 +355,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
 
@@ -379,7 +388,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
     }
@@ -415,7 +424,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
 
@@ -445,7 +454,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
 
@@ -457,7 +466,7 @@ public class MySQLComandos {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)"));
             this.getP().setString(1, txtop2.getText());
             this.getP().execute();
-            JOptionPane.showMessageDialog(null, "Elementos guardados");
+            this.getDatos().mostrar("Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
@@ -473,7 +482,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
 
@@ -486,7 +495,7 @@ public class MySQLComandos {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setString(1, txtop2.getText());
             this.getP().executeUpdate();
-            JOptionPane.showMessageDialog(null, "Elementos guardados");
+            this.getDatos().mostrar("Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
@@ -502,7 +511,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
     }
@@ -532,7 +541,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
+                this.getDatos().mostrar(e);
             }
         }
     }

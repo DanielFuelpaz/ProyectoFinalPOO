@@ -1,18 +1,12 @@
 package Opcion3;
 
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-public class JOption {
-
-    public int preguntar(String s, String t) {
-        return JOptionPane.showConfirmDialog(null, s, t, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-    }
-
-    public String ingreso(String s, String t) {
-        return JOptionPane.showInputDialog(null, s, t);
-    }
-
-    public void mostar(String s) {
-        JOptionPane.showMessageDialog(null, s);
-    }
+public abstract class JOption {
+    public abstract int preguntar(String s, String t);
+    public abstract String ingreso(String s, String t);
+    public abstract void mostrar(String s);
+    public abstract void mostrar(SQLException e);
+    public abstract void mostrar(Exception e);
 }

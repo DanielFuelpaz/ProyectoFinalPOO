@@ -358,7 +358,7 @@ public class Panel3s extends javax.swing.JPanel {
     }// GEN-LAST:event_ApagarbtnActionPerformed
 
     private void GuardarbtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_GuardarbtnActionPerformed
-        JOption datos = new JOption();
+        JOption3 datos = new JOption3();
         MySQLComandos comandos = new MySQLComandos();
         int respuesta = datos.preguntar("¿Desea guardar la foto?", "Confirmación");
         if (respuesta == 0) {
@@ -367,7 +367,7 @@ public class Panel3s extends javax.swing.JPanel {
             comandos.enviarImagen(imagenRuta.getAbsolutePath(), opcion);
             try {
                 ImageIO.write(this.getImg().getRuta(), "jpg", imagenRuta);
-                datos.mostar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
+                datos.mostrar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
             } catch (Exception e) {
                 System.out.println("Error: " + e);
             }
