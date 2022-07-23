@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Principal.Interfaz;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ public class Login implements ActionListener {
 
     // Propiedades del Metodo Creacion Cuneta
     private JFrame j2 = new JFrame();
-    private JLabel cajacreacion = new JLabel("Nombre Usuario: ");
+    private JLabel cajacreacion = new JLabel("Nombre de Usuario: ");
     private JLabel cajacreacion2 = new JLabel("Contraseña: ");
     private JLabel cajacreacion3 = new JLabel("Repita la Contraseña:");
     private JTextField textocreacion = new JTextField("");
@@ -28,12 +29,13 @@ public class Login implements ActionListener {
 
     // Propiedades del Metodo Login Acceso a la Cuenta
     private JFrame j = new JFrame();
-    private JLabel caja = new JLabel("Usuario: ");
-    private JLabel caja2 = new JLabel("Contraseña: ");
-    private JTextField texto = new JTextField("");
-    private JPasswordField texto2 = new JPasswordField("");
-    private JButton boton = new JButton("Crear Usuario ");
-    private JButton boton2 = new JButton("Ingresar");
+    private JLabel caja = new JLabel();
+    private JLabel caja2 = new JLabel();
+    private JLabel caja3 = new JLabel();
+    private JTextField texto = new JTextField();
+    private JPasswordField texto2 = new JPasswordField();
+    private JButton boton = new JButton();
+    private JButton boton2 = new JButton();
     private MySQLComandos sql = new MySQLComandos();
 
     public JLabel getCajacreacion() {
@@ -142,17 +144,20 @@ public class Login implements ActionListener {
 
     public JFrame panelusuario() {
 
-        this.caja.setText("Usuario");
-        this.caja2.setText("Contraseña");
+        this.caja.setText("Usuario :");
+        this.caja2.setText("Contraseña :");
         this.boton.setText("Crear Cuenta");
+        this.boton2.setText("INGRESAR");
+        this.caja3.setText("=== REGISTRO CIVIL ===");
         this.j.setLayout(null);
-        this.j.setSize(400, 400);
-        this.boton2.setBounds(30, 300, 100, 25);
-        this.boton.setBounds(150, 300, 200, 25); // Edicion del Boton lugar (x,y) (largo,ancho)
-        this.texto.setBounds(100, 200, 100, 25);
-        this.texto2.setBounds(100, 250, 100, 25);
-        this.caja.setBounds(35, 200, 50, 25);
-        this.caja2.setBounds(25, 250, 75, 25);
+        this.j.setBounds(400, 100, 500, 500);// Edicion del Frame lugar (x,y) (largo y Ancho)
+        this.boton2.setBounds(195, 250, 100, 25);
+        this.boton.setBounds(180, 300, 130, 25); // Edicion del Boton lugar (x,y) (largo,ancho)
+        this.texto.setBounds(200, 130, 100, 25);
+        this.texto2.setBounds(200, 180, 100, 25);
+        this.caja.setBounds(120, 130, 50, 25);
+        this.caja2.setBounds(100, 180, 75, 25);
+        this.caja3.setBounds(180, -50, 200, 200);
         this.boton.addActionListener(this);
         this.boton2.addActionListener(this);
 
@@ -162,6 +167,7 @@ public class Login implements ActionListener {
         this.j.add(texto2);
         this.j.add(boton);
         this.j.add(boton2);
+        this.j.add(caja3);
 
         this.j.setBackground(Color.GRAY);
         this.j.show();
@@ -174,14 +180,14 @@ public class Login implements ActionListener {
     public JFrame panelCreacionCuenta() {
 
         this.j2.setLayout(null);
-        this.j2.setSize(600, 600);
-        this.cajacreacion.setBounds(55, 100, 100, 25);
-        this.cajacreacion2.setBounds(75, 200, 70, 25);
-        this.cajacreacion3.setBounds(20, 300, 130, 25);
-        this.textocreacion.setBounds(150, 100, 100, 25);
-        this.textocreacion2.setBounds(150, 200, 100, 25);
-        this.textocreacion3.setBounds(150, 300, 100, 25);
-        this.botonguardar.setBounds(200, 350, 100, 25);
+        this.j2.setBounds(400, 200, 500, 300);
+        this.cajacreacion.setBounds(120, 50, 150, 25);
+        this.cajacreacion2.setBounds(160, 100, 100, 25);
+        this.cajacreacion3.setBounds(110, 150, 130, 25);
+        this.textocreacion.setBounds(250, 50, 100, 25);
+        this.textocreacion2.setBounds(250, 100, 100, 25);
+        this.textocreacion3.setBounds(250, 150, 100, 25);
+        this.botonguardar.setBounds(200, 200, 100, 25);
         this.j2.add(cajacreacion);
         this.j2.add(cajacreacion2);
         this.j2.add(cajacreacion3);
