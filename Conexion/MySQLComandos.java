@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class MySQLComandos {
@@ -276,15 +277,6 @@ public class MySQLComandos {
             while(rs.next()){
                 value.addElement(new cargarciudad(rs.getInt(1), rs.getString(2)));
             }
-<<<<<<< HEAD
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }finally{
-            try{
-                ps.close();
-                rs.close();
-            }catch(Exception ex){
-=======
         } catch (SQLException ex) {
             this.getDatos().mostrar(ex);
         } finally {
@@ -300,7 +292,6 @@ public class MySQLComandos {
                 }
             } catch (SQLException e) {
                 this.getDatos().mostrar(e);
->>>>>>> ebd72f169115cc5fe749b8c56323ec01b0cbe4f2
             }
         }
         
@@ -489,15 +480,12 @@ public class MySQLComandos {
         try {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
             this.getP().setString(1, txtop2.getText());
-<<<<<<< HEAD
             this.getP().setInt(2, id);
             this.getP().execute();
             this.getDatos().mostrar("Elementos guardados");
-=======
             this.getP().setString(2, txtop2.getText());
             this.getP().executeUpdate();
             JOptionPane.showMessageDialog(null, "Elementos guardados");
->>>>>>> ebd72f169115cc5fe749b8c56323ec01b0cbe4f2
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
