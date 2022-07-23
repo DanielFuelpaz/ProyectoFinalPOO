@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javax.swing.JTable;
 
 public class MySQLComandos {
 
@@ -132,18 +133,18 @@ public class MySQLComandos {
     }
 
     // Metodo de Traer Reportes
-    public DefaultTableModel Reportes() {
+    public void Reportes(JTable tabla) {
 
         Connection co = c.getConexion();
         String[] columnas = { "Cedula", "Apellido", "Nombre", "Direccion", "Fotografia" };
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-
         try {
 
             this.setInstruccion("SELECT * FROM datospersonales");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
+            modelo.addRow(columnas);
 
             while (rs.next()) {
                 registros[0] = rs.getString("cedula");
@@ -152,8 +153,8 @@ public class MySQLComandos {
                 registros[3] = rs.getString("direccion");
                 registros[4] = rs.getString("foto");
                 modelo.addRow(registros);
-
             }
+            tabla.setModel(modelo);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar");
         } finally {
@@ -171,15 +172,12 @@ public class MySQLComandos {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-
-        return modelo;
-
     }
 
     public void cargarprovincias(JComboBox cb1) {
         Connection co = c.getConexion();
         try {
-
+            cb1.removeAllItems();
             this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
@@ -208,7 +206,7 @@ public class MySQLComandos {
     public void cargarciudades(JComboBox cb2) {
         Connection co = c.getConexion();
         try {
-
+            cb2.removeAllItems();
             this.setP(co.prepareStatement("SELECT ciudades FROM ciudades"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {

@@ -29,12 +29,11 @@ public class Interfaz {
 
     public void initialize() {
 
-        Fbase.setSize(600, 600);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
         Fbase.setVisible(true);
-        Fbase.setBounds(0, 0, 800, 600);
+        Fbase.setBounds(0, 0, 1280, 720);
 
         opcion1.setBounds(0, 0, 190, 30);
         opcion2.setBounds(0, 30, 190, 30);
@@ -47,7 +46,6 @@ public class Interfaz {
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
         Fbase.add(this.opcion5);
-
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
@@ -68,7 +66,7 @@ public class Interfaz {
                 Ced.initialize();
             } else {
                 Ced.getJp1().setVisible(false);
-                // Fbase.dispose();
+                Ced.getPersonas().removeAllItems();
 
             }
         });
@@ -109,6 +107,7 @@ public class Interfaz {
                     c.initialize();
                 } else {
                     c.getFrame().setVisible(false);
+                    c.getCb1().removeAllItems();
                 }
             }
 

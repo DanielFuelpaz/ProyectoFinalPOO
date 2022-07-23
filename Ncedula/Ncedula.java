@@ -25,6 +25,10 @@ public class Ncedula implements ActionListener {
         return this.Jp1;
     }
 
+    public JComboBox getPersonas() {
+        return this.personas;
+    }
+
     public JPanel initialize() {
 
         getJp1().setBounds(200, 0, 575, 350);

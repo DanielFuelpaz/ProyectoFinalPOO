@@ -8,18 +8,20 @@ package Reporte;
 import Conexion.MySQLComandos;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Reporte {
 
     //Propiedades de la Clase Reporte
     private JPanel panel = new JPanel();
+    private JPanel cuadrito = new JPanel();
     MySQLComandos m = new MySQLComandos();
     private JTable report = new JTable();
+    TableColumnModel columna;
 
     public JPanel getPanel() {
         return this.panel;
@@ -39,16 +41,17 @@ public class Reporte {
 
     public JPanel initialize() {
 
-        panel.setBounds(200, 0, 575, 350);
+        panel.setBounds(200, 0, 1080, 720);
         panel.setBackground(new Color(205, 224, 228));
-        report.setPreferredScrollableViewportSize(new Dimension(200, 300));
-        report.setBounds(20, 20, 475, 300);
-        JScrollPane Scroll=new JScrollPane();
-        Scroll.setViewportView(report);
-        DefaultTableModel model = m.Reportes();
-        report.setModel(model);
+        cuadrito.setBounds(400, 20, 200, 300);
+        cuadrito.setBackground(Color.BLACK);
+        report.setBounds(20, 20, 500, 300);
+        report.setLayout(null);
+        m.Reportes(report);
+        JScrollPane jscrollpane = new JScrollPane(report);
+        panel.add(cuadrito);
         panel.add(report);
-        panel.setLayout(null);
+        panel.add(jscrollpane, BorderLayout.CENTER);
         panel.setVisible(true);
 
         return this.panel;
