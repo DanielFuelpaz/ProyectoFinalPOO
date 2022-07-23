@@ -369,7 +369,7 @@ public class Panel3s extends javax.swing.JPanel {
                 ImageIO.write(this.getImg().getRuta(), "jpg", imagenRuta);
                 datos.mostrar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
             } catch (Exception e) {
-                System.out.println("Error: " + e);
+                datos.mostrar(e);
             }
             this.getFotolbl().setIcon(null);
             this.getGuardarbtn().setEnabled(false);

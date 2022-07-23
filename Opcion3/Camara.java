@@ -97,5 +97,5 @@ public class Camara {
         c.setText("TOMAR");
         d.setText("GUARDAR");
     }
-
+    
 }
