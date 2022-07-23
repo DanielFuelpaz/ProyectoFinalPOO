@@ -62,7 +62,6 @@ public class MySQLComandos {
     public void setDatos(JOption3 datos) {
         this.datos = datos;
     }
-    
 
     // Metodo de Inicio de Secion
     public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
@@ -102,7 +101,7 @@ public class MySQLComandos {
     }
 
     // Control Creacion de Usuario
-    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) {
+    public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion, JPasswordField contraseña) {
         Connection co = c.getConexion();
         try {
 
@@ -110,25 +109,40 @@ public class MySQLComandos {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
+                //primer control: Nombres de usuarios ya existentes
+                if (!(rs.getString("usuario").equals(usuario.getText()))) {
+                    if (contraseña.getText().matches("[A-Z]{1,9}.\\d[0-9]") && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]")) {
+                        this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
+                        this.setP(co.prepareStatement(this.getInstruccion()));
+                        this.getP().setString(1, usuario.getText());
+                        this.getP().setString(2, confirmacion.getText());
+                        this.getP().executeUpdate();
+                        this.getDatos().mostrar(" ==== Usuario Creado ====");
+                        usuario.setText("");
+                        contraseña.setText("");
+                        confirmacion.setText("");
+                        return true;
+                    } else {
+                        this.getDatos().mostrar("La contraseña debe tener todo en mayusculas y tener numeros\nEjemplo: USUARIO1234");
+                        return false;
+                    }
 
-                if (!(rs.getString("usuario").equals(usuario.getText())
-                        && rs.getString("contraseña").equals(confirmacion.getText()))) {
-                    this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
-                    this.setP(co.prepareStatement(this.getInstruccion()));
-                    this.getP().setString(1, usuario.getText());
-                    this.getP().setString(2, confirmacion.getText());
-                    this.getP().executeUpdate();
-                    this.getDatos().mostrar(" ==== Usuario Creado ====");
-                    usuario.setText("");
-                    confirmacion.setText("");
-                    return true;
                 }
 
             }
 
             // executeUpdate cuando se hacen select
+<<<<<<< HEAD
         } catch (Exception ex) {
+
+            
+
             this.getDatos().mostrar("El Usuario ya existe");
+
+=======
+        } catch (SQLException ex) {
+            this.getDatos().mostrar("El Usuario " + usuario.getText() + " ya existe");
+>>>>>>> 83a8473da828cac14d5b6c2368b3961291c155c5
         } finally {
             try {
                 if (rs != null) {
@@ -270,6 +284,7 @@ public class MySQLComandos {
             while(rs.next()){
                 value.addElement(new cargarciudad(rs.getInt(1), rs.getString(2)));
             }
+<<<<<<< HEAD
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }finally{
@@ -277,6 +292,23 @@ public class MySQLComandos {
                 ps.close();
                 rs.close();
             }catch(Exception ex){
+=======
+        } catch (SQLException ex) {
+            this.getDatos().mostrar(ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                this.getDatos().mostrar(e);
+>>>>>>> ebd72f169115cc5fe749b8c56323ec01b0cbe4f2
             }
         }
         
@@ -465,9 +497,15 @@ public class MySQLComandos {
         try {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
             this.getP().setString(1, txtop2.getText());
+<<<<<<< HEAD
             this.getP().setInt(2, id);
             this.getP().execute();
             this.getDatos().mostrar("Elementos guardados");
+=======
+            this.getP().setString(2, txtop2.getText());
+            this.getP().executeUpdate();
+            JOptionPane.showMessageDialog(null, "Elementos guardados");
+>>>>>>> ebd72f169115cc5fe749b8c56323ec01b0cbe4f2
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
