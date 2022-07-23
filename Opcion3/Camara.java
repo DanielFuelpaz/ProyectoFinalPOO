@@ -11,19 +11,19 @@ public class Camara {
     private int anchoCamara = 150;
     private int numeroFoto = 1;
 
-    public int getLargoCamara() {
+    private int getLargoCamara() {
         return this.largoCamara;
     }
 
-    public void setLargoCamara(int largoCamara) {
+    private void setLargoCamara(int largoCamara) {
         this.largoCamara = largoCamara;
     }
 
-    public int getAnchoCamara() {
+    private int getAnchoCamara() {
         return this.anchoCamara;
     }
 
-    public void setAnchoCamara(int anchoCamara) {
+    private void setAnchoCamara(int anchoCamara) {
         this.anchoCamara = anchoCamara;
     }
 
@@ -32,70 +32,70 @@ public class Camara {
     private Webcam webcam = Webcam.getDefault();
     private WebcamPanel webcampnl = new WebcamPanel(webcam, dimension, false);
 
-    public Dimension getDimension() {
+    protected Dimension getDimension() {
         return this.dimension;
     }
 
-    public void setDimension(Dimension dimension) {
+    protected void setDimension(Dimension dimension) {
         this.dimension = dimension;
     }
 
-    public Dimension getDimension1() {
+    protected Dimension getDimension1() {
         return this.dimension1;
     }
 
-    public void setDimension1(Dimension dimension1) {
+    protected void setDimension1(Dimension dimension1) {
         this.dimension1 = dimension1;
     }
 
-    public Webcam getWebcam() {
+    protected Webcam getWebcam() {
         return this.webcam;
     }
 
-    public void setWebcam(Webcam webcam) {
+    protected void setWebcam(Webcam webcam) {
         this.webcam = webcam;
     }
 
-    public WebcamPanel getWebcampnl() {
+    protected WebcamPanel getWebcampnl() {
         return this.webcampnl;
     }
 
-    public void setWebcampnl(WebcamPanel webcampnl) {
+    protected void setWebcampnl(WebcamPanel webcampnl) {
         this.webcampnl = webcampnl;
     }
 
-    public int getNumeroFoto() {
+    protected int getNumeroFoto() {
         return this.numeroFoto;
     }
 
-    public void setNumeroFoto(int numeroFoto) {
+    protected void setNumeroFoto(int numeroFoto) {
         this.numeroFoto = numeroFoto;
     }
 
-    public void ApagarBotones(JToggleButton a, JToggleButton b, JToggleButton c) {
+    protected void ApagarBotones(JToggleButton a, JToggleButton b, JToggleButton c) {
         a.setEnabled(false);
         b.setEnabled(false);
         c.setEnabled(false);
     }
 
-    public void EncenderBtn(JToggleButton a, JToggleButton b) {
+    protected void EncenderBtn(JToggleButton a, JToggleButton b) {
         a.setEnabled(true);
         b.setEnabled(true);
 
     }
 
-    public void CargarCamaraTexto(JToggleButton a, JToggleButton b, JToggleButton c, JToggleButton d) {
+    protected void CargarCamaraTexto(JToggleButton a, JToggleButton b, JToggleButton c, JToggleButton d) {
         a.setText("...");
         b.setText("...");
         c.setText("...");
         d.setText("...");
     }
 
-    public void CargadaCamaraTexto(JToggleButton a, JToggleButton b, JToggleButton c, JToggleButton d) {
-        a.setText("ENCENDER");
+    protected void CargadaCamaraTexto(JToggleButton a, JToggleButton b, JToggleButton c, JToggleButton d) {
+        a.setText("Abrir cámara");
         b.setText("APAGAR");
         c.setText("TOMAR");
         d.setText("GUARDAR");
     }
-
+    
 }

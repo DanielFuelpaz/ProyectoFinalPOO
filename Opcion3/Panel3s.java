@@ -38,7 +38,7 @@ public class Panel3s extends javax.swing.JPanel {
         this.setLocation(205, 0);
         this.removeAll();
         this.setBackground(Color.cyan);
-        listaCedulas.removeAllItems();
+        this.getListaCedulas().removeAllItems();
         this.getComandos().ConexionCedulas(listaCedulas);
         this.setVisible(true);
         this.getCam().getWebcam().setViewSize(this.getCam().getDimension1());
@@ -55,107 +55,107 @@ public class Panel3s extends javax.swing.JPanel {
         });
     }
 
-    public JToggleButton getAbrirCamara() {
+    private JToggleButton getAbrirCamara() {
         return this.AbrirCamara;
     }
 
-    public void setAbrirCamara(JToggleButton AbrirCamara) {
+    private void setAbrirCamara(JToggleButton AbrirCamara) {
         this.AbrirCamara = AbrirCamara;
     }
 
-    public JToggleButton getApagarbtn() {
+    private JToggleButton getApagarbtn() {
         return this.Apagarbtn;
     }
 
-    public void setApagarbtn(JToggleButton Apagarbtn) {
+    private void setApagarbtn(JToggleButton Apagarbtn) {
         this.Apagarbtn = Apagarbtn;
     }
 
-    public JToggleButton getGuardarbtn() {
+    private JToggleButton getGuardarbtn() {
         return this.Guardarbtn;
     }
 
-    public void setGuardarbtn(JToggleButton Guardarbtn) {
+    private void setGuardarbtn(JToggleButton Guardarbtn) {
         this.Guardarbtn = Guardarbtn;
     }
 
-    public JToggleButton getTomarbtn() {
+    private JToggleButton getTomarbtn() {
         return this.Tomarbtn;
     }
 
-    public void setTomarbtn(JToggleButton Tomarbtn) {
+    private void setTomarbtn(JToggleButton Tomarbtn) {
         this.Tomarbtn = Tomarbtn;
     }
 
-    public JLabel getCamaraTitulo() {
+    private JLabel getCamaraTitulo() {
         return this.camaraTitulo;
     }
 
-    public void setCamaraTitulo(JLabel camaraTitulo) {
+    private void setCamaraTitulo(JLabel camaraTitulo) {
         this.camaraTitulo = camaraTitulo;
     }
 
-    public JPanel getCamarapnl() {
+    private JPanel getCamarapnl() {
         return this.camarapnl;
     }
 
-    public void setCamarapnl(JPanel camarapnl) {
+    private void setCamarapnl(JPanel camarapnl) {
         this.camarapnl = camarapnl;
     }
 
-    public JLabel getCedulaTitulo() {
+    private JLabel getCedulaTitulo() {
         return this.cedulaTitulo;
     }
 
-    public void setCedulaTitulo(JLabel cedulaTitulo) {
+    private void setCedulaTitulo(JLabel cedulaTitulo) {
         this.cedulaTitulo = cedulaTitulo;
     }
 
-    public JLabel getDescripcionCamara() {
+    private JLabel getDescripcionCamara() {
         return this.descripcionCamara;
     }
 
-    public void setDescripcionCamara(JLabel descripcionCamara) {
+    private void setDescripcionCamara(JLabel descripcionCamara) {
         this.descripcionCamara = descripcionCamara;
     }
 
-    public JLabel getFotolbl() {
+    private JLabel getFotolbl() {
         return this.fotolbl;
     }
 
-    public void setFotolbl(JLabel fotolbl) {
+    private void setFotolbl(JLabel fotolbl) {
         this.fotolbl = fotolbl;
     }
 
-    public JLabel getImagenTitulo() {
+    private JLabel getImagenTitulo() {
         return this.imagenTitulo;
     }
 
-    public void setImagenTitulo(JLabel imagenTitulo) {
+    private void setImagenTitulo(JLabel imagenTitulo) {
         this.imagenTitulo = imagenTitulo;
     }
 
-    public JComboBox<String> getListaCedulas() {
+    private JComboBox<String> getListaCedulas() {
         return this.listaCedulas;
     }
 
-    public void setListaCedulas(JComboBox<String> listaCedulas) {
+    private void setListaCedulas(JComboBox<String> listaCedulas) {
         this.listaCedulas = listaCedulas;
     }
 
-    public Camara getCam() {
+    private Camara getCam() {
         return this.cam;
     }
 
-    public void setCam(Camara cam) {
+    private void setCam(Camara cam) {
         this.cam = cam;
     }
 
-    public Imagen getImg() {
+    private Imagen getImg() {
         return this.img;
     }
 
-    public void setImg(Imagen img) {
+    private void setImg(Imagen img) {
         this.img = img;
     }
 
@@ -166,7 +166,8 @@ public class Panel3s extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         cedulaTitulo = new javax.swing.JLabel();
@@ -183,7 +184,8 @@ public class Panel3s extends javax.swing.JPanel {
 
         cedulaTitulo.setText("Cédula:");
 
-        listaCedulas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaCedulas.setModel(
+                new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         imagenTitulo.setText("Imagen:");
 
@@ -198,13 +200,11 @@ public class Panel3s extends javax.swing.JPanel {
         javax.swing.GroupLayout camarapnlLayout = new javax.swing.GroupLayout(camarapnl);
         camarapnl.setLayout(camarapnlLayout);
         camarapnlLayout.setHorizontalGroup(
-            camarapnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
-        );
+                camarapnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 263, Short.MAX_VALUE));
         camarapnlLayout.setVerticalGroup(
-            camarapnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 137, Short.MAX_VALUE)
-        );
+                camarapnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 137, Short.MAX_VALUE));
 
         Tomarbtn.setText("TOMAR");
         Tomarbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -239,75 +239,105 @@ public class Panel3s extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cedulaTitulo)
-                            .addComponent(imagenTitulo))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(listaCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(camaraTitulo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(AbrirCamara)
-                                .addGap(101, 101, 101)
-                                .addComponent(descripcionCamara, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 46, Short.MAX_VALUE)
-                                .addComponent(camarapnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(Tomarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Apagarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Guardarbtn)
-                            .addComponent(fotolbl, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(43, 43, 43))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(cedulaTitulo)
+                                                        .addComponent(imagenTitulo))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(listaCedulas,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 224,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(40, 40, 40)
+                                                                .addComponent(camaraTitulo)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        Short.MAX_VALUE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(AbrirCamara)
+                                                                .addGap(101, 101, 101)
+                                                                .addComponent(descripcionCamara,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        Short.MAX_VALUE))))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(0, 46, Short.MAX_VALUE)
+                                                                .addComponent(camarapnl,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(32, 32, 32))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(86, 86, 86)
+                                                                .addComponent(Tomarbtn,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 77,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(Apagarbtn,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 89,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(
+                                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        Short.MAX_VALUE)))
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(Guardarbtn)
+                                                        .addComponent(fotolbl, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(43, 43, 43)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cedulaTitulo)
-                            .addComponent(listaCedulas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(camaraTitulo)
-                        .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(imagenTitulo)
-                        .addComponent(AbrirCamara))
-                    .addComponent(descripcionCamara))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(camarapnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Tomarbtn)
-                            .addComponent(Apagarbtn)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fotolbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Guardarbtn)))
-                .addContainerGap(143, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(27, 27, 27)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(cedulaTitulo)
+                                                        .addComponent(listaCedulas,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(29, 29, 29))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                layout.createSequentialGroup()
+                                                        .addContainerGap()
+                                                        .addComponent(camaraTitulo)
+                                                        .addGap(18, 18, 18)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(imagenTitulo)
+                                                .addComponent(AbrirCamara))
+                                        .addComponent(descripcionCamara))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(camarapnl, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(Tomarbtn)
+                                                        .addComponent(Apagarbtn)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(fotolbl, javax.swing.GroupLayout.PREFERRED_SIZE, 132,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(Guardarbtn)))
+                                .addContainerGap(143, Short.MAX_VALUE)));
     }// </editor-fold>//GEN-END:initComponents
 
     private void TomarbtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TomarbtnActionPerformed
@@ -328,7 +358,7 @@ public class Panel3s extends javax.swing.JPanel {
     }// GEN-LAST:event_ApagarbtnActionPerformed
 
     private void GuardarbtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_GuardarbtnActionPerformed
-        JOption datos = new JOption();
+        JOption3 datos = new JOption3();
         MySQLComandos comandos = new MySQLComandos();
         int respuesta = datos.preguntar("¿Desea guardar la foto?", "Confirmación");
         if (respuesta == 0) {
@@ -337,9 +367,9 @@ public class Panel3s extends javax.swing.JPanel {
             comandos.enviarImagen(imagenRuta.getAbsolutePath(), opcion);
             try {
                 ImageIO.write(this.getImg().getRuta(), "jpg", imagenRuta);
-                datos.mostar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
+                datos.mostrar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
             } catch (Exception e) {
-                System.out.println("Error: " + e);
+                datos.mostrar(e);
             }
             this.getFotolbl().setIcon(null);
             this.getGuardarbtn().setEnabled(false);
@@ -352,7 +382,8 @@ public class Panel3s extends javax.swing.JPanel {
         this.getCam().CargarCamaraTexto(this.getApagarbtn(), this.getTomarbtn(), this.getAbrirCamara(),
                 this.getGuardarbtn());
         Hilo h = new Hilo();
-        Thread hilo = h.cargarHilo(cam, Apagarbtn, AbrirCamara, Tomarbtn, Guardarbtn);
+        Thread hilo = h.cargarHilo(this.getCam(), this.getApagarbtn(), this.getAbrirCamara(), this.getTomarbtn(),
+                this.getGuardarbtn());
         hilo.setDaemon(true);
         hilo.start();
         this.getAbrirCamara().setEnabled(false);
