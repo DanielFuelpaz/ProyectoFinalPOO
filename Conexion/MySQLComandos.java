@@ -135,7 +135,6 @@ public class MySQLComandos {
         String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        modelo.addColumn("Cedula");
         try {
             
             this.setInstruccion("SELECT * FROM datospersonales");
