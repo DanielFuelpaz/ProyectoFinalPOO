@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Conexion.MySQLComandos;
+import Objetos.cargarprovincia;
+import Objetos.ingresociudad;
 
 public class Configuracion implements ActionListener {
     
@@ -22,7 +24,6 @@ public class Configuracion implements ActionListener {
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
     private MySQLComandos sql = new MySQLComandos();
-    
     public JPanel getFrame() {
         return frame;
     }
@@ -41,7 +42,6 @@ public class Configuracion implements ActionListener {
         cb1.setBounds(150, 30, 200, 20);
         frame.add(this.guardar);
         guardar.setBounds(135, 200, 100, 20);
-        
         this.cb1.addItem("Opcion");
         this.cb1.addItem("Ciudad");
         this.cb1.addItem("Provincia");
@@ -95,7 +95,10 @@ public class Configuracion implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if ((cb1.getSelectedItem().toString().equals("Ciudad")) && (txtop2.getText().isEmpty() != true)) {
-            sql.InsCiud(txtop2);
+            cargarprovincia prov = (cargarprovincia) cb2.getSelectedItem();
+            int idciu = prov.getIdpro();
+            ingresociudad cid = new ingresociudad(idciu);
+            sql.InsCiud(txtop2, cid.getIdprov());
             
         } else if (("Provincia".equals(cb1.getSelectedItem().toString())) && (txtop2.getText().isEmpty() != true)) {
             sql.InsProv(txtop2);
