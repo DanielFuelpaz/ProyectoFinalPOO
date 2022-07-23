@@ -7,8 +7,8 @@ import java.awt.Dimension;
 import javax.swing.JToggleButton;
 
 public class Camara {
-    private int largoCamara = 263;
-    private int anchoCamara = 137;
+    private int largoCamara = 250;
+    private int anchoCamara = 150;
     private int numeroFoto = 1;
 
     public int getLargoCamara() {
