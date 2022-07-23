@@ -108,7 +108,7 @@ public class MySQLComandos {
             while (this.getRs().next()) {
                 //primer control: Nombres de usuarios ya existentes
                 if (!(rs.getString("usuario").equals(usuario.getText()))) {
-                    if (contraseña.getText().matches("[A-Z]{1,9}.\\d[0-9]") && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]")) {
+                    if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*") && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
                         this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                         this.setP(co.prepareStatement(this.getInstruccion()));
                         this.getP().setString(1, usuario.getText());
@@ -129,17 +129,9 @@ public class MySQLComandos {
             }
 
             // executeUpdate cuando se hacen select
-<<<<<<< HEAD
-        } catch (Exception ex) {
-
-            
-
-            this.getDatos().mostrar("El Usuario ya existe");
-
-=======
         } catch (SQLException ex) {
             this.getDatos().mostrar("El Usuario " + usuario.getText() + " ya existe");
->>>>>>> 83a8473da828cac14d5b6c2368b3961291c155c5
+
         } finally {
             try {
                 if (rs != null) {
