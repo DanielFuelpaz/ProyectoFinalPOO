@@ -469,8 +469,6 @@ public class MySQLComandos {
         Connection co = c.getConexion();
         this.setInstruccion("UPDATE datospersonales SET foto = ? WHERE datospersonales.cedula=?;");
         try {
-            System.out.println(img);
-            System.out.println(cedula);
             FileInputStream byteImagen = new FileInputStream(img);
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setBinaryStream(1, byteImagen);

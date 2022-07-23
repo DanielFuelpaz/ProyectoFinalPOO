@@ -34,7 +34,7 @@ public class Panel3s extends javax.swing.JPanel {
 
     public Panel3s() {
         initComponents();
-        this.setSize(600, 500);
+        this.setSize(570, 350);
         this.setLocation(205, 0);
         this.removeAll();
         this.setBackground(Color.cyan);
