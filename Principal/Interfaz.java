@@ -65,7 +65,7 @@ public class Interfaz {
                 Ced.initialize();
             } else {
                 Ced.getJp1().setVisible(false);
-//                Fbase.dispose();
+                Ced.getPersonas().removeAllItems();
 
             }
         });
@@ -103,6 +103,7 @@ public class Interfaz {
                     c.initialize();
                 } else {
                     c.getFrame().setVisible(false);
+                    c.getCb1().removeAllItems();
                 }
             }
 

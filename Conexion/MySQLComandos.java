@@ -135,7 +135,7 @@ public class MySQLComandos {
         String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        
+        modelo.addColumn("Cedula");
         try {
             
             this.setInstruccion("SELECT * FROM datospersonales");
@@ -174,7 +174,7 @@ public class MySQLComandos {
     public void cargarprovincias(JComboBox cb1) {
         Connection co = c.getConexion();
         try {
-            
+            cb1.removeAllItems();
             this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
@@ -203,7 +203,7 @@ public class MySQLComandos {
     public void cargarciudades(JComboBox cb2) {
         Connection co = c.getConexion();
         try {
-            
+            cb2.removeAllItems();
             this.setP(co.prepareStatement("SELECT ciudades FROM ciudades"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {

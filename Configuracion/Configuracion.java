@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import Conexion.MySQLComandos;
 
 public class Configuracion implements ActionListener {
-
+    
     public JPanel frame = new JPanel();
     public JLabel op1 = new JLabel("Seleccione la Opcion");
     public JLabel op2 = new JLabel("Nombre Ciudad");
@@ -22,11 +22,15 @@ public class Configuracion implements ActionListener {
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
     private MySQLComandos sql = new MySQLComandos();
-
+    
     public JPanel getFrame() {
         return frame;
     }
 
+    public JComboBox getCb1() {
+        return cb1;
+    }
+        
     public void initialize() {
         frame.setBounds(205, 0, 575, 350);
         frame.setBackground(Color.LIGHT_GRAY);
@@ -37,11 +41,11 @@ public class Configuracion implements ActionListener {
         cb1.setBounds(150, 30, 200, 20);
         frame.add(this.guardar);
         guardar.setBounds(135, 200, 100, 20);
-
+        
         this.cb1.addItem("Opcion");
         this.cb1.addItem("Ciudad");
         this.cb1.addItem("Provincia");
-
+        
         this.cb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
@@ -77,24 +81,25 @@ public class Configuracion implements ActionListener {
                         cb2.show(false);
                     }
                 }
-
+                
             }
         });
-
+        frame.setVisible(true);
         this.guardar.addActionListener(this);
-    }
 
+    }
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         if ((cb1.getSelectedItem().toString().equals("Ciudad")) && (txtop2.getText().isEmpty() != true)) {
             sql.InsCiud(txtop2);
-
+            
         } else if (("Provincia".equals(cb1.getSelectedItem().toString())) && (txtop2.getText().isEmpty() != true)) {
             sql.InsProv(txtop2);
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
         }
     }
-
+    
 }
