@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
+import java.awt.BorderLayout;
 
 public class Interfaz {
 
@@ -21,7 +22,7 @@ public class Interfaz {
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
     private Ncedula Ced = new Ncedula();
-    private Panel3 foto = new Panel3();
+    public Panel3s foto = new Panel3s();
     private DatosPersonales DP = new DatosPersonales();
     private Reporte r = new Reporte();
     private Configuracion c = new Configuracion();
@@ -67,7 +68,7 @@ public class Interfaz {
                 Ced.initialize();
             } else {
                 Ced.getJp1().setVisible(false);
-//                Fbase.dispose();
+                // Fbase.dispose();
 
             }
         });
@@ -76,9 +77,12 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    foto.getPanel3(Fbase);
+                    Fbase.add(foto, BorderLayout.CENTER);
+                    Fbase.revalidate();
+                    Fbase.repaint();
+                    foto.setVisible(true);
                 } else {
-                    foto.getPanel().setVisible(false);
+                    foto.setVisible(false);
                 }
             }
 

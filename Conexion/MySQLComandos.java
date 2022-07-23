@@ -11,9 +11,10 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class MySQLComandos {
 
@@ -46,7 +47,7 @@ public class MySQLComandos {
         this.rs = rs;
     }
 
-    //Metodo de Inicio de Secion
+    // Metodo de Inicio de Secion
     public boolean iniciosesion(JTextField usuario, JPasswordField contraseña) throws SQLException {
         Connection co = c.getConexion();
         try {
@@ -55,17 +56,18 @@ public class MySQLComandos {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-                if (rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(contraseña.getText())) {
+                if (rs.getString("usuario").equals(usuario.getText())
+                        && rs.getString("contraseña").equals(contraseña.getText())) {
                     System.out.println("sesion iniciada correctamente");
                     return true;
 
                 }
             }
 
-            //executeUpdate cuando se hacen select
+            // executeUpdate cuando se hacen select
         } catch (Exception e) {
             System.out.println("Error en la conexion");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -83,7 +85,7 @@ public class MySQLComandos {
         return false;
     }
 
-    //Control Creacion de Usuario
+    // Control Creacion de Usuario
     public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion) {
         Connection co = c.getConexion();
         try {
@@ -93,7 +95,8 @@ public class MySQLComandos {
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
 
-                if (!(rs.getString("usuario").equals(usuario.getText()) && rs.getString("contraseña").equals(confirmacion.getText()))) {
+                if (!(rs.getString("usuario").equals(usuario.getText())
+                        && rs.getString("contraseña").equals(confirmacion.getText()))) {
                     this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                     this.setP(co.prepareStatement(this.getInstruccion()));
                     this.getP().setString(1, usuario.getText());
@@ -107,10 +110,10 @@ public class MySQLComandos {
 
             }
 
-            //executeUpdate cuando se hacen select
+            // executeUpdate cuando se hacen select
         } catch (Exception ex) {
             System.out.println("El Usuario ya existe");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -129,10 +132,10 @@ public class MySQLComandos {
     }
 
     // Metodo de Traer Reportes
-    public DefaultTableModel Reportes(){
-        
+    public DefaultTableModel Reportes() {
+
         Connection co = c.getConexion();
-        String[] columnas = { "Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
+        String[] columnas = { "Cedula", "Apellido", "Nombre", "Direccion", "Fotografia" };
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
@@ -153,7 +156,7 @@ public class MySQLComandos {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al conectar");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -185,7 +188,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -214,7 +217,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -231,12 +234,15 @@ public class MySQLComandos {
         }
     }
 
-    public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono, JComboBox cb1, JComboBox cb2) {
+    public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono,
+            JComboBox cb1, JComboBox cb2) {
         Connection co = c.getConexion();
         try {
 
-            if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true) && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
-                this.setP(co.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
+            if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true)
+                    && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
+                this.setP(co.prepareStatement(
+                        "INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
                 this.getP().setString(1, txtnombres.getText());
                 this.getP().setString(2, txtapellidos.getText());
                 this.getP().setString(3, txtdireccion.getText());
@@ -256,7 +262,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al Guardar");
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -288,7 +294,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -311,7 +317,8 @@ public class MySQLComandos {
         try {
 
             String partes[] = personas.getSelectedItem().toString().split(" ");
-            this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
+            this.setInstruccion(
+                    "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setInt(1, Integer.valueOf(Rced.getText()));
             this.getP().setString(2, partes[0]);
@@ -320,7 +327,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -356,7 +363,7 @@ public class MySQLComandos {
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -386,7 +393,7 @@ public class MySQLComandos {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -414,7 +421,7 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
@@ -443,7 +450,39 @@ public class MySQLComandos {
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+                if (co != null) {
+                    co.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
+    public void enviarImagen(String img, String cedula) {
+        Connection co = c.getConexion();
+        this.setInstruccion("UPDATE datospersonales SET foto = ? WHERE datospersonales.cedula=?;");
+        try {
+            System.out.println(img);
+            System.out.println(cedula);
+            FileInputStream byteImagen = new FileInputStream(img);
+            this.setP(co.prepareStatement(this.getInstruccion()));
+            this.getP().setBinaryStream(1, byteImagen);
+            this.getP().setString(2, cedula.replace(" ", ""));
+            this.getP().executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
             try {
                 if (rs != null) {
                     rs.close();
