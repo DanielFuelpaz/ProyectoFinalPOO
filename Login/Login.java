@@ -172,6 +172,7 @@ public class Login implements ActionListener {
         this.j.setBackground(Color.GRAY);
         this.j.show();
         this.j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.j.setResizable(false);
 
         return j;
     }
@@ -200,6 +201,7 @@ public class Login implements ActionListener {
         this.j2.setBackground(Color.GRAY);
         this.j2.show();
         this.j2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.j2.setResizable(false);
 
         return j2;
 

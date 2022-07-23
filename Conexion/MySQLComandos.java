@@ -132,7 +132,7 @@ public class MySQLComandos {
             // executeUpdate cuando se hacen select
         } catch (Exception ex) {
 
-            System.out.println("=== ERROR CLAVE USUARIO INCORRECTA ===");
+            
 
             this.getDatos().mostrar("El Usuario ya existe");
 
