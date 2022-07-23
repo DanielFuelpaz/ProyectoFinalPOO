@@ -128,7 +128,7 @@ public class Interfaz {
             }
 
         });
-
+        Fbase.setDefaultCloseOperation(0);
         Fbase.setResizable(false);
         Fbase.show();
     }
