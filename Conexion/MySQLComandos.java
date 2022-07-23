@@ -473,10 +473,11 @@ public class MySQLComandos {
     public void InsCiud(JTextField txtop2) {
         Connection co = c.getConexion();
         try {
-            this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades) VALUES (?)"));
+            this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
             this.getP().setString(1, txtop2.getText());
-            this.getP().execute();
-            this.getDatos().mostrar("Elementos guardados");
+            this.getP().setString(2, txtop2.getText());
+            this.getP().executeUpdate();
+            JOptionPane.showMessageDialog(null, "Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
