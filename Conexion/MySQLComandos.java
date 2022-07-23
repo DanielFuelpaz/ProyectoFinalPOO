@@ -99,7 +99,9 @@ public class MySQLComandos {
             while (this.getRs().next()) {
 
                 if (!(rs.getString("usuario").equals(usuario.getText())
-                        && rs.getString("contraseña").equals(confirmacion.getText()))) {
+                       ) && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]") ) {
+                         
+                    
                     this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                     this.setP(co.prepareStatement(this.getInstruccion()));
                     this.getP().setString(1, usuario.getText());
@@ -109,13 +111,17 @@ public class MySQLComandos {
                     usuario.setText("");
                     confirmacion.setText("");
                     return true;
+                    
+                    
+                }else{
+                    System.out.println("=== ERROR DE CREACION DE USUARIO ===");
                 }
 
             }
 
             // executeUpdate cuando se hacen select
         } catch (Exception ex) {
-            System.out.println("El Usuario ya existe");
+            System.out.println("=== ERROR CLAVE USUARIO INCORRECTA ===");
         } finally {
             try {
                 if (rs != null) {
