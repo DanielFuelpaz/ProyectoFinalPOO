@@ -22,7 +22,7 @@ public class Interfaz {
     public JToggleButton opcion4 = new JToggleButton("Reporte de cedulados");
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
     private Ncedula Ced = new Ncedula();
-    public Panel3s foto = new Panel3s();
+    private Panel3s foto = new Panel3s();
     private DatosPersonales DP = new DatosPersonales();
     private Reporte r = new Reporte();
     private Configuracion c = new Configuracion();
@@ -46,6 +46,7 @@ public class Interfaz {
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
         Fbase.add(this.opcion5);
+        
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
@@ -118,7 +119,6 @@ public class Interfaz {
         Fbase.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Fbase.show();
     }
-
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
         i.initialize();

@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Conexion.MySQLComandos;
-
+import Opcion3.JOption3;
 public class Configuracion implements ActionListener {
     
     public JPanel frame = new JPanel();
@@ -22,6 +22,7 @@ public class Configuracion implements ActionListener {
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
     private MySQLComandos sql = new MySQLComandos();
+    private JOption3 datos= new JOption3();
     
     public JPanel getFrame() {
         return frame;
@@ -101,7 +102,7 @@ public class Configuracion implements ActionListener {
             sql.InsProv(txtop2);
             
         } else {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun item");
+            datos.mostrar("No se ha seleccionado ningun item");
         }
     }
     
