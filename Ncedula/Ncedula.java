@@ -66,7 +66,6 @@ public class Ncedula implements ActionListener {
         Guardar.setLocation(300, 220);
         Guardar.addActionListener(this);
         getJp1().setVisible(true);
-
         return Jp1;
     }
 

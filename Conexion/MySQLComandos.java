@@ -180,17 +180,17 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public void Reportes(JTable tabla) {
+        this.CargarDatos();
         String[] columnas = {"CID", "Apellido", "Nombre", "Direccion", "Ruta Foto"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         modelo.addRow(columnas);
-        for (int i = 0; i < personas.size(); i++) {
-            PersonaBD persona = personas.get(i);
-            registros[0] = String.valueOf(persona.getCedula());
-            registros[1] = persona.getApellido();
-            registros[2] = persona.getNombre();
-            registros[3] = persona.getDireccion();
-            registros[4] = persona.getRutaF();
+        for (int i = 0; i < getPersonas().size(); i++) {
+            registros[0] = String.valueOf(getPersonas().get(i).getCedula());
+            registros[1] = getPersonas().get(i).getApellido();
+            registros[2] = getPersonas().get(i).getNombre();
+            registros[3] = getPersonas().get(i).getDireccion();
+            registros[4] = getPersonas().get(i).getRutaF();
             modelo.addRow(registros);
             tabla.setModel(modelo);
         }
@@ -486,4 +486,7 @@ public class MySQLComandos {
         }
     }
 
+    public void traerImagen(){
+        
+    }
 }
