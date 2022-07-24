@@ -23,7 +23,7 @@ public class Interfaz {
     public JToggleButton opcion5 = new JToggleButton("Configuracion");
     public JToggleButton opcion6 = new JToggleButton("Salir");
     private Ncedula Ced = new Ncedula();
-    public Panel3s foto = new Panel3s();
+    private Panel3s foto = new Panel3s();
     private DatosPersonales DP = new DatosPersonales();
     private Reporte r = new Reporte();
     private Configuracion c = new Configuracion();

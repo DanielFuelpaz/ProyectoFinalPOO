@@ -6,12 +6,10 @@
 package DatosPersonales;
 
 import Conexion.MySQLComandos;
+import Objetos.cargarprovincia;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,7 +24,7 @@ public class DatosPersonales implements ActionListener {
 
     public JPanel frame = new JPanel();
     public JLabel jl1 = new JLabel("Nombres");
-    public JTextField txtnombres = new JTextField("");
+    public JTextField txtnombres = new JTextField();
     public JLabel jl2 = new JLabel("Apellidos");
     public JTextField txtapellidos = new JTextField();
     public JLabel jl3 = new JLabel("Dirección");
@@ -77,7 +75,14 @@ public class DatosPersonales implements ActionListener {
         bg.setBounds(150, 263, 100, 25);
         frame.add(this.bg);
         sql.cargarprovincias(cb1);
-        sql.cargarciudades(cb2);
+        this.cb1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+            cargarprovincia prov = (cargarprovincia)cb1.getSelectedItem();
+            int idciu = prov.getIdpro();
+            sql.cargarciudades(cb2, idciu);
+            }
+        });
         frame.show();
 
         this.bg.addActionListener(new ActionListener() {
@@ -94,7 +99,5 @@ public class DatosPersonales implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    
 
 }

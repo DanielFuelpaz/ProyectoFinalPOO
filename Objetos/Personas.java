@@ -8,6 +8,7 @@ public class Personas {
     private String direccion;
     private String telefono;
     private byte[] fotos;
+    private String rutaF;
 
     public byte[] getFotos() {
         return fotos;
@@ -56,5 +57,14 @@ public class Personas {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public String getRutaF() {
+        return this.rutaF;
+    }
+
+    public void setRutaF(String rutaF) {
+        this.rutaF = rutaF;
+    }
+    
     
 }
