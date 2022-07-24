@@ -129,17 +129,10 @@ public class MySQLComandos {
             }
 
             // executeUpdate cuando se hacen select
-<<<<<<< HEAD
-        } catch (Exception ex) {
 
-            
-
-            this.getDatos().mostrar("El Usuario ya existe");
-
-=======
         } catch (SQLException ex) {
             this.getDatos().mostrar("El Usuario " + usuario.getText() + " ya existe");
->>>>>>> 83a8473da828cac14d5b6c2368b3961291c155c5
+
         } finally {
             try {
                 if (rs != null) {
