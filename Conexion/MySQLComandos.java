@@ -3,8 +3,11 @@ package Conexion;
 import Objetos.cargarciudad;
 import Ncedula.Ncedula;
 import Objetos.PersonaBD;
+import Objetos.Render;
 import Objetos.provincia;
 import Opcion3.JOption3;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +21,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 public class MySQLComandos {
@@ -180,19 +187,41 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public void Reportes(JTable tabla) {
-        this.CargarDatos();
-        String[] columnas = {"CID", "Apellido", "Nombre", "Direccion", "Ruta Foto"};
-        String[] registros = new String[5];
-        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
-        modelo.addRow(columnas);
-        for (int i = 0; i < getPersonas().size(); i++) {
-            registros[0] = String.valueOf(getPersonas().get(i).getCedula());
-            registros[1] = getPersonas().get(i).getApellido();
-            registros[2] = getPersonas().get(i).getNombre();
-            registros[3] = getPersonas().get(i).getDireccion();
-            registros[4] = getPersonas().get(i).getRutaF();
-            modelo.addRow(registros);
-            tabla.setModel(modelo);
+        this.CargarDatos(); 
+        tabla.setDefaultRenderer(Object.class, new Render());
+        DefaultTableModel dt = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        dt.addColumn("CID");
+        dt.addColumn("Apellido");
+        dt.addColumn("Nombre");
+        dt.addColumn("Direccion");
+        dt.addColumn("Ruta Foto");
+        if(getPersonas().size() > 0){
+            for(int i=0; i<getPersonas().size(); i++){
+                Object fila[] = new Object[5];
+                fila[0] = getPersonas().get(i).getCedula();
+                fila[1] = getPersonas().get(i).getApellido();
+                fila[2] = getPersonas().get(i).getNombre();
+                fila[3] = getPersonas().get(i).getDireccion();
+                try{
+                    byte[] bi = getPersonas().get(i).getFotos();
+                    BufferedImage image = null;
+                    InputStream in = new ByteArrayInputStream(bi);
+                    image = ImageIO.read(in);
+                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 140, 0));
+                    fila[4] = new JLabel(imgi);
+
+                }catch(Exception ex){
+                    fila[4] = new JLabel("No imagen");
+                }
+                dt.addRow(fila);
+            }
+            tabla.setModel(dt);
+            tabla.setRowHeight(60);
         }
     }
 
@@ -397,7 +426,7 @@ public class MySQLComandos {
     }
 
     public void ConexionCedulas(JComboBox ListaCedulas) {
-
+        this.CargarDatos();
         for (int i = 0; i < getPersonas().size(); i++) {
             ListaCedulas.addItem(getPersonas().get(i).getCedula());
         }
@@ -458,6 +487,7 @@ public class MySQLComandos {
 
     public void enviarImagen(String img, String cedula) {
         Connection co = c.getConexion();
+        this.CargarDatos();
         this.setInstruccion("UPDATE datospersonales SET foto = ? WHERE datospersonales.cedula=?;");
         try {
             FileInputStream byteImagen = new FileInputStream(img);

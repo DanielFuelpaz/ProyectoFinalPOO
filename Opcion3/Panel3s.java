@@ -28,7 +28,7 @@ public class Panel3s extends javax.swing.JPanel {
         this.setSize(570, 350);
         this.setLocation(205, 0);
         this.removeAll();
-        this.setBackground(Color.cyan);
+        this.setBackground(Color.LIGHT_GRAY);
         this.getListaCedulas().removeAllItems();
         this.comandos.ConexionCedulas(listaCedulas);
         this.setVisible(true);
@@ -354,10 +354,10 @@ public class Panel3s extends javax.swing.JPanel {
         int respuesta = datos.preguntar("¿Desea guardar la foto?", "Confirmación");
         if (respuesta == 0) {
             String rutaDispositivo = datos.ingreso("Ingrese la ruta de su dispositivo para guardar la imagen", "Ruta");
-            File imagenRuta = new File(rutaDispositivo + "\\Foto" + this.getCam().getNumeroFoto() + ".jpg");
+            File imagenRuta = new File(rutaDispositivo + "\\Foto"+this.getCam().getNumeroFoto()+".jpg");
             comandos.enviarImagen(imagenRuta.getAbsolutePath(), opcion);
             try {
-                ImageIO.write(this.getImg().getRuta(), "jpg", imagenRuta);
+                ImageIO.write(this.getImg().getRuta(), ".jpg", imagenRuta);
                 datos.mostrar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
             } catch (Exception e) {
                 datos.mostrar(e);

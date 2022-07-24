@@ -19,24 +19,11 @@ public class Reporte  {
     private JTable report = new JTable();
     Imagen ci1;
     
-    public JPanel getPanel() {
-        return this.panel;
+    public JPanel getpanel() {
+        return panel;
     }
     
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
-    }
-    
-    public JTable getReport() {
-        return this.report;
-    }
-    
-    public void setReport(JTable report) {
-        this.report = report;
-    }
-    
-    public JPanel initialize() {
-        
+    public void initialize() {
         panel.setBounds(200, 0, 1080, 720);
         panel.setBackground(new Color(205, 224, 228));
         panel.add(report);
@@ -44,7 +31,7 @@ public class Reporte  {
         report.setEnabled(false);
         report.setBounds(315, 0, 375, 16 * report.getRowCount());
         panel.setVisible(true);
-        return this.panel;
+        
     }
         
 }
