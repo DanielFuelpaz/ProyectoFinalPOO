@@ -452,18 +452,18 @@ public class MySQLComandos {
         int pos = 0;
 //        try {
 
-            Random rnd = new Random();
-            pos = rnd.nextInt(7999 + 1000) + 1000;
-            for (int i = 0; i < personas.size(); i++) {
-                ArrayList <PersonaBD> per=null;
-                if (personas.get(i).getCedula() !=null) {
-                    per.add(personas.get(i));
-                    while(per.get(i).getCedula().toString().substring(6,9).equals(Integer.toString(pos))) {
-                    pos = rnd.nextInt(7999 + 1000) + 1000;
-                    }
-                }
-                
-            }
+//            Random rnd = new Random();
+//            pos = rnd.nextInt(7999 + 1000) + 1000;
+//            for (int i = 0; i < personas.size(); i++) {
+//                ArrayList <PersonaBD> per=null;
+//                if (personas.get(i).getCedula() !=null) {
+//                    per.add(personas.get(i));
+//                    while(per.get(i).getCedula().toString().substring(6,9).equals(Integer.toString(pos))) {
+//                    pos = rnd.nextInt(7999 + 1000) + 1000;
+//                    }
+//                }
+//                
+//            }
 //            this.setInstruccion("SELECT cedula FROM datospersonales WHERE cedula IS NOT NULL");
 //            this.setP(co.prepareStatement(this.getInstruccion()));
 //            this.setRs(this.getP().executeQuery(this.getInstruccion()));
@@ -502,9 +502,9 @@ public class MySQLComandos {
 
     public void ConexionCedulas(JComboBox ListaCedulas) {
            
-        for (int i = 0; i < personas.size(); i++) {
-                ListaCedulas.addItem(personas.get(i).getCedula()); 
-        }
+//        for (int i = 0; i < personas.size(); i++) {
+//                ListaCedulas.addItem(personas.get(i).getCedula().toString()); 
+//        }
         }
 
     public void InsCiud(JTextField txtop2,int id) {

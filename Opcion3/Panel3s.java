@@ -363,6 +363,7 @@ public class Panel3s extends javax.swing.JPanel {
         int respuesta = datos.preguntar("¿Desea guardar la foto?", "Confirmación");
         if (respuesta == 0) {
             String rutaDispositivo = datos.ingreso("Ingrese la ruta de su dispositivo para guardar la imagen", "Ruta");
+//            datos.ingreso("Ingrese el nombre para su foto", "Nombre de su foto");
             File imagenRuta = new File(rutaDispositivo + "\\Foto" + this.getCam().getNumeroFoto() + ".jpg");
             comandos.enviarImagen(imagenRuta.getAbsolutePath(), opcion);
             try {
@@ -374,6 +375,14 @@ public class Panel3s extends javax.swing.JPanel {
             this.getFotolbl().setIcon(null);
             this.getGuardarbtn().setEnabled(false);
             this.getTomarbtn().setText("TOMAR");
+            
+            
+            
+            
+            
+            
+            
+            
         }
         this.getCam().setNumeroFoto(this.getCam().getNumeroFoto() + 1);
     }// GEN-LAST:event_GuardarbtnActionPerformed
