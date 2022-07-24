@@ -21,46 +21,45 @@ import java.io.FileNotFoundException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class MySQLComandos {
-
+    
     private String instruccion;
     private PreparedStatement p;
     private ResultSet rs;
     private final Conexion c = new Conexion();
     JOption3 datos = new JOption3();
-    ArrayList <PersonaBD>personas  = this.Reportes();
-
+    ArrayList<PersonaBD> personas = this.Reportes();
+    
     public String getInstruccion() {
         return this.instruccion;
     }
-
+    
     public void setInstruccion(String instruccion) {
         this.instruccion = instruccion;
     }
-
+    
     public PreparedStatement getP() {
         return this.p;
     }
-
+    
     public void setP(PreparedStatement p) {
         this.p = p;
     }
-
+    
     public ResultSet getRs() {
         return this.rs;
     }
-
+    
     public void setRs(ResultSet rs) {
         this.rs = rs;
     }
-
+    
     public JOption3 getDatos() {
         return this.datos;
     }
-
+    
     public void setDatos(JOption3 datos) {
         this.datos = datos;
     }
@@ -77,7 +76,7 @@ public class MySQLComandos {
                         && this.getRs().getString("contraseña").equals(contraseña.getText())) {
                     this.getDatos().mostrar("sesion iniciada correctamente");
                     return true;
-
+                    
                 }
             }
 
@@ -89,7 +88,7 @@ public class MySQLComandos {
                 if (this.getRs() != null) {
                     this.getRs().close();
                 }
-                if ( this.getP()!= null) {
+                if (this.getP() != null) {
                     this.getP().close();
                 }
                 if (co != null) {
@@ -106,7 +105,7 @@ public class MySQLComandos {
     public boolean creacionusuario(JTextField usuario, JPasswordField confirmacion, JPasswordField contraseña) {
         Connection co = c.getConexion();
         try {
-
+            
             this.setInstruccion("SELECT * FROM usuarios");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
@@ -129,10 +128,8 @@ public class MySQLComandos {
                         return false;
                     }
                 }
-
-                if (!(this.getRs().getString("usuario").equals(usuario.getText())
-                       ) && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]") ) {
-                         
+                
+                if (!(this.getRs().getString("usuario").equals(usuario.getText())) && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]")) {
                     
                     this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                     this.setP(co.prepareStatement(this.getInstruccion()));
@@ -144,20 +141,18 @@ public class MySQLComandos {
                     confirmacion.setText("");
                     return true;
                     
-                    
-                }else{
+                } else {
                     datos.mostrar("=== ERROR DE CREACION DE USUARIO ====");
-
+                    
                 }
-
+                
             }
-
-            } 
-          // executeUpdate cuando se hacen select
-         catch (Exception ex) {
-
+            
+        } // executeUpdate cuando se hacen select
+        catch (Exception ex) {
+            
             this.getDatos().mostrar("=== ERROR CLAVE USUARIO INCORRECTA ===");
-
+            
             this.getDatos().mostrar("El Usuario ya existe");
         } finally {
             try {
@@ -175,7 +170,7 @@ public class MySQLComandos {
             }
         }
         return false;
-    
+        
     }
 
     // Metodo de Traer Reportes
@@ -192,21 +187,26 @@ public class MySQLComandos {
             registros[4] = persona.getRutaF();
             modelo.addRow(registros);
             tabla.setModel(modelo);
-        } 
+        }
     }
-
+    
     public ArrayList Reportes() {
         Connection co = c.getConexion();
-        ArrayList <PersonaBD> listP= new ArrayList();
+        ArrayList<PersonaBD> listP = new ArrayList();
         PersonaBD persona;
         try {
-
+            
             this.setInstruccion("SELECT * FROM datospersonales");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
                 persona = new PersonaBD();
-                persona.setCedula(Integer.parseInt(this.getRs().getString("cedula")));
+                if (this.getRs().getString("cedula") != null) {
+                    persona.setCedula(Integer.parseInt(this.getRs().getString("cedula")));
+                } else {
+                    persona.setCedula(null);
+                }
+                
                 persona.setApellido(this.getRs().getString("apellido"));
                 persona.setNombre(this.getRs().getString("nombre"));
                 persona.setDireccion(this.getRs().getString("direccion"));
@@ -232,7 +232,7 @@ public class MySQLComandos {
         }
         return listP;
     }
-
+    
     public void cargarprovincias(JComboBox cb1) {
         Connection co = c.getConexion();
         try {
@@ -241,50 +241,48 @@ public class MySQLComandos {
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
                 cb1.addItem(this.getRs().getString("provincias"));
-        DefaultComboBoxModel value;
-        Statement st = null;
-        ResultSet rs = null;
-        try{
-            st = co.createStatement();
-            rs = st.executeQuery("SELECT * FROM provincias");
-            value = new DefaultComboBoxModel();
-            cb1.setModel(value);
-            while(rs.next()){                
-                value.addElement(new cargarprovincia(rs.getInt(1),rs.getString(2)));
+                DefaultComboBoxModel value;
+                Statement st = null;
+                ResultSet rs = null;
+                try {
+                    st = co.createStatement();
+                    rs = st.executeQuery("SELECT * FROM provincias");
+                    value = new DefaultComboBoxModel();
+                    cb1.setModel(value);
+                    while (rs.next()) {
+                        value.addElement(new cargarprovincia(rs.getInt(1), rs.getString(2)));
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(ex.getMessage());
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                } finally {
+                    try {
+                        st.close();
+                        rs.close();
+                    } catch (Exception ex) {
+                    }
+                }
             }
-        }catch(SQLException ex){
-            System.out.println(ex.getMessage());
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }finally{
-            try{
-                st.close();
-                rs.close();
-            }catch(Exception ex){
-            }
-        }
-    }
-        }
-    
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
-    
+            
         }
     }
     
     public void cargarciudades(JComboBox cb2, int id) {
-          
+        
         Connection co = c.getConexion();
         DefaultComboBoxModel value;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        try{
+        try {
             ps = co.prepareStatement("SELECT * FROM ciudades where prov_id = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
             value = new DefaultComboBoxModel();
             cb2.setModel(value);
-            while(rs.next()){
+            while (rs.next()) {
                 value.addElement(new cargarciudad(rs.getInt(1), rs.getString(2)));
             }
         } catch (SQLException ex) {
@@ -306,7 +304,7 @@ public class MySQLComandos {
         }
         
     }
-
+    
     public void cargarciudades(JComboBox cb2) {
         Connection co = c.getConexion();
         try {
@@ -314,7 +312,7 @@ public class MySQLComandos {
             this.setP(co.prepareStatement("SELECT ciudades FROM ciudades"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-
+                
                 cb2.addItem(this.getRs().getString("ciudades"));
             }
         } catch (SQLException ex) {
@@ -331,28 +329,27 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-               this.getDatos().mostrar(e);
+                this.getDatos().mostrar(e);
             }
         }
     }
-
+    
     public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono,
             JComboBox cb1, JComboBox cb2) {
         Connection co = c.getConexion();
         try {
-
+            
             if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true)
                     && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
-                this.setP(co.prepareStatement(
-                        "INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
+                this.setP(co.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
                 this.getP().setString(1, txtnombres.getText());
                 this.getP().setString(2, txtapellidos.getText());
                 this.getP().setString(3, txtdireccion.getText());
                 this.getP().setString(4, txttelefono.getText());
                 this.getP().setString(5, cb1.getSelectedItem().toString());
                 this.getP().setString(6, cb2.getSelectedItem().toString());
+                
                 this.getP().executeUpdate();
-
                 this.getDatos().mostrar("Elementos guardados");
                 txtnombres.setText("");
                 txtapellidos.setText("");
@@ -361,7 +358,7 @@ public class MySQLComandos {
             } else {
                 this.getDatos().mostrar("No se ha seleccionado ningun item");
             }
-
+            
         } catch (SQLException ex) {
             this.getDatos().mostrar("Error al Guardar");
         } finally {
@@ -380,7 +377,7 @@ public class MySQLComandos {
             }
         }
     }
-
+    
     public void listaper(JComboBox per) {
 //        Connection co = c.getConexion();
 //        try {
@@ -390,13 +387,13 @@ public class MySQLComandos {
 
 //            while (this.getRs().next()) {}
         for (int i = 0; i < personas.size(); i++) {
-            
+            if (personas.get(i).getCedula() == null) {
                 per.addItem(personas.get(i).getApellido() + " " + personas.get(i).getNombre());
+            }
             
         }
 
 //            }
-
 //        } catch (SQLException ex) {
 //            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
 //        } finally {
@@ -413,12 +410,12 @@ public class MySQLComandos {
 //            } catch (SQLException e) {
 //                this.getDatos().mostrar(e);
 //            }
-        }
-
+    }
+    
     public void addced(JComboBox personas, JTextField Rced) {
         Connection co = c.getConexion();
         try {
-
+            
             String partes[] = personas.getSelectedItem().toString().split(" ");
             this.setInstruccion(
                     "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
@@ -427,7 +424,7 @@ public class MySQLComandos {
             this.getP().setString(2, partes[0]);
             this.getP().setString(3, partes[1]);
             this.getP().executeUpdate();
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -446,24 +443,25 @@ public class MySQLComandos {
             }
         }
     }
-
+    
     public int traerced() {
 //        Connection co = c.getConexion();
         int pos = 0;
 //        try {
 
-            Random rnd = new Random();
-            pos = rnd.nextInt(7999 + 1000) + 1000;
-            for (int i = 0; i < personas.size(); i++) {
-                ArrayList <PersonaBD> per=null;
-                if (personas.get(i).getCedula() !=null) {
-                    per.add(personas.get(i));
-                    while(per.get(i).getCedula().toString().substring(6,9).equals(Integer.toString(pos))) {
-                    pos = rnd.nextInt(7999 + 1000) + 1000;
-                    }
-                }
+        Random rnd = new Random();
+        pos = rnd.nextInt(7999 + 1000) + 1000;
+        for (int i = 0; i < personas.size(); i++) {
+            ArrayList<PersonaBD> per = null;
+            if (personas.get(i).getCedula() == null) {
                 
+                per.add(personas.get(i));
+                while (per.get(i).getCedula().toString().substring(6, 9).equals(Integer.toString(pos))) {
+                    pos = rnd.nextInt(7999 + 1000) + 1000;
+                }
             }
+            
+        }
 //            this.setInstruccion("SELECT cedula FROM datospersonales WHERE cedula IS NOT NULL");
 //            this.setP(co.prepareStatement(this.getInstruccion()));
 //            this.setRs(this.getP().executeQuery(this.getInstruccion()));
@@ -496,18 +494,17 @@ public class MySQLComandos {
 //                this.getDatos().mostrar(e);
 //            }
 //        }
-
         return pos;
     }
-
+    
     public void ConexionCedulas(JComboBox ListaCedulas) {
-           
+        
         for (int i = 0; i < personas.size(); i++) {
-                ListaCedulas.addItem(personas.get(i).getCedula()); 
+            ListaCedulas.addItem(personas.get(i).getCedula());
         }
-        }
-
-    public void InsCiud(JTextField txtop2,int id) {
+    }
+    
+    public void InsCiud(JTextField txtop2, int id) {
         Connection co = c.getConexion();
         try {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
@@ -533,9 +530,9 @@ public class MySQLComandos {
                 this.getDatos().mostrar(e);
             }
         }
-
+        
     }
-
+    
     public void InsProv(JTextField txtop2) {
         Connection co = c.getConexion();
         try {
@@ -563,7 +560,7 @@ public class MySQLComandos {
             }
         }
     }
-
+    
     public void enviarImagen(String img, String cedula) {
         Connection co = c.getConexion();
         this.setInstruccion("UPDATE datospersonales SET foto = ? WHERE datospersonales.cedula=?;");
@@ -593,5 +590,5 @@ public class MySQLComandos {
             }
         }
     }
-
+    
 }

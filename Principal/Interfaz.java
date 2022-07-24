@@ -132,6 +132,7 @@ public class Interfaz {
         Fbase.setResizable(false);
         Fbase.show();
     }
+
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
         i.initialize();
