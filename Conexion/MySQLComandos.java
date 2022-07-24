@@ -488,12 +488,13 @@ public class MySQLComandos {
     public void enviarImagen(String img, String cedula) {
         Connection co = c.getConexion();
         this.CargarDatos();
-        this.setInstruccion("UPDATE datospersonales SET foto = ? WHERE datospersonales.cedula=?;");
+        this.setInstruccion("UPDATE datospersonales SET foto = ? , rutaF = ? WHERE datospersonales.cedula=?;");    
         try {
             FileInputStream byteImagen = new FileInputStream(img);
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setBinaryStream(1, byteImagen);
-            this.getP().setString(2, cedula.replace(" ", ""));
+            this.getP().setString(2, img);
+            this.getP().setString(3, cedula.replace(" ", ""));
             this.getP().executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
