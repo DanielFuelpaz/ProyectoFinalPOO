@@ -6,14 +6,10 @@
 package DatosPersonales;
 
 import Conexion.MySQLComandos;
-import Objetos.cargarciudad;
 import Objetos.cargarprovincia;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -28,7 +24,7 @@ public class DatosPersonales implements ActionListener {
 
     public JPanel frame = new JPanel();
     public JLabel jl1 = new JLabel("Nombres");
-    public JTextField txtnombres = new JTextField("");
+    public JTextField txtnombres = new JTextField();
     public JLabel jl2 = new JLabel("Apellidos");
     public JTextField txtapellidos = new JTextField();
     public JLabel jl3 = new JLabel("Dirección");

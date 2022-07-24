@@ -379,8 +379,8 @@ public class MySQLComandos {
     }
 
     public void listaper(JComboBox per) {
-
         for (int i = 0; i < personas.size(); i++) {
+
             if (personas.get(i).getCedula() == null) {
                 per.addItem(personas.get(i).getApellido() + " " + personas.get(i).getNombre());
             }
@@ -389,18 +389,23 @@ public class MySQLComandos {
 
     }
 
-    public void addced(JComboBox personas, JTextField Rced) {
+    public void addced(JComboBox per, JTextField Rced) {
         Connection co = c.getConexion();
         try {
 
-            String partes[] = personas.getSelectedItem().toString().split(" ");
-            this.setInstruccion(
-                    "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
+            String partes[] = per.getSelectedItem().toString().split(" ");
+            this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setInt(1, Integer.valueOf(Rced.getText()));
             this.getP().setString(2, partes[0]);
             this.getP().setString(3, partes[1]);
             this.getP().executeUpdate();
+            for (int i = 0; i < personas.size(); i++) {
+                if (personas.get(i).getApellido().equals(partes[0]) && personas.get(i).getNombre().equals(partes[1])) {
+                    personas.get(i).setCedula(Integer.parseInt(Rced.getText()));
+                }
+
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
@@ -421,8 +426,10 @@ public class MySQLComandos {
         }
     }
 
-    public int traerced() {
+    public void traerced(JTextField Rced) {
+
         int pos = 0;
+
         Random rnd = new Random();
         pos = rnd.nextInt(7999 + 1000) + 1000;
         for (int i = 0; i < personas.size(); i++) {
@@ -430,12 +437,9 @@ public class MySQLComandos {
                 while (personas.get(i).getCedula().toString().substring(6, 9).equals(Integer.toString(pos))) {
                     pos = rnd.nextInt(7999 + 1000) + 1000;
                 }
-                personas.get(i).setCedula(i);
-
             }
-
         }
-        return pos;
+        Rced.setText("180500" + pos);
     }
 
     public void ConexionCedulas(JComboBox ListaCedulas) {

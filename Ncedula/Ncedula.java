@@ -70,12 +70,12 @@ public class Ncedula implements ActionListener {
         return Jp1;
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton but1 = (JButton) e.getSource();
         if (but1 == GenCedula) {
-            Rced.setText(String.valueOf("180500" + sql.traerced()));
+            sql.traerced(Rced);
+
         } else {
 
             sql.addced(personas, Rced);
