@@ -97,10 +97,10 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    Fbase.add(r.getPanel());
+                    Fbase.add(r.getpanel());
                     r.initialize();
                 } else {
-                    r.getPanel().setVisible(false);
+                    r.getpanel().setVisible(false);
                 }
             }
 
