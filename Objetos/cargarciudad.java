@@ -43,6 +43,7 @@ public class cargarciudad {
         this.idpro = idpro;
     }
     
+    @Override
     public String toString(){
         return this.ciudad;
     }

@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DatosPersonales{
+public class DatosPersonales {
 
     public JPanel frame = new JPanel();
     public JLabel jl1 = new JLabel("Nombres");
@@ -73,9 +73,10 @@ public class DatosPersonales{
         this.cb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-            provincia prov = (provincia)cb1.getSelectedItem();
-            int idciu = prov.getIdpro();
-            sql.cargarciudades(cb2, idciu);
+                cb2.removeAllItems();
+                provincia prov = (provincia) cb1.getSelectedItem();
+                int idciu = prov.getIdpro();
+                sql.cargarciudades(cb2, idciu);
             }
         });
         frame.show();

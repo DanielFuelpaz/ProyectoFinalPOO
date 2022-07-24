@@ -263,68 +263,28 @@ public class MySQLComandos {
         }
     }
 
-    public void cargarciudades(JComboBox cb2, int id) {
+    public void cargarciudades(JComboBox<Object> cb2, int id) {
 
         Connection co = c.getConexion();
-        DefaultComboBoxModel value;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
         try {
-            ps = co.prepareStatement("SELECT * FROM ciudades where prov_id = ?");
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            value = new DefaultComboBoxModel();
-            cb2.setModel(value);
-            while (rs.next()) {
-                value.addElement(new cargarciudad(rs.getInt(1), rs.getString(2)));
-            }
-        } catch (SQLException ex) {
-            this.getDatos().mostrar(ex);
-        } finally {
-            try {
-                if (this.getRs() != null) {
-                    this.getRs().close();
-                }
-                if (p != null) {
-                    p.close();
-                }
-                if (co != null) {
-                    co.close();
-                }
-            } catch (SQLException e) {
-                this.getDatos().mostrar(e);
-            }
-        }
-
-    }
-
-    public void cargarciudades(JComboBox cb2) {
-        Connection co = c.getConexion();
-        try {
-            cb2.removeAllItems();
-            this.setP(co.prepareStatement("SELECT ciudades FROM ciudades"));
+            this.setP(co.prepareStatement("SELECT * FROM ciudades where prov_id = ?"));
+            this.getP().setInt(1, id);
             this.setRs(this.getP().executeQuery());
-            while (this.getRs().next()) {
-
-                cb2.addItem(this.getRs().getString("ciudades"));
+            while (rs.next()) {
+                cb2.addItem(new cargarciudad(rs.getInt("idCiud"), rs.getString("ciudades")));
             }
         } catch (SQLException ex) {
             this.getDatos().mostrar(ex);
         } finally {
             try {
-                if (this.getRs() != null) {
-                    this.getRs().close();
-                }
-                if (this.getP() != null) {
-                    this.getP().close();
-                }
-                if (co != null) {
-                    co.close();
-                }
+                co.close();
+                rs.close();
+                p.close();
+
             } catch (SQLException e) {
-                this.getDatos().mostrar(e);
             }
         }
+
     }
 
     public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono,
@@ -474,7 +434,7 @@ public class MySQLComandos {
 
     }
 
-    public void InsProv(JTextField txtop2) {
+    public void InsProv(JTextField txtop2,JComboBox<Object> cb2) {
         Connection co = c.getConexion();
         try {
             this.setInstruccion("INSERT INTO provincias (provincias) VALUES (?)");
@@ -482,20 +442,16 @@ public class MySQLComandos {
             this.getP().setString(1, txtop2.getText());
             this.getP().executeUpdate();
             this.getDatos().mostrar("Elementos guardados");
+            cb2.addItem(new provincia(cb2.getItemCount()+1, txtop2.getText()));
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                if (this.getRs() != null) {
-                    this.getRs().close();
-                }
-                if (this.getP() != null) {
-                    this.getP().close();
-                }
-                if (co != null) {
-                    co.close();
-                }
+                this.getRs().close();
+                this.getP().close();
+                co.close();
+
             } catch (SQLException e) {
                 this.getDatos().mostrar(e);
             }

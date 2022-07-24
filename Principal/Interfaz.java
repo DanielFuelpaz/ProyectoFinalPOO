@@ -58,8 +58,6 @@ public class Interfaz {
                     DP.initialize();
                 } else {
                     DP.getFrame().setVisible(false);
-                    DP.getFrame().remove(DP.cb1);
-                    DP.cb2.removeAllItems();
                 }
             }
 
@@ -110,9 +108,11 @@ public class Interfaz {
                 if (estado == ItemEvent.SELECTED) {
                     Fbase.add(c.getFrame());
                     c.initialize();
+                    
                 } else {
                     c.getFrame().setVisible(false);
-                    c.getCb1().removeAllItems();
+                    c.resetCB(c.cb2);
+                    
                 }
             }
 
