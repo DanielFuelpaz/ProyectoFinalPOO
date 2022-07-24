@@ -426,13 +426,12 @@ public class MySQLComandos {
         Random rnd = new Random();
         pos = rnd.nextInt(7999 + 1000) + 1000;
         for (int i = 0; i < personas.size(); i++) {
-            ArrayList<PersonaBD> per = null;
-            if (personas.get(i).getCedula() == null) {
-
-                per.add(personas.get(i));
-                while (per.get(i).getCedula().toString().substring(6, 9).equals(Integer.toString(pos))) {
+            if (personas.get(i).getCedula() != null) {
+                while (personas.get(i).getCedula().toString().substring(6, 9).equals(Integer.toString(pos))) {
                     pos = rnd.nextInt(7999 + 1000) + 1000;
                 }
+                personas.get(i).setCedula(i);
+
             }
 
         }
