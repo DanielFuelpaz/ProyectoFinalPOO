@@ -232,6 +232,7 @@ public class Login implements ActionListener {
         this.j2.add(textocreacion2);
         this.j2.add(textocreacion3);
         this.j2.add(botonguardar);
+        this.j2.setIconImage(icono);
         this.botonguardar.addActionListener(this);
 
         this.j2.setBackground(Color.GRAY);
