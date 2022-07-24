@@ -128,8 +128,8 @@ public class MySQLComandos {
                         this.getDatos().mostrar("La contraseña debe tener todo en mayusculas y tener numeros\nEjemplo: USUARIO1234");
                         return false;
                     }
+                }
 
-<<<<<<< HEAD
                 if (!(this.getRs().getString("usuario").equals(usuario.getText())
                        ) && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]") ) {
                          
@@ -147,24 +147,18 @@ public class MySQLComandos {
                     
                 }else{
                     datos.mostrar("=== ERROR DE CREACION DE USUARIO ====");
-=======
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
+
                 }
 
             }
 
-            // executeUpdate cuando se hacen select
-<<<<<<< HEAD
-        } catch (Exception ex) {
+            } 
+          // executeUpdate cuando se hacen select
+         catch (Exception ex) {
 
             this.getDatos().mostrar("=== ERROR CLAVE USUARIO INCORRECTA ===");
 
             this.getDatos().mostrar("El Usuario ya existe");
-=======
-        } catch (SQLException ex) {
-            this.getDatos().mostrar("El Usuario " + usuario.getText() + " ya existe");
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
-
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -181,6 +175,7 @@ public class MySQLComandos {
             }
         }
         return false;
+    
     }
 
     // Metodo de Traer Reportes
@@ -240,14 +235,12 @@ public class MySQLComandos {
 
     public void cargarprovincias(JComboBox cb1) {
         Connection co = c.getConexion();
-<<<<<<< HEAD
         try {
             cb1.removeAllItems();
             this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
                 cb1.addItem(this.getRs().getString("provincias"));
-=======
         DefaultComboBoxModel value;
         Statement st = null;
         ResultSet rs = null;
@@ -271,6 +264,13 @@ public class MySQLComandos {
             }
         }
     }
+        }
+    
+        catch (SQLException ex) {
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+    
+        }
+    }
     
     public void cargarciudades(JComboBox cb2, int id) {
           
@@ -286,7 +286,6 @@ public class MySQLComandos {
             cb2.setModel(value);
             while(rs.next()){
                 value.addElement(new cargarciudad(rs.getInt(1), rs.getString(2)));
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
             }
         } catch (SQLException ex) {
             this.getDatos().mostrar(ex);
@@ -307,7 +306,6 @@ public class MySQLComandos {
         }
         
     }
-<<<<<<< HEAD
 
     public void cargarciudades(JComboBox cb2) {
         Connection co = c.getConexion();
@@ -337,9 +335,6 @@ public class MySQLComandos {
             }
         }
     }
-=======
-    
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
 
     public void addPer(JTextField txtnombres, JTextField txtapellidos, JTextField txtdireccion, JTextField txttelefono,
             JComboBox cb1, JComboBox cb2) {
@@ -520,9 +515,6 @@ public class MySQLComandos {
             this.getP().setInt(2, id);
             this.getP().execute();
             this.getDatos().mostrar("Elementos guardados");
-            this.getP().setString(2, txtop2.getText());
-            this.getP().executeUpdate();
-            JOptionPane.showMessageDialog(null, "Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);

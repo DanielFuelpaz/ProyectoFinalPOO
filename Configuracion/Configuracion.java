@@ -10,13 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Conexion.MySQLComandos;
-<<<<<<< HEAD
 import Opcion3.JOption3;
-=======
 import Objetos.cargarprovincia;
 import Objetos.ingresociudad;
-
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
 public class Configuracion implements ActionListener {
     
     public JPanel frame = new JPanel();
@@ -28,11 +24,7 @@ public class Configuracion implements ActionListener {
     public JTextField txtop2 = new JTextField();
     public JButton guardar = new JButton("Guardar");
     private MySQLComandos sql = new MySQLComandos();
-<<<<<<< HEAD
     private JOption3 datos= new JOption3();
-    
-=======
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
     public JPanel getFrame() {
         return frame;
     }

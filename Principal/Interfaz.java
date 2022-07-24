@@ -48,11 +48,7 @@ public class Interfaz {
         Fbase.add(this.opcion3);
         Fbase.add(this.opcion4);
         Fbase.add(this.opcion5);
-<<<<<<< HEAD
-        
-=======
         Fbase.add(this.opcion6);
->>>>>>> 28619d4b453daeb46306d5cc8acd5e7d5f21e820
         this.opcion1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
