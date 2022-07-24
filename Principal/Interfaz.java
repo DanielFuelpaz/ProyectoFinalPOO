@@ -12,9 +12,12 @@ import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Interfaz {
-
+    
+    private Image icono = new ImageIcon(getClass().getResource("Icono/icono.png")).getImage();
     public JFrame Fbase = new JFrame("RegistroCivil");
     public JToggleButton opcion1 = new JToggleButton("Datos Personales");
     public JToggleButton opcion2 = new JToggleButton("Generación del número de cédula");
@@ -30,6 +33,7 @@ public class Interfaz {
 
     public void initialize() {
 
+        Fbase.setIconImage(icono);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
