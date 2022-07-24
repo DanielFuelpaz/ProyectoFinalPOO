@@ -6,8 +6,8 @@
 package Reporte;
 
 import Conexion.MySQLComandos;
+import Objetos.Imagen;
 import java.awt.Color;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -17,6 +17,7 @@ public class Reporte  {
     private JPanel panel = new JPanel();
     MySQLComandos m = new MySQLComandos();
     private JTable report = new JTable();
+    Imagen ci1;
     
     public JPanel getPanel() {
         return this.panel;
