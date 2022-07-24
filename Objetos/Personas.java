@@ -65,6 +65,16 @@ public class Personas {
     public void setRutaF(String rutaF) {
         this.rutaF = rutaF;
     }
+
+    public Personas(String apellido, String nombre, String direccion, String telefono) {
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
+
+    public Personas() {
+    }
     
     
 }

@@ -29,7 +29,15 @@ public class MySQLComandos {
     private ResultSet rs;
     private final Conexion c = new Conexion();
     JOption3 datos = new JOption3();
-    ArrayList<PersonaBD> personas = this.Reportes();
+    ArrayList<PersonaBD> personas = new ArrayList<>();
+
+    public ArrayList<PersonaBD> getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(ArrayList<PersonaBD> personas) {
+        this.personas = personas;
+    }
 
     public String getInstruccion() {
         return this.instruccion;
@@ -172,7 +180,7 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public void Reportes(JTable tabla) {
-        String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
+        String[] columnas = {"CID", "Apellido", "Nombre", "Direccion", "Ruta Foto"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
         modelo.addRow(columnas);
@@ -188,7 +196,7 @@ public class MySQLComandos {
         }
     }
 
-    public ArrayList Reportes() {
+    public void CargarDatos() {
         Connection co = c.getConexion();
         ArrayList<PersonaBD> listP = new ArrayList();
         PersonaBD persona;
@@ -211,6 +219,7 @@ public class MySQLComandos {
                 persona.setFotos(this.getRs().getBytes("foto"));
                 listP.add(persona);
             }
+            setPersonas(listP);
         } catch (SQLException e) {
             this.getDatos().mostrar("Error al conectar");
         } finally {
@@ -228,7 +237,7 @@ public class MySQLComandos {
                 this.getDatos().mostrar(e);
             }
         }
-        return listP;
+
     }
 
     public void cargarprovincias(JComboBox<Object> cb1) {
@@ -237,9 +246,9 @@ public class MySQLComandos {
             this.setP(co.prepareStatement("SELECT * FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-                
-                cb1.addItem(new provincia(this.getRs().getInt("idProv"),this.getRs().getString("provincias")));
-                
+
+                cb1.addItem(new provincia(this.getRs().getInt("idProv"), this.getRs().getString("provincias")));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
@@ -332,9 +341,10 @@ public class MySQLComandos {
                 this.getP().setString(4, txttelefono.getText());
                 this.getP().setString(5, cb1.getSelectedItem().toString());
                 this.getP().setString(6, cb2.getSelectedItem().toString());
-
                 this.getP().executeUpdate();
                 this.getDatos().mostrar("Elementos guardados");
+                this.getPersonas().add(new PersonaBD(txtapellidos.getText(), txtnombres.getText(), txtdireccion.getText(), txttelefono.getText()));
+                System.out.println(personas.get(personas.size()).getCedula());
                 txtnombres.setText("");
                 txtapellidos.setText("");
                 txtdireccion.setText("");
@@ -363,9 +373,11 @@ public class MySQLComandos {
     }
 
     public void listaper(JComboBox per) {
+        this.CargarDatos();
         for (int i = 0; i < personas.size(); i++) {
 
             if (personas.get(i).getCedula() == null) {
+                System.out.println(personas.get(i).getApellido() + " " + personas.get(i).getNombre());
                 per.addItem(personas.get(i).getApellido() + " " + personas.get(i).getNombre());
             }
 
@@ -428,8 +440,8 @@ public class MySQLComandos {
 
     public void ConexionCedulas(JComboBox ListaCedulas) {
 
-        for (int i = 0; i < personas.size(); i++) {
-            ListaCedulas.addItem(personas.get(i).getCedula());
+        for (int i = 0; i < getPersonas().size(); i++) {
+            ListaCedulas.addItem(getPersonas().get(i).getCedula());
         }
     }
 

@@ -2,15 +2,12 @@ package Opcion3;
 
 import Conexion.MySQLComandos;
 import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
@@ -24,13 +21,7 @@ public class Panel3s extends javax.swing.JPanel {
     Camara cam = new Camara();
     String opcion;
 
-    public MySQLComandos getComandos() {
-        return this.comandos;
-    }
-
-    public void setComandos(MySQLComandos comandos) {
-        this.comandos = comandos;
-    }
+    
 
     public Panel3s() {
         initComponents();
@@ -39,7 +30,7 @@ public class Panel3s extends javax.swing.JPanel {
         this.removeAll();
         this.setBackground(Color.cyan);
         this.getListaCedulas().removeAllItems();
-        this.getComandos().ConexionCedulas(listaCedulas);
+        this.comandos.ConexionCedulas(listaCedulas);
         this.setVisible(true);
         this.getCam().getWebcam().setViewSize(this.getCam().getDimension1());
         this.getCam().getWebcampnl().setFillArea(true);

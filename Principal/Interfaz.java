@@ -58,6 +58,7 @@ public class Interfaz {
                     DP.initialize();
                 } else {
                     DP.getFrame().setVisible(false);
+                    DP.getFrame().remove(DP.cb1);
                     DP.cb2.removeAllItems();
                 }
             }
