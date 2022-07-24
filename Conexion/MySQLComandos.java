@@ -304,7 +304,6 @@ public class MySQLComandos {
                 this.getP().executeUpdate();
                 this.getDatos().mostrar("Elementos guardados");
                 this.getPersonas().add(new PersonaBD(txtapellidos.getText(), txtnombres.getText(), txtdireccion.getText(), txttelefono.getText()));
-                System.out.println(personas.get(personas.size()).getCedula());
                 txtnombres.setText("");
                 txtapellidos.setText("");
                 txtdireccion.setText("");
@@ -337,7 +336,6 @@ public class MySQLComandos {
         for (int i = 0; i < personas.size(); i++) {
 
             if (personas.get(i).getCedula() == null) {
-                System.out.println(personas.get(i).getApellido() + " " + personas.get(i).getNombre());
                 per.addItem(personas.get(i).getApellido() + " " + personas.get(i).getNombre());
             }
 
@@ -434,7 +432,7 @@ public class MySQLComandos {
 
     }
 
-    public void InsProv(JTextField txtop2,JComboBox<Object> cb2) {
+    public void InsProv(JTextField txtop2, JComboBox<Object> cb2) {
         Connection co = c.getConexion();
         try {
             this.setInstruccion("INSERT INTO provincias (provincias) VALUES (?)");
@@ -442,7 +440,7 @@ public class MySQLComandos {
             this.getP().setString(1, txtop2.getText());
             this.getP().executeUpdate();
             this.getDatos().mostrar("Elementos guardados");
-            cb2.addItem(new provincia(cb2.getItemCount()+1, txtop2.getText()));
+            cb2.addItem(new provincia(cb2.getItemCount() + 1, txtop2.getText()));
             txtop2.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
