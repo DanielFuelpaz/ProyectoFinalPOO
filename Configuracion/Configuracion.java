@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Conexion.MySQLComandos;
 import Opcion3.JOption3;
-import Objetos.cargarprovincia;
 import Objetos.ingresociudad;
+import Objetos.provincia;
 public class Configuracion implements ActionListener {
     
     public JPanel frame = new JPanel();
@@ -95,7 +95,7 @@ public class Configuracion implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         if ((cb1.getSelectedItem().toString().equals("Ciudad")) && (txtop2.getText().isEmpty() != true)) {
-            cargarprovincia prov = (cargarprovincia) cb2.getSelectedItem();
+            provincia prov = (provincia) cb2.getSelectedItem();
             int idciu = prov.getIdpro();
             ingresociudad cid = new ingresociudad(idciu);
             sql.InsCiud(txtop2, cid.getIdprov());

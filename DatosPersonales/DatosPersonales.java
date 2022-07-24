@@ -6,7 +6,7 @@
 package DatosPersonales;
 
 import Conexion.MySQLComandos;
-import Objetos.cargarprovincia;
+import Objetos.provincia;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,15 +16,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author g4to1
- */
 public class DatosPersonales implements ActionListener {
 
     public JPanel frame = new JPanel();
     public JLabel jl1 = new JLabel("Nombres");
-    public JTextField txtnombres = new JTextField();
+    public JTextField txtnombres = new JTextField("");
     public JLabel jl2 = new JLabel("Apellidos");
     public JTextField txtapellidos = new JTextField();
     public JLabel jl3 = new JLabel("Dirección");
@@ -78,7 +74,7 @@ public class DatosPersonales implements ActionListener {
         this.cb1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-            cargarprovincia prov = (cargarprovincia)cb1.getSelectedItem();
+            provincia prov = (provincia)cb1.getSelectedItem();
             int idciu = prov.getIdpro();
             sql.cargarciudades(cb2, idciu);
             }

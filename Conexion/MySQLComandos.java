@@ -1,9 +1,9 @@
 package Conexion;
 
 import Objetos.cargarciudad;
-import Objetos.cargarprovincia;
 import Ncedula.Ncedula;
 import Objetos.PersonaBD;
+import Objetos.provincia;
 import Opcion3.JOption3;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -250,15 +250,14 @@ public class MySQLComandos {
             while (this.getRs().next()) {
                 cb1.addItem(this.getRs().getString("provincias"));
                 DefaultComboBoxModel value;
-                Statement st = null;
-                ResultSet rs = null;
                 try {
-                    st = co.createStatement();
-                    rs = st.executeQuery("SELECT * FROM provincias");
+                    
+                    
+                    this.setRs(this.getP().executeQuery("SELECT * FROM provincias"));
                     value = new DefaultComboBoxModel();
                     cb1.setModel(value);
-                    while (rs.next()) {
-                        value.addElement(new cargarprovincia(rs.getInt(1), rs.getString(2)));
+                    while (this.getRs().next()) {
+                        value.addElement(new provincia(rs.getInt(1), rs.getString(2)));
                     }
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
@@ -266,7 +265,7 @@ public class MySQLComandos {
                     System.out.println(ex.getMessage());
                 } finally {
                     try {
-                        st.close();
+                        p.close();
                         rs.close();
                     } catch (Exception ex) {
                     }

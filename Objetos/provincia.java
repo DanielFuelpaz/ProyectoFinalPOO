@@ -9,11 +9,11 @@ package Objetos;
  *
  * @author g4to1
  */
-public class cargarprovincia {
+public class provincia {
     private  int idpro;
     private String provincia;
 
-    public cargarprovincia(int idpro, String provincia) {
+    public provincia(int idpro, String provincia) {
         this.idpro = idpro;
         this.provincia = provincia;
     }
@@ -34,7 +34,4 @@ public class cargarprovincia {
         this.provincia = provincia;
     }
     
-    public String toString(){
-        return this.provincia;
-    }
 }
