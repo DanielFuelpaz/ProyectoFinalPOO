@@ -34,4 +34,9 @@ public class provincia {
         this.provincia = provincia;
     }
     
+    @Override
+    public String toString() {
+       return this.provincia;
+    }
+    
 }

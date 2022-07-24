@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
@@ -148,20 +147,10 @@ public class MySQLComandos {
 
             }
 
-<<<<<<< HEAD
             // executeUpdate cuando se hacen select
-
         } catch (SQLException ex) {
             this.getDatos().mostrar("El Usuario " + usuario.getText() + " ya existe");
 
-=======
-        } // executeUpdate cuando se hacen select
-        catch (Exception ex) {
-
-            this.getDatos().mostrar("=== ERROR CLAVE USUARIO INCORRECTA ===");
-
-            this.getDatos().mostrar("El Usuario ya existe");
->>>>>>> e50fd5a7c82e03aadb8171b62c17c0faae73b98a
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -186,6 +175,7 @@ public class MySQLComandos {
         String[] columnas = {"Cedula", "Apellido", "Nombre", "Direccion", "Fotografia"};
         String[] registros = new String[5];
         DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+        modelo.addRow(columnas);
         for (int i = 0; i < personas.size(); i++) {
             PersonaBD persona = personas.get(i);
             registros[0] = String.valueOf(persona.getCedula());
@@ -241,39 +231,26 @@ public class MySQLComandos {
         return listP;
     }
 
-    public void cargarprovincias(JComboBox cb1) {
+    public void cargarprovincias(JComboBox<Object> cb1) {
         Connection co = c.getConexion();
         try {
-            cb1.removeAllItems();
-            this.setP(co.prepareStatement("SELECT provincias FROM provincias"));
+            this.setP(co.prepareStatement("SELECT * FROM provincias"));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-                cb1.addItem(this.getRs().getString("provincias"));
-                DefaultComboBoxModel value;
-                try {
-                    
-                    
-                    this.setRs(this.getP().executeQuery("SELECT * FROM provincias"));
-                    value = new DefaultComboBoxModel();
-                    cb1.setModel(value);
-                    while (this.getRs().next()) {
-                        value.addElement(new provincia(rs.getInt(1), rs.getString(2)));
-                    }
-                } catch (SQLException ex) {
-                    System.out.println(ex.getMessage());
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                } finally {
-                    try {
-                        p.close();
-                        rs.close();
-                    } catch (Exception ex) {
-                    }
-                }
+                
+                cb1.addItem(new provincia(this.getRs().getInt("idProv"),this.getRs().getString("provincias")));
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
 
+        } finally {
+            try {
+                co.close();
+                p.close();
+                rs.close();
+            } catch (SQLException ex) {
+            }
         }
     }
 

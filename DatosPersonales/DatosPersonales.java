@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DatosPersonales implements ActionListener {
+public class DatosPersonales{
 
     public JPanel frame = new JPanel();
     public JLabel jl1 = new JLabel("Nombres");
@@ -29,7 +29,7 @@ public class DatosPersonales implements ActionListener {
     public JTextField txttelefono = new JTextField();
 
     public JLabel jl5 = new JLabel("Provincia");
-    public JComboBox cb1 = new JComboBox();
+    public JComboBox<Object> cb1 = new JComboBox();
     public JLabel jl6 = new JLabel("Ciudad");
     public JComboBox cb2 = new JComboBox();
     public JButton bg = new JButton("Guardar");
@@ -40,7 +40,6 @@ public class DatosPersonales implements ActionListener {
     }
 
     public void initialize() {
-
         frame.setBounds(200, 0, 575, 350);
         frame.setBackground(Color.LIGHT_GRAY);
         frame.setLayout(null);
@@ -89,11 +88,6 @@ public class DatosPersonales implements ActionListener {
             }
         });
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

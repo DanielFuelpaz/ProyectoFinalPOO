@@ -6,6 +6,7 @@
 package Reporte;
 
 import Conexion.MySQLComandos;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -37,9 +38,8 @@ public class Reporte {
 
         panel.setBounds(200, 0, 1080, 720);
         panel.setBackground(new Color(205, 224, 228));
-        report.setBounds(20, 20, 500, 300);
         m.Reportes(report);
-        panel.add(report);
+        panel.add(panel, BorderLayout.CENTER);
         panel.setVisible(true);
         return this.panel;
     }
