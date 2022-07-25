@@ -6,6 +6,7 @@ import Objetos.PersonaBD;
 import Objetos.Render;
 import Objetos.provincia;
 import Opcion3.JOption3;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
@@ -27,7 +28,10 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 public class MySQLComandos {
 
@@ -198,15 +202,12 @@ public class MySQLComandos {
                 return false;
             }
         };
-        String[] titulos = { "CID", "Apellido", "Nombre", "Direccion", "Ruta Foto", "Foto" };
-
-        dt.addColumn("CID");
-        dt.addColumn("Apellido");
-        dt.addColumn("Nombre");
-        dt.addColumn("Direccion");
-        dt.addColumn("Ruta Foto");
-        dt.addColumn("Foto");
-        dt.addRow(titulos);
+        dt.addColumn("ID");
+        dt.addColumn("Last Name");
+        dt.addColumn("First Name");
+        dt.addColumn("Address");
+        dt.addColumn("URL");
+        dt.addColumn("Selfie");
         if (getPersonas().size() > 0) {
             for (int i = 0; i < getPersonas().size(); i++) {
                 Object fila[] = new Object[6];
@@ -229,7 +230,17 @@ public class MySQLComandos {
                 dt.addRow(fila);
             }
             tabla.setModel(dt);
-            tabla.setRowHeight(40);
+            TableColumnModel columnModel = tabla.getColumnModel();
+
+            columnModel.getColumn(0).setPreferredWidth(100);
+            columnModel.getColumn(1).setPreferredWidth(100);
+            columnModel.getColumn(2).setPreferredWidth(100);
+            columnModel.getColumn(3).setPreferredWidth(100);
+            columnModel.getColumn(4).setPreferredWidth(250);
+            columnModel.getColumn(5).setPreferredWidth(100);
+            columnModel.getColumn(0).setMaxWidth(90);
+            tabla.setRowHeight(65);
+            
         }
     }
 
