@@ -124,9 +124,10 @@ public class MySQLComandos {
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
-                //primer control: Nombres de usuarios ya existentes
+                // primer control: Nombres de usuarios ya existentes
                 if (!(rs.getString("usuario").equals(usuario.getText()))) {
-                    if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*") && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
+                    if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")
+                            && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
                         this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                         this.setP(co.prepareStatement(this.getInstruccion()));
                         this.getP().setString(1, usuario.getText());
@@ -138,12 +139,14 @@ public class MySQLComandos {
                         confirmacion.setText("");
                         return true;
                     } else {
-                        this.getDatos().mostrar("La contraseña debe tener todo en mayusculas y tener numeros\nEjemplo: USUARIO1234");
+                        this.getDatos().mostrar(
+                                "La contraseña debe tener todo en mayusculas y tener numeros\nEjemplo: USUARIO1234");
                         return false;
                     }
                 }
 
-                if (!(this.getRs().getString("usuario").equals(usuario.getText())) && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]")) {
+                if (!(this.getRs().getString("usuario").equals(usuario.getText()))
+                        && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]")) {
 
                     this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                     this.setP(co.prepareStatement(this.getInstruccion()));
@@ -187,16 +190,16 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public void Reportes(JTable tabla) {
-        this.CargarDatos(); 
+        this.CargarDatos();
         tabla.setDefaultRenderer(Object.class, new Render());
-        DefaultTableModel dt = new DefaultTableModel(){
+        DefaultTableModel dt = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        String[] titulos={"CID","Apellido","Nombre","Direccion","Ruta Foto","Foto"};
-        
+        String[] titulos = { "CID", "Apellido", "Nombre", "Direccion", "Ruta Foto", "Foto" };
+
         dt.addColumn("CID");
         dt.addColumn("Apellido");
         dt.addColumn("Nombre");
@@ -204,15 +207,15 @@ public class MySQLComandos {
         dt.addColumn("Ruta Foto");
         dt.addColumn("Foto");
         dt.addRow(titulos);
-        if(getPersonas().size() > 0){
-            for(int i=0; i<getPersonas().size(); i++){
+        if (getPersonas().size() > 0) {
+            for (int i = 0; i < getPersonas().size(); i++) {
                 Object fila[] = new Object[6];
                 fila[0] = getPersonas().get(i).getCedula();
                 fila[1] = getPersonas().get(i).getApellido();
                 fila[2] = getPersonas().get(i).getNombre();
                 fila[3] = getPersonas().get(i).getDireccion();
                 fila[4] = getPersonas().get(i).getRutaF();
-                try{
+                try {
                     byte[] bi = getPersonas().get(i).getFotos();
                     BufferedImage image = null;
                     InputStream in = new ByteArrayInputStream(bi);
@@ -220,7 +223,7 @@ public class MySQLComandos {
                     ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 60, 0));
                     fila[5] = new JLabel(imgi);
 
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     fila[5] = new JLabel("No imagen");
                 }
                 dt.addRow(fila);
@@ -329,7 +332,8 @@ public class MySQLComandos {
 
             if ((txtnombres.getText().isEmpty() != true) && (txtapellidos.getText().isEmpty() != true)
                     && (txtdireccion.getText().isEmpty() != true) && (txttelefono.getText().isEmpty() != true)) {
-                this.setP(co.prepareStatement("INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
+                this.setP(co.prepareStatement(
+                        "INSERT INTO datospersonales (nombre,apellido,direccion,telefono,provincia,ciudad) VALUES (?,?,?,?,?,?)"));
                 this.getP().setString(1, txtnombres.getText());
                 this.getP().setString(2, txtapellidos.getText());
                 this.getP().setString(3, txtdireccion.getText());
@@ -338,7 +342,8 @@ public class MySQLComandos {
                 this.getP().setString(6, cb2.getSelectedItem().toString());
                 this.getP().executeUpdate();
                 this.getDatos().mostrar("Elementos guardados");
-                this.getPersonas().add(new PersonaBD(txtapellidos.getText(), txtnombres.getText(), txtdireccion.getText(), txttelefono.getText()));
+                this.getPersonas().add(new PersonaBD(txtapellidos.getText(), txtnombres.getText(),
+                        txtdireccion.getText(), txttelefono.getText()));
                 txtnombres.setText("");
                 txtapellidos.setText("");
                 txtdireccion.setText("");
@@ -383,7 +388,8 @@ public class MySQLComandos {
         try {
 
             String partes[] = per.getSelectedItem().toString().split(" ");
-            this.setInstruccion("UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
+            this.setInstruccion(
+                    "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setInt(1, Integer.valueOf(Rced.getText()));
             this.getP().setString(2, partes[0]);
@@ -494,7 +500,7 @@ public class MySQLComandos {
     public void enviarImagen(String img, String cedula) {
         Connection co = c.getConexion();
         this.CargarDatos();
-        this.setInstruccion("UPDATE datospersonales SET foto = ? , rutaF = ? WHERE datospersonales.cedula=?;");    
+        this.setInstruccion("UPDATE datospersonales SET foto = ? , rutaF = ? WHERE datospersonales.cedula=?;");
         try {
             FileInputStream byteImagen = new FileInputStream(img);
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -523,7 +529,7 @@ public class MySQLComandos {
         }
     }
 
-    public void traerImagen(){
-        
+    public void traerImagen() {
+
     }
 }

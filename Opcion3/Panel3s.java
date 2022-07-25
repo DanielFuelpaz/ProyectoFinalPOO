@@ -1,6 +1,8 @@
 package Opcion3;
 
 import Conexion.MySQLComandos;
+import Objetos.Personas;
+import Utilitarios.Ciclos;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -11,6 +13,7 @@ import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -30,6 +33,7 @@ public class Panel3s extends javax.swing.JPanel {
         this.removeAll();
         this.setBackground(Color.LIGHT_GRAY);
         this.getListaCedulas().removeAllItems();
+	listaCedulas.addItem("-");
         this.comandos.ConexionCedulas(listaCedulas);
         this.setVisible(true);
         this.getCam().getWebcam().setViewSize(this.getCam().getDimension1());
@@ -351,22 +355,25 @@ public class Panel3s extends javax.swing.JPanel {
     private void GuardarbtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_GuardarbtnActionPerformed
         JOption3 datos = new JOption3();
         MySQLComandos comandos = new MySQLComandos();
+        JFChooser elector = new JFChooser();
+        Ciclos ciclo = new Ciclos();
+        Personas persona = new Personas();
+        Computador pc = new Computador();
         int respuesta = datos.preguntar("¿Desea guardar la foto?", "Confirmación");
         if (respuesta == 0) {
-            String rutaDispositivo = datos.ingreso("Ingrese la ruta de su dispositivo para guardar la imagen", "Ruta");
-            File imagenRuta = new File(rutaDispositivo + "\\Foto"+this.getCam().getNumeroFoto()+".jpg");
-            comandos.enviarImagen(imagenRuta.getAbsolutePath(), opcion);
+            pc.setRutaDispositivo(elector.ElegirCarpeta(null).getAbsolutePath());
+            img.setArchivoImg(ciclo.ImagenDesicion(datos, pc.getRutaDispositivo(), persona));
             try {
-                ImageIO.write(this.getImg().getRuta(), ".jpg", imagenRuta);
-                datos.mostrar("Se guardó su imagen en: " + imagenRuta.getAbsolutePath());
-            } catch (Exception e) {
-                datos.mostrar(e);
+                ImageIO.write(this.getImg().getRuta(), "jpg", img.getArchivoImg());
+                datos.mostrar("Se guardó su imagen en: " + img.getArchivoImg().getAbsolutePath());
+            } catch (IOException ex) {
+                datos.mostrar("Error");
             }
+            comandos.enviarImagen(img.getArchivoImg().getAbsolutePath(), opcion);
             this.getFotolbl().setIcon(null);
             this.getGuardarbtn().setEnabled(false);
             this.getTomarbtn().setText("TOMAR");
         }
-        this.getCam().setNumeroFoto(this.getCam().getNumeroFoto() + 1);
     }// GEN-LAST:event_GuardarbtnActionPerformed
 
     private void AbrirCamaraActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AbrirCamaraActionPerformed
