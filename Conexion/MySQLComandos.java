@@ -6,6 +6,7 @@ import Objetos.PersonaBD;
 import Objetos.Render;
 import Objetos.provincia;
 import Opcion3.JOption3;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
@@ -27,7 +28,10 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 
 public class MySQLComandos {
 
@@ -187,32 +191,29 @@ public class MySQLComandos {
 
     // Metodo de Traer Reportes
     public void Reportes(JTable tabla) {
-        this.CargarDatos(); 
+        this.CargarDatos();
         tabla.setDefaultRenderer(Object.class, new Render());
-        DefaultTableModel dt = new DefaultTableModel(){
+        DefaultTableModel dt = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        String[] titulos={"CID","Apellido","Nombre","Direccion","Ruta Foto","Foto"};
-        
-        dt.addColumn("CID");
-        dt.addColumn("Apellido");
-        dt.addColumn("Nombre");
-        dt.addColumn("Direccion");
-        dt.addColumn("Ruta Foto");
-        dt.addColumn("Foto");
-        dt.addRow(titulos);
-        if(getPersonas().size() > 0){
-            for(int i=0; i<getPersonas().size(); i++){
+        dt.addColumn("ID");
+        dt.addColumn("Last Name");
+        dt.addColumn("First Name");
+        dt.addColumn("Address");
+        dt.addColumn("URL");
+        dt.addColumn("Selfie");
+        if (getPersonas().size() > 0) {
+            for (int i = 0; i < getPersonas().size(); i++) {
                 Object fila[] = new Object[6];
                 fila[0] = getPersonas().get(i).getCedula();
                 fila[1] = getPersonas().get(i).getApellido();
                 fila[2] = getPersonas().get(i).getNombre();
                 fila[3] = getPersonas().get(i).getDireccion();
                 fila[4] = getPersonas().get(i).getRutaF();
-                try{
+                try {
                     byte[] bi = getPersonas().get(i).getFotos();
                     BufferedImage image = null;
                     InputStream in = new ByteArrayInputStream(bi);
@@ -220,13 +221,23 @@ public class MySQLComandos {
                     ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 60, 0));
                     fila[5] = new JLabel(imgi);
 
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     fila[5] = new JLabel("No imagen");
                 }
                 dt.addRow(fila);
             }
             tabla.setModel(dt);
-            tabla.setRowHeight(40);
+            TableColumnModel columnModel = tabla.getColumnModel();
+
+            columnModel.getColumn(0).setPreferredWidth(100);
+            columnModel.getColumn(1).setPreferredWidth(100);
+            columnModel.getColumn(2).setPreferredWidth(100);
+            columnModel.getColumn(3).setPreferredWidth(100);
+            columnModel.getColumn(4).setPreferredWidth(250);
+            columnModel.getColumn(5).setPreferredWidth(100);
+            columnModel.getColumn(0).setMaxWidth(90);
+            tabla.setRowHeight(65);
+            
         }
     }
 
@@ -494,7 +505,7 @@ public class MySQLComandos {
     public void enviarImagen(String img, String cedula) {
         Connection co = c.getConexion();
         this.CargarDatos();
-        this.setInstruccion("UPDATE datospersonales SET foto = ? , rutaF = ? WHERE datospersonales.cedula=?;");    
+        this.setInstruccion("UPDATE datospersonales SET foto = ? , rutaF = ? WHERE datospersonales.cedula=?;");
         try {
             FileInputStream byteImagen = new FileInputStream(img);
             this.setP(co.prepareStatement(this.getInstruccion()));
@@ -523,7 +534,7 @@ public class MySQLComandos {
         }
     }
 
-    public void traerImagen(){
-        
+    public void traerImagen() {
+
     }
 }
