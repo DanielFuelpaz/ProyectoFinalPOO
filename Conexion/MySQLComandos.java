@@ -418,7 +418,6 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
-                this.getDatos().mostrar(e);
             }
         }
     }
@@ -442,7 +441,7 @@ public class MySQLComandos {
     public void ConexionCedulas(JComboBox ListaCedulas) {
         this.CargarDatos();
         for (int i = 0; i < getPersonas().size(); i++) {
-            if (getPersonas().get(i).getFotos() == null) {
+            if (getPersonas().get(i).getRutaF() == null) {
                 ListaCedulas.addItem(getPersonas().get(i).getCedula());
             }
 

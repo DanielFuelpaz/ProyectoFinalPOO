@@ -85,8 +85,6 @@ public class Interfaz {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
                     Fbase.add(foto, BorderLayout.CENTER);
-                    Fbase.revalidate();
-                    Fbase.repaint();
                     foto.setVisible(true);
                 } else {
                     foto.setVisible(false);
