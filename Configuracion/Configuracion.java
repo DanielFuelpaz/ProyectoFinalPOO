@@ -93,9 +93,16 @@ public class Configuracion implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         if ((cb1.getSelectedItem().toString().equals("Ciudad")) && (txtop2.getText().isEmpty() != true)) {
             provincia prov = (provincia) cb2.getSelectedItem();
-            int idciu = prov.getIdpro();
-            ingresociudad cid = new ingresociudad(idciu);
-            sql.InsCiud(txtop2, cid.getIdprov());
+            try {
+                int idciu = prov.getIdpro();
+                ingresociudad cid = new ingresociudad(idciu);
+                 sql.InsCiud(txtop2, cid.getIdprov());
+            } catch (Exception e) {
+                datos.error("No hay provincias\nUsar Opcion Provincias para crear una nueva");
+            }
+            
+            
+           
 
         } else if (("Provincia".equals(cb1.getSelectedItem().toString())) && (txtop2.getText().isEmpty() != true)) {
             

@@ -6,7 +6,6 @@ import Objetos.PersonaBD;
 import Objetos.Render;
 import Objetos.provincia;
 import Opcion3.JOption3;
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
@@ -25,11 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
@@ -143,8 +139,7 @@ public class MySQLComandos {
                         confirmacion.setText("");
                         return true;
                     } else {
-                        this.getDatos().mostrar(
-                                "La contraseña debe tener todo en mayusculas y tener numeros\nEjemplo: USUARIO1234");
+                        this.getDatos().mostrar("Formato de contraseña incorrecto\nEjemplo: Contraseña*45");
                         return false;
                     }
                 }
@@ -240,7 +235,7 @@ public class MySQLComandos {
             columnModel.getColumn(5).setPreferredWidth(100);
             columnModel.getColumn(0).setMaxWidth(90);
             tabla.setRowHeight(65);
-            
+
         }
     }
 
@@ -300,7 +295,6 @@ public class MySQLComandos {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
 
         } finally {
             try {
@@ -359,12 +353,10 @@ public class MySQLComandos {
                 txtapellidos.setText("");
                 txtdireccion.setText("");
                 txttelefono.setText("");
-            } else {
-                this.getDatos().mostrar("No se ha seleccionado ningun item");
             }
 
         } catch (SQLException ex) {
-            this.getDatos().mostrar("Error al Guardar");
+            this.getDatos().error("Error al Guardar");
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -414,7 +406,6 @@ public class MySQLComandos {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -451,7 +442,10 @@ public class MySQLComandos {
     public void ConexionCedulas(JComboBox ListaCedulas) {
         this.CargarDatos();
         for (int i = 0; i < getPersonas().size(); i++) {
-            ListaCedulas.addItem(getPersonas().get(i).getCedula());
+            if (getPersonas().get(i).getFotos() == null) {
+                ListaCedulas.addItem(getPersonas().get(i).getCedula());
+            }
+
         }
     }
 
@@ -495,7 +489,7 @@ public class MySQLComandos {
             cb2.addItem(new provincia(cb2.getItemCount() + 1, txtop2.getText()));
             txtop2.setText("");
         } catch (SQLException ex) {
-            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+            this.getDatos().error("La provincia " + txtop2.getText() + " ya existe");
         } finally {
             try {
                 this.getRs().close();
@@ -518,9 +512,9 @@ public class MySQLComandos {
             this.getP().setBinaryStream(1, byteImagen);
             this.getP().setString(2, img);
             this.getP().setString(3, cedula.replace(" ", ""));
-            this.getP().executeUpdate();
+            this.getP().executeUpdate();          
+            
         } catch (SQLException ex) {
-            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

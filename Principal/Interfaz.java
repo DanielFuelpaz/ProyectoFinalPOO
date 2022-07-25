@@ -1,5 +1,6 @@
 package Principal;
 
+import Conexion.MySQLComandos;
 import Configuracion.Configuracion;
 import DatosPersonales.DatosPersonales;
 import Ncedula.Ncedula;
@@ -16,7 +17,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Interfaz {
-    
+
     private Image icono = new ImageIcon(getClass().getResource("Icono/icono.png")).getImage();
     public JFrame Fbase = new JFrame("RegistroCivil");
     public JToggleButton opcion1 = new JToggleButton("Datos Personales");
@@ -62,6 +63,7 @@ public class Interfaz {
                     DP.initialize();
                 } else {
                     DP.getFrame().setVisible(false);
+                    DP.cb1.removeAllItems();
                 }
             }
 
@@ -97,10 +99,12 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
+
                     Fbase.add(r.getpanel());
                     r.initialize();
                 } else {
                     r.getpanel().setVisible(false);
+                    r.getpanel().removeAll();
                 }
             }
 
@@ -112,11 +116,11 @@ public class Interfaz {
                 if (estado == ItemEvent.SELECTED) {
                     Fbase.add(c.getFrame());
                     c.initialize();
-                    
+
                 } else {
                     c.getFrame().setVisible(false);
                     c.resetCB(c.cb2);
-                    
+
                 }
             }
 

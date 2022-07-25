@@ -7,6 +7,7 @@ package DatosPersonales;
 
 import Conexion.MySQLComandos;
 import Objetos.provincia;
+import Opcion3.JOption3;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,7 @@ public class DatosPersonales {
     public JTextField txtdireccion = new JTextField();
     public JLabel jl4 = new JLabel("Telefono");
     public JTextField txttelefono = new JTextField();
-
+    private JOption3 datos = new JOption3();
     public JLabel jl5 = new JLabel("Provincia");
     public JComboBox<Object> cb1 = new JComboBox();
     public JLabel jl6 = new JLabel("Ciudad");
@@ -74,9 +75,13 @@ public class DatosPersonales {
             @Override
             public void actionPerformed(ActionEvent a) {
                 cb2.removeAllItems();
-                provincia prov = (provincia) cb1.getSelectedItem();
-                int idciu = prov.getIdpro();
-                sql.cargarciudades(cb2, idciu);
+                try {
+                    provincia prov = (provincia) cb1.getSelectedItem();
+                    int idciu = prov.getIdpro();
+                    sql.cargarciudades(cb2, idciu);
+                } catch (Exception e) {
+                }
+
             }
         });
         frame.show();

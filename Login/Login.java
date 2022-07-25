@@ -247,7 +247,6 @@ public class Login implements ActionListener {
     public static void main(String[] args) {
         Login l = new Login();
         l.panelusuario();
-
     }
 
     @Override
