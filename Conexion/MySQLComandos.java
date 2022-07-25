@@ -195,33 +195,38 @@ public class MySQLComandos {
                 return false;
             }
         };
+        String[] titulos={"CID","Apellido","Nombre","Direccion","Ruta Foto","Foto"};
+        
         dt.addColumn("CID");
         dt.addColumn("Apellido");
         dt.addColumn("Nombre");
         dt.addColumn("Direccion");
         dt.addColumn("Ruta Foto");
+        dt.addColumn("Foto");
+        dt.addRow(titulos);
         if(getPersonas().size() > 0){
             for(int i=0; i<getPersonas().size(); i++){
-                Object fila[] = new Object[5];
+                Object fila[] = new Object[6];
                 fila[0] = getPersonas().get(i).getCedula();
                 fila[1] = getPersonas().get(i).getApellido();
                 fila[2] = getPersonas().get(i).getNombre();
                 fila[3] = getPersonas().get(i).getDireccion();
+                fila[4] = getPersonas().get(i).getRutaF();
                 try{
                     byte[] bi = getPersonas().get(i).getFotos();
                     BufferedImage image = null;
                     InputStream in = new ByteArrayInputStream(bi);
                     image = ImageIO.read(in);
-                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 140, 0));
-                    fila[4] = new JLabel(imgi);
+                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 60, 0));
+                    fila[5] = new JLabel(imgi);
 
                 }catch(Exception ex){
-                    fila[4] = new JLabel("No imagen");
+                    fila[5] = new JLabel("No imagen");
                 }
                 dt.addRow(fila);
             }
             tabla.setModel(dt);
-            tabla.setRowHeight(60);
+            tabla.setRowHeight(40);
         }
     }
 
@@ -246,6 +251,7 @@ public class MySQLComandos {
                 persona.setNombre(this.getRs().getString("nombre"));
                 persona.setDireccion(this.getRs().getString("direccion"));
                 persona.setFotos(this.getRs().getBytes("foto"));
+                persona.setRutaF(this.getRs().getString("rutaF"));
                 listP.add(persona);
             }
             setPersonas(listP);

@@ -28,7 +28,7 @@ public class Reporte  {
         panel.add(report);
         m.Reportes(report);
         report.setEnabled(false);
-        report.setBounds(315, 0, 375, 16 * report.getRowCount());
+        report.setBounds(315, 0, 375, 50 * report.getRowCount());
         panel.setVisible(true);
         
     }
