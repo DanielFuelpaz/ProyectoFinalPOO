@@ -9,12 +9,12 @@ package Objetos;
  *
  * @author g4to1
  */
-public class cargarciudad {
+public class ciudades {
     private int idciu;
     private String ciudad;
     private int idpro;
 
-    public cargarciudad(int idciu, String ciudad) {
+    public ciudades(int idciu, String ciudad) {
         this.idciu = idciu;
         this.ciudad = ciudad;
     }

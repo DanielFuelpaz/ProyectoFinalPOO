@@ -1,6 +1,5 @@
 package Principal;
 
-import Conexion.MySQLComandos;
 import Configuracion.Configuracion;
 import DatosPersonales.DatosPersonales;
 import Ncedula.Ncedula;

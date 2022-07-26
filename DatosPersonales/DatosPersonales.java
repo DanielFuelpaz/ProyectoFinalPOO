@@ -6,11 +6,8 @@
 package DatosPersonales;
 
 import Conexion.MySQLComandos;
-import Objetos.provincia;
-import Opcion3.JOption3;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -28,19 +25,19 @@ public class DatosPersonales {
     public JTextField txtdireccion = new JTextField();
     public JLabel jl4 = new JLabel("Telefono");
     public JTextField txttelefono = new JTextField();
-    private JOption3 datos = new JOption3();
     public JLabel jl5 = new JLabel("Provincia");
     public JComboBox<Object> cb1 = new JComboBox();
     public JLabel jl6 = new JLabel("Ciudad");
-    public JComboBox cb2 = new JComboBox();
+    public JComboBox<Object> cb2 = new JComboBox();
     public JButton bg = new JButton("Guardar");
-    private MySQLComandos sql = new MySQLComandos();
+    private final MySQLComandos sql = new MySQLComandos();
 
     public JPanel getFrame() {
         return this.frame;
     }
 
     public void initialize() {
+        
         frame.setBounds(200, 0, 575, 350);
         frame.setBackground(Color.LIGHT_GRAY);
         frame.setLayout(null);
@@ -64,34 +61,22 @@ public class DatosPersonales {
         frame.add(this.jl5);
         cb1.setBounds(100, 175, 200, 25);
         frame.add(this.cb1);
+        sql.cargarprovincias(cb1);
         jl6.setBounds(35, 218, 60, 15);
         frame.add(this.jl6);
         cb2.setBounds(100, 214, 200, 25);
         frame.add(this.cb2);
         bg.setBounds(150, 263, 100, 25);
         frame.add(this.bg);
-        sql.cargarprovincias(cb1);
-        this.cb1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                cb2.removeAllItems();
-                try {
-                    provincia prov = (provincia) cb1.getSelectedItem();
-                    int idciu = prov.getIdpro();
-                    sql.cargarciudades(cb2, idciu);
-                } catch (Exception e) {
-                }
-
-            }
+        
+        this.cb1.addActionListener((ActionEvent a) -> {
+            cb2.removeAllItems();
+            sql.cargarciudades(cb2, cb1.getSelectedIndex() + 1);
         });
         frame.show();
 
-        this.bg.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent g) {
-
-                sql.addPer(txtnombres, txtapellidos, txtdireccion, txttelefono, cb1, cb2);
-            }
+        this.bg.addActionListener((ActionEvent g) -> {
+            sql.addPer(txtnombres, txtapellidos, txtdireccion, txttelefono, cb1, cb2);
         });
 
     }

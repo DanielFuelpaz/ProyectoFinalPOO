@@ -1,9 +1,8 @@
 package Conexion;
 
-import Objetos.cargarciudad;
-import Ncedula.Ncedula;
 import Objetos.PersonaBD;
 import Objetos.Render;
+import Objetos.ciudades;
 import Objetos.provincia;
 import Opcion3.JOption3;
 import java.awt.image.BufferedImage;
@@ -21,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -245,7 +245,7 @@ public class MySQLComandos {
         PersonaBD persona;
         try {
 
-            this.setInstruccion("SELECT * FROM datospersonales");
+            this.setInstruccion("SELECT * FROM datospersonales ORDER BY datospersonales.cedula ASC");
             this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
             while (this.getRs().next()) {
@@ -286,35 +286,39 @@ public class MySQLComandos {
 
     public void cargarprovincias(JComboBox<Object> cb1) {
         Connection co = c.getConexion();
+
         try {
-            this.setP(co.prepareStatement("SELECT * FROM provincias"));
+
+            this.setInstruccion("SELECT * FROM provincias ORDER BY provincias.idProv ASC");
+            this.setP(co.prepareStatement(this.getInstruccion()));
             this.setRs(this.getP().executeQuery());
-            while (this.getRs().next()) {
-
-                cb1.addItem(new provincia(this.getRs().getInt("idProv"), this.getRs().getString("provincias")));
-
+            ResultSet Cprov = this.getRs();
+            while (Cprov.next()) {
+                cb1.addItem(new provincia(Cprov.getInt("idProv"), Cprov.getString("provincias")));
             }
         } catch (SQLException ex) {
-
+            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 co.close();
                 p.close();
                 rs.close();
             } catch (SQLException ex) {
+                System.out.println(ex);
             }
         }
     }
 
     public void cargarciudades(JComboBox<Object> cb2, int id) {
-
         Connection co = c.getConexion();
         try {
-            this.setP(co.prepareStatement("SELECT * FROM ciudades where prov_id = ?"));
+            this.setInstruccion("SELECT * FROM ciudades where prov_id = ?");
+            this.setP(co.prepareStatement(this.getInstruccion()));
             this.getP().setInt(1, id);
             this.setRs(this.getP().executeQuery());
-            while (rs.next()) {
-                cb2.addItem(new cargarciudad(rs.getInt("idCiud"), rs.getString("ciudades")));
+            ResultSet Ciud = this.getRs();
+            while (Ciud.next()) {
+                cb2.addItem(new ciudades(Ciud.getInt("idCiud"), Ciud.getString("ciudades")));
             }
         } catch (SQLException ex) {
             this.getDatos().mostrar(ex);
@@ -389,23 +393,24 @@ public class MySQLComandos {
     public void addced(JComboBox per, JTextField Rced) {
         Connection co = c.getConexion();
         try {
+            if (per.getSelectedItem().toString() != null) {
+                String partes[] = per.getSelectedItem().toString().split(" ");
+                this.setInstruccion(
+                        "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
+                this.setP(co.prepareStatement(this.getInstruccion()));
+                this.getP().setInt(1, Integer.valueOf(Rced.getText()));
+                this.getP().setString(2, partes[0]);
+                this.getP().setString(3, partes[1]);
+                this.getP().executeUpdate();
+                for (int i = 0; i < personas.size(); i++) {
+                    if (personas.get(i).getApellido().equals(partes[0]) && personas.get(i).getNombre().equals(partes[1])) {
+                        personas.get(i).setCedula(Integer.parseInt(Rced.getText()));
+                    }
 
-            String partes[] = per.getSelectedItem().toString().split(" ");
-            this.setInstruccion(
-                    "UPDATE datospersonales SET cedula = ? WHERE datospersonales.apellido = ? AND datospersonales.nombre = ? ;");
-            this.setP(co.prepareStatement(this.getInstruccion()));
-            this.getP().setInt(1, Integer.valueOf(Rced.getText()));
-            this.getP().setString(2, partes[0]);
-            this.getP().setString(3, partes[1]);
-            this.getP().executeUpdate();
-            for (int i = 0; i < personas.size(); i++) {
-                if (personas.get(i).getApellido().equals(partes[0]) && personas.get(i).getNombre().equals(partes[1])) {
-                    personas.get(i).setCedula(Integer.parseInt(Rced.getText()));
                 }
-
             }
 
-        } catch (NumberFormatException |SQLException ex) {
+        } catch (NumberFormatException | SQLException ex) {
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -425,7 +430,7 @@ public class MySQLComandos {
 
     public void traerced(JTextField Rced) {
 
-        int pos = 0;
+        int pos;
 
         Random rnd = new Random();
         pos = rnd.nextInt(7999 + 1000) + 1000;
@@ -455,11 +460,11 @@ public class MySQLComandos {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
             this.getP().setString(1, txtop2.getText());
             this.getP().setInt(2, id);
-            this.getP().execute();
+            this.getP().executeUpdate();
             this.getDatos().mostrar("Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
-          
+
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -492,10 +497,15 @@ public class MySQLComandos {
             this.getDatos().error("La provincia " + txtop2.getText() + " ya existe");
         } finally {
             try {
-                this.getRs().close();
-                this.getP().close();
-                co.close();
-
+                if (this.getRs() != null) {
+                    this.getRs().close();
+                }
+                if (this.getP() != null) {
+                    this.getP().close();
+                }
+                if (co != null) {
+                    co.close();
+                }
             } catch (SQLException e) {
                 this.getDatos().mostrar(e);
             }
@@ -512,8 +522,8 @@ public class MySQLComandos {
             this.getP().setBinaryStream(1, byteImagen);
             this.getP().setString(2, img);
             this.getP().setString(3, cedula.replace(" ", ""));
-            this.getP().executeUpdate();          
-            
+            this.getP().executeUpdate();
+
         } catch (SQLException ex) {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);

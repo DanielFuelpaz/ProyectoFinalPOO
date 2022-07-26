@@ -13,30 +13,26 @@ import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.io.File;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Panel3s extends javax.swing.JPanel implements MouseMotionListener{
+public class Panel3s extends javax.swing.JPanel implements MouseListener {
 
     private MySQLComandos comandos = new MySQLComandos();
     Imagen img = new Imagen();
     Camara cam = new Camara();
     String opcion;
 
-    
-
     public Panel3s() {
-        addMouseMotionListener(this);
         initComponents();
         this.setSize(570, 350);
         this.setLocation(205, 0);
         this.removeAll();
         this.setBackground(Color.LIGHT_GRAY);
         this.getListaCedulas().removeAllItems();
-	listaCedulas.addItem("-");
+        listaCedulas.addItem("-");
         this.setVisible(true);
         this.getCam().getWebcam().setViewSize(this.getCam().getDimension1());
         this.getCam().getWebcampnl().setFillArea(true);
@@ -44,11 +40,15 @@ public class Panel3s extends javax.swing.JPanel implements MouseMotionListener{
         this.getCamarapnl().add(this.getCam().getWebcampnl());
         this.getDescripcionCamara().setText(this.getCam().getWebcam().toString());
         this.getCam().ApagarBotones(this.getApagarbtn(), this.getTomarbtn(), this.getGuardarbtn());
+        addMouseListener(this);
         this.getListaCedulas().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                    opcion = listaCedulas.getSelectedItem().toString();
+                if (listaCedulas.getSelectedItem()!=null) {
+                     opcion = listaCedulas.getSelectedItem().toString();
                 }
+               
+            }
         });
     }
 
@@ -374,11 +374,28 @@ public class Panel3s extends javax.swing.JPanel implements MouseMotionListener{
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
+       listaCedulas.removeAllItems();
+        comandos.ConexionCedulas(listaCedulas);
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
-        comandos.ConexionCedulas(listaCedulas);
+    public void mousePressed(MouseEvent e) {
+       
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+       
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+       
     }
 }
