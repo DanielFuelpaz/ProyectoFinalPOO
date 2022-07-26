@@ -418,62 +418,6 @@ public class MySQLComandos {
 
     public void traerced(JTextField Rced) {
 
-<<<<<<< HEAD
-//            Random rnd = new Random();
-//            pos = rnd.nextInt(7999 + 1000) + 1000;
-//            for (int i = 0; i < personas.size(); i++) {
-//                ArrayList <PersonaBD> per=null;
-//                if (personas.get(i).getCedula() !=null) {
-//                    per.add(personas.get(i));
-//                    while(per.get(i).getCedula().toString().substring(6,9).equals(Integer.toString(pos))) {
-//                    pos = rnd.nextInt(7999 + 1000) + 1000;
-//                    }
-//                }
-//                
-//            }
-//            this.setInstruccion("SELECT cedula FROM datospersonales WHERE cedula IS NOT NULL");
-//            this.setP(co.prepareStatement(this.getInstruccion()));
-//            this.setRs(this.getP().executeQuery(this.getInstruccion()));
-//            while (this.getRs().next()) {
-//                while (this.getRs().getString("cedula").substring(6, 9).equals(Integer.toString(pos))) {
-//                }
-//            }
-
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Ncedula.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (this.getRs() != null) {
-//                    this.getRs().close();
-//                }
-//                if (this.getP() != null) {
-//                }
-//                if (co != null) {
-//                    co.close();
-//                }
-//            } catch (SQLException e) {
-//                this.getDatos().mostrar(e);
-//            }
-//        }           this.getP().close();
-//                }
-//                if (co != null) {
-//                    co.close();
-//                }
-//            } catch (SQLException e) {
-//                this.getDatos().mostrar(e);
-//            }
-//        }
-
-        return pos;
-    }
-
-    public void ConexionCedulas(JComboBox ListaCedulas) {
-           
-//        for (int i = 0; i < personas.size(); i++) {
-//                ListaCedulas.addItem(personas.get(i).getCedula().toString()); 
-//        }
-        }
-=======
         int pos;
 
         Random rnd = new Random();
@@ -494,7 +438,6 @@ public class MySQLComandos {
             if (getPersonas().get(i).getRutaF() == null) {
                 ListaCedulas.addItem(getPersonas().get(i).getCedula());
             }
->>>>>>> f9636b55f0b21180a14868b9e531dfacf961fbf0
 
         }
     }

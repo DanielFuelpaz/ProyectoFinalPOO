@@ -333,15 +333,8 @@ public class Panel3s extends javax.swing.JPanel implements MouseListener {
         Computador pc = new Computador();
         int respuesta = datos.preguntar("¿Desea guardar la foto?", "Confirmación");
         if (respuesta == 0) {
-<<<<<<< HEAD
-            String rutaDispositivo = datos.ingreso("Ingrese la ruta de su dispositivo para guardar la imagen", "Ruta");
-//            datos.ingreso("Ingrese el nombre para su foto", "Nombre de su foto");
-            File imagenRuta = new File(rutaDispositivo + "\\Foto" + this.getCam().getNumeroFoto() + ".jpg");
-            comandos.enviarImagen(imagenRuta.getAbsolutePath(), opcion);
-=======
             pc.setRutaDispositivo(elector.ElegirCarpeta(null).getAbsolutePath());
             img.setArchivoImg(ciclo.ImagenDesicion(datos, pc.getRutaDispositivo(), persona));
->>>>>>> f9636b55f0b21180a14868b9e531dfacf961fbf0
             try {
                 ImageIO.write(this.getImg().getRuta(), "jpg", img.getArchivoImg());
                 datos.mostrar("Se guardó su imagen en: " + img.getArchivoImg().getAbsolutePath());
@@ -352,14 +345,6 @@ public class Panel3s extends javax.swing.JPanel implements MouseListener {
             this.getFotolbl().setIcon(null);
             this.getGuardarbtn().setEnabled(false);
             this.getTomarbtn().setText("TOMAR");
-            
-            
-            
-            
-            
-            
-            
-            
         }
     }// GEN-LAST:event_GuardarbtnActionPerformed
 
