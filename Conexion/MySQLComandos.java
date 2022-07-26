@@ -125,40 +125,29 @@ public class MySQLComandos {
             while (this.getRs().next()) {
                 // primer control: Nombres de usuarios ya existentes
                 if (!(rs.getString("usuario").equals(usuario.getText()))) {
-                    if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")
-                            && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
-                        this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
-                        this.setP(co.prepareStatement(this.getInstruccion()));
-                        this.getP().setString(1, usuario.getText());
-                        this.getP().setString(2, confirmacion.getText());
-                        this.getP().executeUpdate();
-                        this.getDatos().mostrar(" ==== Usuario Creado ====");
-                        usuario.setText("");
-                        contraseña.setText("");
-                        confirmacion.setText("");
-                        return true;
+                    if (!(contraseña.getText().contains(usuario.getText())) && !(confirmacion.getText().contains(usuario.getText()))) {
+
+                        if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*") && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
+                            this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
+                            this.setP(co.prepareStatement(this.getInstruccion()));
+
+                            this.getP().setString(1, usuario.getText());
+                            this.getP().setString(2, confirmacion.getText());
+
+                            this.getP().executeUpdate();
+                            this.getDatos().mostrar(" ==== Usuario Creado ====");
+                            usuario.setText("");
+                            contraseña.setText("");
+                            confirmacion.setText("");
+                            return true;
+                        } else {
+                            this.getDatos().mostrar("Formato de contraseña incorrecto\nEjemplo: Contraseña*45");
+                            return false;
+                        }
                     } else {
-                        this.getDatos().mostrar("Formato de contraseña incorrecto\nEjemplo: Contraseña*45");
+                        this.getDatos().mostrar("La contraseña contiene el nombre de usuario");
                         return false;
                     }
-                }
-
-                if (!(this.getRs().getString("usuario").equals(usuario.getText()))
-                        && confirmacion.getText().matches("[A-Z]{1,9}.\\d[0-9]")) {
-
-                    this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
-                    this.setP(co.prepareStatement(this.getInstruccion()));
-                    this.getP().setString(1, usuario.getText());
-                    this.getP().setString(2, confirmacion.getText());
-                    this.getP().executeUpdate();
-                    this.getDatos().mostrar(" ==== Usuario Creado ====");
-                    usuario.setText("");
-                    confirmacion.setText("");
-                    return true;
-
-                } else {
-                    datos.mostrar("=== ERROR DE CREACION DE USUARIO ====");
-
                 }
 
             }
