@@ -25,7 +25,7 @@ public class JFChooser {
             elector.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             elector.setAcceptAllFileFilterUsed(false);
             if (elector.showOpenDialog(panel)==JFileChooser.APPROVE_OPTION) {
-                carpeta = elector.getCurrentDirectory();
+                carpeta = elector.getSelectedFile();
         }
     return carpeta;
 }

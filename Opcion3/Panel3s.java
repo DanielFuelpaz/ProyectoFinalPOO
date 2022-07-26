@@ -12,12 +12,14 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Panel3s extends javax.swing.JPanel {
+public class Panel3s extends javax.swing.JPanel implements MouseMotionListener{
 
     private MySQLComandos comandos = new MySQLComandos();
     Imagen img = new Imagen();
@@ -27,15 +29,14 @@ public class Panel3s extends javax.swing.JPanel {
     
 
     public Panel3s() {
+        addMouseMotionListener(this);
         initComponents();
         this.setSize(570, 350);
         this.setLocation(205, 0);
         this.removeAll();
         this.setBackground(Color.LIGHT_GRAY);
         this.getListaCedulas().removeAllItems();
-        this.comandos.CargarDatos();
 	listaCedulas.addItem("-");
-        this.comandos.ConexionCedulas(listaCedulas);
         this.setVisible(true);
         this.getCam().getWebcam().setViewSize(this.getCam().getDimension1());
         this.getCam().getWebcampnl().setFillArea(true);
@@ -46,8 +47,8 @@ public class Panel3s extends javax.swing.JPanel {
         this.getListaCedulas().addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                opcion = listaCedulas.getSelectedItem().toString();
-            }
+                    opcion = listaCedulas.getSelectedItem().toString();
+                }
         });
     }
 
@@ -131,11 +132,11 @@ public class Panel3s extends javax.swing.JPanel {
         this.imagenTitulo = imagenTitulo;
     }
 
-    private JComboBox<String> getListaCedulas() {
-        return this.listaCedulas;
+    public JComboBox getListaCedulas() {
+        return listaCedulas;
     }
 
-    private void setListaCedulas(JComboBox<String> listaCedulas) {
+    public void setListaCedulas(JComboBox listaCedulas) {
         this.listaCedulas = listaCedulas;
     }
 
@@ -371,4 +372,13 @@ public class Panel3s extends javax.swing.JPanel {
     private javax.swing.JLabel imagenTitulo;
     private javax.swing.JComboBox listaCedulas;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        comandos.ConexionCedulas(listaCedulas);
+    }
 }

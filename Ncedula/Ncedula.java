@@ -75,7 +75,6 @@ public class Ncedula implements ActionListener {
             sql.traerced(Rced);
 
         } else {
-
             sql.addced(personas, Rced);
             Rced.setText("");
             personas.removeAllItems();

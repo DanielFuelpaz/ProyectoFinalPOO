@@ -405,7 +405,7 @@ public class MySQLComandos {
 
             }
 
-        } catch (SQLException ex) {
+        } catch (NumberFormatException |SQLException ex) {
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -418,6 +418,7 @@ public class MySQLComandos {
                     co.close();
                 }
             } catch (SQLException e) {
+                this.getDatos().mostrar(e);
             }
         }
     }
@@ -458,7 +459,7 @@ public class MySQLComandos {
             this.getDatos().mostrar("Elementos guardados");
             txtop2.setText("");
         } catch (SQLException ex) {
-            Logger.getLogger(MySQLComandos.class.getName()).log(Level.SEVERE, null, ex);
+          
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -533,7 +534,4 @@ public class MySQLComandos {
         }
     }
 
-    public void traerImagen() {
-
-    }
 }
