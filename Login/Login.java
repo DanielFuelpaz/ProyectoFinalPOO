@@ -8,9 +8,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import Principal.Interfaz;
+import java.awt.Image;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -31,11 +33,40 @@ public class Login implements ActionListener {
     private JLabel caja = new JLabel();
     private JLabel caja2 = new JLabel();
     private JLabel caja3 = new JLabel();
+    private JLabel cajaimagen = new JLabel("");
     private JTextField texto = new JTextField();
     private JPasswordField texto2 = new JPasswordField();
     private JButton boton = new JButton();
     private JButton boton2 = new JButton();
     private MySQLComandos sql = new MySQLComandos();
+    private Image icono = new ImageIcon(getClass().getResource("Icono/icono.png")).getImage();
+    //private ImageIcon portada = new ImageIcon("Icono.portada.png");
+   // private Icon ico = new ImageIcon(portada.getImage().getScaledInstance(cajaimagen.getWidth(), cajaimagen.getHeight(), Image.SCALE_DEFAULT));
+    //private JPanel panel = new JPanel();
+
+    public JLabel getCaja3() {
+        return this.caja3;
+    }
+
+    public void setCaja3(JLabel caja3) {
+        this.caja3 = caja3;
+    }
+
+    public JLabel getCajaimagen() {
+        return this.cajaimagen;
+    }
+
+    public void setCajaimagen(JLabel cajaimagen) {
+        this.cajaimagen = cajaimagen;
+    }
+
+    public Image getIcono() {
+        return this.icono;
+    }
+
+    public void setIcono(Image icono) {
+        this.icono = icono;
+    }
 
     public JLabel getCajacreacion() {
         return this.cajacreacion;
@@ -150,16 +181,21 @@ public class Login implements ActionListener {
         this.caja3.setText("=== REGISTRO CIVIL ===");
         this.j.setLayout(null);
         this.j.setBounds(400, 100, 500, 500);// Edicion del Frame lugar (x,y) (largo y Ancho)
-        this.boton2.setBounds(195, 250, 100, 25);
-        this.boton.setBounds(180, 300, 130, 25); // Edicion del Boton lugar (x,y) (largo,ancho)
-        this.texto.setBounds(200, 130, 100, 25);
-        this.texto2.setBounds(200, 180, 100, 25);
-        this.caja.setBounds(120, 130, 50, 25);
-        this.caja2.setBounds(100, 180, 75, 25);
-        this.caja3.setBounds(180, -50, 200, 200);
+        this.boton2.setBounds(195, 300, 100, 25);
+        this.boton.setBounds(180, 350, 130, 25); // Edicion del Boton lugar (x,y) (largo,ancho)
+        this.texto.setBounds(200, 180, 100, 25);
+        this.texto2.setBounds(200, 230, 100, 25);
+        this.caja.setBounds(120, 180, 50, 25);
+        this.caja2.setBounds(100, 230, 75, 25);
+        this.caja3.setBounds(180, -70, 200, 200);
+        this.cajaimagen.setBounds(220, 100, 600, 600);
+        
+       
+        //this.cajaimagen.setIcon(ico);
+        //this.cajaimagen.repaint();
         this.boton.addActionListener(this);
         this.boton2.addActionListener(this);
-
+      
         this.j.add(caja);
         this.j.add(caja2);
         this.j.add(texto);
@@ -167,10 +203,11 @@ public class Login implements ActionListener {
         this.j.add(boton);
         this.j.add(boton2);
         this.j.add(caja3);
-
+        this.j.add(cajaimagen);
         this.j.setBackground(Color.GRAY);
         this.j.show();
         this.j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.j.setIconImage(icono);
         this.j.setResizable(false);
 
         return j;
@@ -195,6 +232,7 @@ public class Login implements ActionListener {
         this.j2.add(textocreacion2);
         this.j2.add(textocreacion3);
         this.j2.add(botonguardar);
+        this.j2.setIconImage(icono);
         this.botonguardar.addActionListener(this);
 
         this.j2.setBackground(Color.GRAY);
@@ -209,7 +247,6 @@ public class Login implements ActionListener {
     public static void main(String[] args) {
         Login l = new Login();
         l.panelusuario();
-
     }
 
     @Override
@@ -231,7 +268,7 @@ public class Login implements ActionListener {
             panelCreacionCuenta();
 
         } else {
-            if (sql.creacionusuario(textocreacion, textocreacion2,textocreacion3)) {
+            if (sql.creacionusuario(textocreacion, textocreacion2, textocreacion3)) {
                 j2.hide();
                 j.show();
             }

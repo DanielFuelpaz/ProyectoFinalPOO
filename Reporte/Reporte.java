@@ -6,8 +6,11 @@
 package Reporte;
 
 import Conexion.MySQLComandos;
+import Objetos.Imagen;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class Reporte {
@@ -16,32 +19,27 @@ public class Reporte {
     private JPanel panel = new JPanel();
     MySQLComandos m = new MySQLComandos();
     private JTable report = new JTable();
+    Imagen ci1;
 
-    public JPanel getPanel() {
-        return this.panel;
+    public JPanel getpanel() {
+        return panel;
     }
 
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
-    }
-
-    public JTable getReport() {
-        return this.report;
-    }
-
-    public void setReport(JTable report) {
-        this.report = report;
-    }
-
-    public JPanel initialize() {
-
-        panel.setBounds(200, 0, 1080, 720);
+    public void initialize() {
+        panel.setBounds(200, 0, 1050, 413);
         panel.setBackground(new Color(205, 224, 228));
-        report.setBounds(20, 20, 500, 300);
-        m.Reportes(report);
         panel.add(report);
+        m.Reportes(report);
+        report.setBounds(315, 0, 300, 400);
+        panel.setLayout(new BorderLayout());
+        report.setRowSelectionAllowed(true);
+        report.setColumnSelectionAllowed(true);
+        report.setSelectionForeground(Color.white);
+        report.setSelectionBackground(new Color(217, 160, 198));
+        JScrollPane panelScroll = new JScrollPane(report);
+        panel.add(panelScroll, BorderLayout.CENTER);
         panel.setVisible(true);
-        return this.panel;
+
     }
 
 }

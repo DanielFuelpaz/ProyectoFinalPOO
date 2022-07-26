@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Conexion {
-
+//
 //    public static final String usuario = "root";
 //    public static final String clave = "";
 //    public static final String url = "jdbc:mysql://localhost:3306/respaldopoo";
-    
+//    
     public static final String usuario = "uvtrtmhl1kh3bgym";
     public static final String clave = "srpWdxh10ffLwT5WsyY0";
     public static final String url = "jdbc:mysql://bwlzwusixbbsd7oqhmvd-mysql.services.clever-cloud.com:3306/bwlzwusixbbsd7oqhmvd";

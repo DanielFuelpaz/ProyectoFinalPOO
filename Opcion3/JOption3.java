@@ -36,4 +36,9 @@ public class JOption3 extends JOption {
         JOptionPane.showMessageDialog(null, e);
     }
 
+    @Override
+    public void error(String s) {
+        JOptionPane.showMessageDialog(null,s, "ERROR", JOptionPane.ERROR_MESSAGE);
+    }
+
 }

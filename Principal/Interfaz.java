@@ -12,9 +12,12 @@ import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Interfaz {
 
+    private Image icono = new ImageIcon(getClass().getResource("Icono/icono.png")).getImage();
     public JFrame Fbase = new JFrame("RegistroCivil");
     public JToggleButton opcion1 = new JToggleButton("Datos Personales");
     public JToggleButton opcion2 = new JToggleButton("Generación del número de cédula");
@@ -30,6 +33,7 @@ public class Interfaz {
 
     public void initialize() {
 
+        Fbase.setIconImage(icono);
         Fbase.setLocation(0, 0);
         Fbase.setBackground(Color.CYAN);
         Fbase.setLayout(null);
@@ -59,7 +63,6 @@ public class Interfaz {
                 } else {
                     DP.getFrame().setVisible(false);
                     DP.cb1.removeAllItems();
-                    DP.cb2.removeAllItems();
                 }
             }
 
@@ -95,10 +98,12 @@ public class Interfaz {
             public void itemStateChanged(ItemEvent ie) {
                 int estado = ie.getStateChange();
                 if (estado == ItemEvent.SELECTED) {
-                    Fbase.add(r.getPanel());
+
+                    Fbase.add(r.getpanel());
                     r.initialize();
                 } else {
-                    r.getPanel().setVisible(false);
+                    r.getpanel().setVisible(false);
+                    r.getpanel().removeAll();
                 }
             }
 
@@ -110,9 +115,11 @@ public class Interfaz {
                 if (estado == ItemEvent.SELECTED) {
                     Fbase.add(c.getFrame());
                     c.initialize();
+
                 } else {
                     c.getFrame().setVisible(false);
-                    c.getCb1().removeAllItems();
+                    c.resetCB(c.cb2);
+
                 }
             }
 
@@ -132,6 +139,7 @@ public class Interfaz {
         Fbase.setResizable(false);
         Fbase.show();
     }
+
     public static void main(String[] args) {
         Interfaz i = new Interfaz();
         i.initialize();
