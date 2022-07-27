@@ -127,7 +127,7 @@ public class MySQLComandos {
                 if (!(rs.getString("usuario").equals(usuario.getText()))) {
                     if (!(contraseña.getText().contains(usuario.getText())) && !(confirmacion.getText().contains(usuario.getText()))) {
 
-                        if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*") && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-_].\\d[0-9]*")) {
+                        if (contraseña.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-\\*_].\\d[0-9]*") && confirmacion.getText().matches("[A-Z]+.[a-z]*.[@$?¡\\-\\*_].\\d[0-9]*")) {
                             this.setInstruccion("Insert into usuarios set usuario =?, contraseña =?");
                             this.setP(co.prepareStatement(this.getInstruccion()));
 
@@ -204,7 +204,7 @@ public class MySQLComandos {
                     BufferedImage image = null;
                     InputStream in = new ByteArrayInputStream(bi);
                     image = ImageIO.read(in);
-                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(60, 60, 0));
+                    ImageIcon imgi = new ImageIcon(image.getScaledInstance(80, 80, 0));
                     fila[5] = new JLabel(imgi);
 
                 } catch (Exception ex) {
@@ -448,11 +448,16 @@ public class MySQLComandos {
             this.setP(co.prepareStatement("INSERT INTO ciudades (ciudades,prov_id) VALUES (?,?)"));
             this.getP().setString(1, txtop2.getText());
             this.getP().setInt(2, id);
-            this.getP().executeUpdate();
-            this.getDatos().mostrar("Elementos guardados");
+            try {
+                this.getP().executeUpdate();
+                this.getDatos().mostrar("Elementos guardados");
+            } catch (SQLException e) {
+                this.getDatos().error("La Ciudad " + txtop2.getText() + " ya existe");
+                txtop2.getText();
+            }
+
             txtop2.setText("");
         } catch (SQLException ex) {
-
         } finally {
             try {
                 if (this.getRs() != null) {
@@ -474,15 +479,22 @@ public class MySQLComandos {
     public void InsProv(JTextField txtop2, JComboBox<Object> cb2) {
         Connection co = c.getConexion();
         try {
-            this.setInstruccion("INSERT INTO provincias (provincias) VALUES (?)");
+            this.setInstruccion("INSERT INTO provincias (idProv,provincias) VALUES (?,?)");
             this.setP(co.prepareStatement(this.getInstruccion()));
-            this.getP().setString(1, txtop2.getText());
-            this.getP().executeUpdate();
-            this.getDatos().mostrar("Elementos guardados");
-            cb2.addItem(new provincia(cb2.getItemCount() + 1, txtop2.getText()));
+            this.getP().setInt(1, cb2.getItemCount() + 1);
+            this.getP().setString(2, txtop2.getText());
+            try {
+                this.getP().executeUpdate();
+                cb2.addItem(new provincia(cb2.getItemCount() + 1, txtop2.getText()));
+                this.getDatos().mostrar("Elementos guardados");
+            } catch (SQLException ex) {
+                this.getDatos().error("La provincia " + txtop2.getText() + " ya existe");
+                txtop2.setText("");
+            }
+
             txtop2.setText("");
         } catch (SQLException ex) {
-            this.getDatos().error("La provincia " + txtop2.getText() + " ya existe");
+
         } finally {
             try {
                 if (this.getRs() != null) {

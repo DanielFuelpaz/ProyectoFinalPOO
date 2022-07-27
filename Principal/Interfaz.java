@@ -60,6 +60,10 @@ public class Interfaz {
                 if (estado == ItemEvent.SELECTED) {
                     Fbase.add(DP.getFrame());
                     DP.initialize();
+                    Ced.getJp1().setVisible(false);
+                    foto.setVisible(false);
+                    r.getpanel().setVisible(false);
+                    c.getFrame().setVisible(false);
                 } else {
                     DP.getFrame().setVisible(false);
                     DP.cb1.removeAllItems();
@@ -72,6 +76,10 @@ public class Interfaz {
             if (estado == ItemEvent.SELECTED) {
                 Fbase.add(Ced.getJp1());
                 Ced.initialize();
+                DP.getFrame().setVisible(false);
+                foto.setVisible(false);
+                r.getpanel().setVisible(false);
+                c.getFrame().setVisible(false);
             } else {
                 Ced.getJp1().setVisible(false);
                 Ced.getPersonas().removeAllItems();
@@ -87,6 +95,10 @@ public class Interfaz {
                     Fbase.revalidate();
                     Fbase.repaint();
                     foto.setVisible(true);
+                    DP.getFrame().setVisible(false);
+                    Ced.getJp1().setVisible(false);
+                    r.getpanel().setVisible(false);
+                    c.getFrame().setVisible(false);
                 } else {
                     foto.setVisible(false);
                 }
@@ -101,6 +113,10 @@ public class Interfaz {
 
                     Fbase.add(r.getpanel());
                     r.initialize();
+                    DP.getFrame().setVisible(false);
+                    Ced.getJp1().setVisible(false);
+                    foto.setVisible(false);
+                    c.getFrame().setVisible(false);
                 } else {
                     r.getpanel().setVisible(false);
                     r.getpanel().removeAll();
@@ -115,7 +131,10 @@ public class Interfaz {
                 if (estado == ItemEvent.SELECTED) {
                     Fbase.add(c.getFrame());
                     c.initialize();
-
+                    DP.getFrame().setVisible(false);
+                    Ced.getJp1().setVisible(false);
+                    foto.setVisible(false);
+                    r.getpanel().setVisible(false);
                 } else {
                     c.getFrame().setVisible(false);
                     c.resetCB(c.cb2);

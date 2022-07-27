@@ -108,7 +108,7 @@ public class Configuracion implements ActionListener {
             
             sql.InsProv(txtop2,cb2);
 
-        } else {
+        } else{
             datos.mostrar("No se ha seleccionado ningun item");
         }
     }
